@@ -17,7 +17,7 @@ export default defineConfig({
       entry: resolve(__dirname, "src/index.ts"),
       name: "AdvancedDateRangePicker",
       formats: ["es", "cjs"],
-      fileName: (format) => `index.${format === "es" ? "esm" : "js"}.js`,
+      fileName: (format) => format === "es" ? "index.esm.js" : "index.js",
     },
     rollupOptions: {
       external: ["react", "react-dom", "react/jsx-runtime"],
