@@ -21,7 +21,7 @@ export default defineConfig({
     },
     cssCodeSplit: false,
     rollupOptions: {
-      external: ["react", "react-dom", "react/jsx-runtime"],
+      external: ["react", "react-dom", "react/jsx-runtime", "react-day-picker/dist/style.css"],
       output: {
         globals: {
           react: "React",
