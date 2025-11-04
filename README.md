@@ -59,6 +59,16 @@ npx tailwindcss init -p
 @tailwind utilities;
 ```
 
+3. **Import the package CSS** (required for react-day-picker styles):
+```tsx
+import "advanced-date-range-picker/dist/advanced-date-range-picker.css";
+```
+
+Or if using CSS imports:
+```css
+@import "advanced-date-range-picker/dist/advanced-date-range-picker.css";
+```
+
 ## Usage
 
 ### Basic Example
@@ -66,6 +76,8 @@ npx tailwindcss init -p
 ```tsx
 import React, { useState } from "react";
 import { AdvancedDateRangePicker, DateRangeSelection } from "advanced-date-range-picker";
+// Import the CSS file (required)
+import "advanced-date-range-picker/dist/advanced-date-range-picker.css";
 
 function App() {
   const [showPicker, setShowPicker] = useState(false);
@@ -122,6 +134,8 @@ export default App;
 ```tsx
 import React, { useState } from "react";
 import { AdvancedDateRangePicker, DateRangeSelection } from "advanced-date-range-picker";
+// Import the CSS file (required)
+import "advanced-date-range-picker/dist/advanced-date-range-picker.css";
 
 function DateRangeModal() {
   const [showModal, setShowModal] = useState(false);

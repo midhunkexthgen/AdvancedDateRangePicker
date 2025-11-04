@@ -48,7 +48,21 @@ module.exports = {
 };
 ```
 
-### Step 4: Use the Component
+### Step 4: Import the CSS (Required)
+
+Import the package CSS file in your main entry file (e.g., `main.tsx`, `App.tsx`, or `index.css`):
+
+```tsx
+// In your main component or entry file
+import "advanced-date-range-picker/dist/advanced-date-range-picker.css";
+```
+
+Or in your CSS file:
+```css
+@import "advanced-date-range-picker/dist/advanced-date-range-picker.css";
+```
+
+### Step 5: Use the Component
 
 ```tsx
 import React, { useState } from "react";
@@ -56,6 +70,8 @@ import {
   AdvancedDateRangePicker,
   DateRangeSelection,
 } from "advanced-date-range-picker";
+// Import the CSS file (required)
+import "advanced-date-range-picker/dist/advanced-date-range-picker.css";
 
 function MyComponent() {
   const [showPicker, setShowPicker] = useState(false);
@@ -221,8 +237,10 @@ const selection: DateRangeSelection = {
 
 ### Styles not applying
 
+- **Import the CSS file**: Make sure you've imported `advanced-date-range-picker/dist/advanced-date-range-picker.css` in your project
 - Update your `tailwind.config.js` to include the package path in `content`
 - Make sure Tailwind CSS is compiled in your build process
+- Verify the CSS file exists in `node_modules/advanced-date-range-picker/dist/advanced-date-range-picker.css`
 
 ### TypeScript errors
 
