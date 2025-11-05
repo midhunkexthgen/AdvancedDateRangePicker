@@ -1,4 +1,4 @@
-import { jsxs as x, jsx as f, Fragment as ct } from "react/jsx-runtime";
+import { jsxs as v, jsx as f, Fragment as ct } from "react/jsx-runtime";
 import C, { createContext as vr, useContext as kr, useCallback as ye, useRef as Me, useLayoutEffect as Mr, useState as B, useEffect as Ye, useMemo as Bt, forwardRef as Fn, createElement as Xt } from "react";
 function Nr(e, t, n = "long") {
   return new Intl.DateTimeFormat("en-US", {
@@ -85,11 +85,11 @@ function Pn(e) {
   d.setUTCSeconds(0);
   const g = s > 0 ? d.getSeconds() : (d.getSeconds() - 60) % 60, u = Math.round(-(Ve(e.timeZone, e) * 60)) % 60;
   (u || g) && (e.internal.setUTCSeconds(e.internal.getUTCSeconds() + u), Date.prototype.setUTCSeconds.call(e, Date.prototype.getUTCSeconds.call(e) + u + g));
-  const y = Ve(e.timeZone, e), h = y > 0 ? Math.floor(y) : Math.ceil(y), N = -(/* @__PURE__ */ new Date(+e)).getTimezoneOffset() - h, S = h !== n, M = N - l;
-  if (S && M) {
-    Date.prototype.setUTCMinutes.call(e, Date.prototype.getUTCMinutes.call(e) + M);
-    const m = Ve(e.timeZone, e), v = m > 0 ? Math.floor(m) : Math.ceil(m), p = h - v;
-    p && (e.internal.setUTCMinutes(e.internal.getUTCMinutes() + p), Date.prototype.setUTCMinutes.call(e, Date.prototype.getUTCMinutes.call(e) + p));
+  const y = Ve(e.timeZone, e), h = y > 0 ? Math.floor(y) : Math.ceil(y), N = -(/* @__PURE__ */ new Date(+e)).getTimezoneOffset() - h, M = h !== n, m = N - l;
+  if (M && m) {
+    Date.prototype.setUTCMinutes.call(e, Date.prototype.getUTCMinutes.call(e) + m);
+    const w = Ve(e.timeZone, e), O = w > 0 ? Math.floor(w) : Math.ceil(w), D = h - O;
+    D && (e.internal.setUTCMinutes(e.internal.getUTCMinutes() + D), Date.prototype.setUTCMinutes.call(e, Date.prototype.getUTCMinutes.call(e) + D));
   }
 }
 class oe extends Ne {
@@ -2131,37 +2131,37 @@ function Ie(e, t, n = Oe) {
   });
 }
 function qo(e, t, n, r, s) {
-  const { disabled: o, hidden: i, modifiers: a, showOutsideDays: l, broadcastCalendar: d, today: g } = t, { isSameDay: u, isSameMonth: y, startOfMonth: h, isBefore: k, endOfMonth: N, isAfter: S } = s, M = n && h(n), m = r && N(r), v = {
+  const { disabled: o, hidden: i, modifiers: a, showOutsideDays: l, broadcastCalendar: d, today: g } = t, { isSameDay: u, isSameMonth: y, startOfMonth: h, isBefore: k, endOfMonth: N, isAfter: M } = s, m = n && h(n), w = r && N(r), O = {
     [Z.focused]: [],
     [Z.outside]: [],
     [Z.disabled]: [],
     [Z.hidden]: [],
     [Z.today]: []
-  }, p = {};
-  for (const D of e) {
-    const { date: b, displayMonth: _ } = D, U = !!(_ && !y(b, _)), X = !!(M && k(b, M)), H = !!(m && S(b, m)), Q = !!(o && Ie(b, o, s)), V = !!(i && Ie(b, i, s)) || X || H || // Broadcast calendar will show outside days as default
-    !d && !l && U || d && l === !1 && U, fe = u(b, g ?? s.today());
-    U && v.outside.push(D), Q && v.disabled.push(D), V && v.hidden.push(D), fe && v.today.push(D), a && Object.keys(a).forEach((re) => {
+  }, D = {};
+  for (const b of e) {
+    const { date: p, displayMonth: _ } = b, U = !!(_ && !y(p, _)), X = !!(m && k(p, m)), H = !!(w && M(p, w)), Q = !!(o && Ie(p, o, s)), V = !!(i && Ie(p, i, s)) || X || H || // Broadcast calendar will show outside days as default
+    !d && !l && U || d && l === !1 && U, fe = u(p, g ?? s.today());
+    U && O.outside.push(b), Q && O.disabled.push(b), V && O.hidden.push(b), fe && O.today.push(b), a && Object.keys(a).forEach((re) => {
       const he = a?.[re];
-      he && Ie(b, he, s) && (p[re] ? p[re].push(D) : p[re] = [D]);
+      he && Ie(p, he, s) && (D[re] ? D[re].push(b) : D[re] = [b]);
     });
   }
-  return (D) => {
-    const b = {
+  return (b) => {
+    const p = {
       [Z.focused]: !1,
       [Z.disabled]: !1,
       [Z.hidden]: !1,
       [Z.outside]: !1,
       [Z.today]: !1
     }, _ = {};
-    for (const U in v) {
-      const X = v[U];
-      b[U] = X.some((H) => H === D);
+    for (const U in O) {
+      const X = O[U];
+      p[U] = X.some((H) => H === b);
     }
-    for (const U in p)
-      _[U] = p[U].some((X) => X === D);
+    for (const U in D)
+      _[U] = D[U].some((X) => X === b);
     return {
-      ...b,
+      ...p,
       // custom modifiers should override all the previous ones
       ..._
     };
@@ -2345,50 +2345,50 @@ function va(e, t, { classNames: n, months: r, focused: s, dateLib: o }) {
     r.length === 0 || d.length === 0 || r.length !== d.length)
       return;
     const g = o.isSameMonth(r[0].date, d[0].date), u = o.isAfter(r[0].date, d[0].date), y = u ? n[de.caption_after_enter] : n[de.caption_before_enter], h = u ? n[de.weeks_after_enter] : n[de.weeks_before_enter], k = i.current, N = e.current.cloneNode(!0);
-    if (N instanceof HTMLElement ? (qt(N).forEach((v) => {
-      if (!(v instanceof HTMLElement))
+    if (N instanceof HTMLElement ? (qt(N).forEach((O) => {
+      if (!(O instanceof HTMLElement))
         return;
-      const p = Da(v);
-      p && v.contains(p) && v.removeChild(p);
-      const D = jt(v);
-      D && D.classList.remove(y);
-      const b = Lt(v);
-      b && b.classList.remove(h);
+      const D = Da(O);
+      D && O.contains(D) && O.removeChild(D);
+      const b = jt(O);
+      b && b.classList.remove(y);
+      const p = Lt(O);
+      p && p.classList.remove(h);
     }), i.current = N) : i.current = null, l.current || g || // skip animation if a day is focused because it can cause issues to the animation and is better for a11y
     s)
       return;
-    const S = k instanceof HTMLElement ? qt(k) : [], M = qt(e.current);
-    if (M?.every((m) => m instanceof HTMLElement) && S && S.every((m) => m instanceof HTMLElement)) {
+    const M = k instanceof HTMLElement ? qt(k) : [], m = qt(e.current);
+    if (m?.every((w) => w instanceof HTMLElement) && M && M.every((w) => w instanceof HTMLElement)) {
       l.current = !0, e.current.style.isolation = "isolate";
-      const m = wa(e.current);
-      m && (m.style.zIndex = "1"), M.forEach((v, p) => {
-        const D = S[p];
-        if (!D)
+      const w = wa(e.current);
+      w && (w.style.zIndex = "1"), m.forEach((O, D) => {
+        const b = M[D];
+        if (!b)
           return;
-        v.style.position = "relative", v.style.overflow = "hidden";
-        const b = jt(v);
-        b && b.classList.add(y);
-        const _ = Lt(v);
+        O.style.position = "relative", O.style.overflow = "hidden";
+        const p = jt(O);
+        p && p.classList.add(y);
+        const _ = Lt(O);
         _ && _.classList.add(h);
         const U = () => {
-          l.current = !1, e.current && (e.current.style.isolation = ""), m && (m.style.zIndex = ""), b && b.classList.remove(y), _ && _.classList.remove(h), v.style.position = "", v.style.overflow = "", v.contains(D) && v.removeChild(D);
+          l.current = !1, e.current && (e.current.style.isolation = ""), w && (w.style.zIndex = ""), p && p.classList.remove(y), _ && _.classList.remove(h), O.style.position = "", O.style.overflow = "", O.contains(b) && O.removeChild(b);
         };
-        D.style.pointerEvents = "none", D.style.position = "absolute", D.style.overflow = "hidden", D.setAttribute("aria-hidden", "true");
-        const X = xa(D);
+        b.style.pointerEvents = "none", b.style.position = "absolute", b.style.overflow = "hidden", b.setAttribute("aria-hidden", "true");
+        const X = xa(b);
         X && (X.style.opacity = "0");
-        const H = jt(D);
+        const H = jt(b);
         H && (H.classList.add(u ? n[de.caption_before_exit] : n[de.caption_after_exit]), H.addEventListener("animationend", U));
-        const Q = Lt(D);
-        Q && Q.classList.add(u ? n[de.weeks_before_exit] : n[de.weeks_after_exit]), v.insertBefore(D, v.firstChild);
+        const Q = Lt(b);
+        Q && Q.classList.add(u ? n[de.weeks_before_exit] : n[de.weeks_after_exit]), O.insertBefore(b, O.firstChild);
       });
     }
   });
 }
 function ka(e, t, n, r) {
-  const s = e[0], o = e[e.length - 1], { ISOWeek: i, fixedWeeks: a, broadcastCalendar: l } = n ?? {}, { addDays: d, differenceInCalendarDays: g, differenceInCalendarMonths: u, endOfBroadcastWeek: y, endOfISOWeek: h, endOfMonth: k, endOfWeek: N, isAfter: S, startOfBroadcastWeek: M, startOfISOWeek: m, startOfWeek: v } = r, p = l ? M(s, r) : i ? m(s) : v(s), D = l ? y(o) : i ? h(k(o)) : N(k(o)), b = g(D, p), _ = u(o, s) + 1, U = [];
-  for (let Q = 0; Q <= b; Q++) {
-    const V = d(p, Q);
-    if (t && S(V, t))
+  const s = e[0], o = e[e.length - 1], { ISOWeek: i, fixedWeeks: a, broadcastCalendar: l } = n ?? {}, { addDays: d, differenceInCalendarDays: g, differenceInCalendarMonths: u, endOfBroadcastWeek: y, endOfISOWeek: h, endOfMonth: k, endOfWeek: N, isAfter: M, startOfBroadcastWeek: m, startOfISOWeek: w, startOfWeek: O } = r, D = l ? m(s, r) : i ? w(s) : O(s), b = l ? y(o) : i ? h(k(o)) : N(k(o)), p = g(b, D), _ = u(o, s) + 1, U = [];
+  for (let Q = 0; Q <= p; Q++) {
+    const V = d(D, Q);
+    if (t && M(V, t))
       break;
     U.push(V);
   }
@@ -2430,20 +2430,20 @@ function Dn(e, t, n, r) {
   return t && d(l, t) < 0 && (l = t), u(l);
 }
 function Sa(e, t, n, r) {
-  const { addDays: s, endOfBroadcastWeek: o, endOfISOWeek: i, endOfMonth: a, endOfWeek: l, getISOWeek: d, getWeek: g, startOfBroadcastWeek: u, startOfISOWeek: y, startOfWeek: h } = r, k = e.reduce((N, S) => {
-    const M = n.broadcastCalendar ? u(S, r) : n.ISOWeek ? y(S) : h(S), m = n.broadcastCalendar ? o(S) : n.ISOWeek ? i(a(S)) : l(a(S)), v = t.filter((_) => _ >= M && _ <= m), p = n.broadcastCalendar ? 35 : 42;
-    if (n.fixedWeeks && v.length < p) {
+  const { addDays: s, endOfBroadcastWeek: o, endOfISOWeek: i, endOfMonth: a, endOfWeek: l, getISOWeek: d, getWeek: g, startOfBroadcastWeek: u, startOfISOWeek: y, startOfWeek: h } = r, k = e.reduce((N, M) => {
+    const m = n.broadcastCalendar ? u(M, r) : n.ISOWeek ? y(M) : h(M), w = n.broadcastCalendar ? o(M) : n.ISOWeek ? i(a(M)) : l(a(M)), O = t.filter((_) => _ >= m && _ <= w), D = n.broadcastCalendar ? 35 : 42;
+    if (n.fixedWeeks && O.length < D) {
       const _ = t.filter((U) => {
-        const X = p - v.length;
-        return U > m && U <= s(m, X);
+        const X = D - O.length;
+        return U > w && U <= s(w, X);
       });
-      v.push(..._);
+      O.push(..._);
     }
-    const D = v.reduce((_, U) => {
-      const X = n.ISOWeek ? d(U) : g(U), H = _.find((V) => V.weekNumber === X), Q = new nr(U, S, r);
+    const b = O.reduce((_, U) => {
+      const X = n.ISOWeek ? d(U) : g(U), H = _.find((V) => V.weekNumber === X), Q = new nr(U, M, r);
       return H ? H.days.push(Q) : _.push(new go(X, [Q])), _;
-    }, []), b = new mo(S, D);
-    return N.push(b), N;
+    }, []), p = new mo(M, b);
+    return N.push(p), N;
   }, []);
   return n.reverseMonths ? k.reverse() : k;
 }
@@ -2451,8 +2451,8 @@ function Oa(e, t) {
   let { startMonth: n, endMonth: r } = e;
   const { startOfYear: s, startOfDay: o, startOfMonth: i, endOfMonth: a, addYears: l, endOfYear: d, newDate: g, today: u } = t, { fromYear: y, toYear: h, fromMonth: k, toMonth: N } = e;
   !n && k && (n = k), !n && y && (n = t.newDate(y, 0, 1)), !r && N && (r = N), !r && h && (r = g(h, 11, 31));
-  const S = e.captionLayout === "dropdown" || e.captionLayout === "dropdown-years";
-  return n ? n = i(n) : y ? n = g(y, 0, 1) : !n && S && (n = s(l(e.today ?? u(), -100))), r ? r = a(r) : h ? r = g(h, 11, 31) : !r && S && (r = d(e.today ?? u())), [
+  const M = e.captionLayout === "dropdown" || e.captionLayout === "dropdown-years";
+  return n ? n = i(n) : y ? n = g(y, 0, 1) : !n && M && (n = s(l(e.today ?? u(), -100))), r ? r = a(r) : h ? r = g(h, 11, 31) : !r && M && (r = d(e.today ?? u())), [
     n && o(n),
     r && o(r)
   ];
@@ -2490,14 +2490,14 @@ function Ya(e, t) {
     e.month ? i : void 0
   );
   Ye(() => {
-    const b = Dn(e, n, r, t);
-    l(b);
+    const p = Dn(e, n, r, t);
+    l(p);
   }, [e.timeZone]);
-  const d = Na(a, r, e, t), g = ka(d, e.endMonth ? o(e.endMonth) : void 0, e, t), u = Sa(d, g, e, t), y = Wa(u), h = Ma(u), k = Ta(a, n, e, t), N = Ca(a, r, e, t), { disableNavigation: S, onMonthChange: M } = e, m = (b) => y.some((_) => _.days.some((U) => U.isEqualTo(b))), v = (b) => {
-    if (S)
+  const d = Na(a, r, e, t), g = ka(d, e.endMonth ? o(e.endMonth) : void 0, e, t), u = Sa(d, g, e, t), y = Wa(u), h = Ma(u), k = Ta(a, n, e, t), N = Ca(a, r, e, t), { disableNavigation: M, onMonthChange: m } = e, w = (p) => y.some((_) => _.days.some((U) => U.isEqualTo(p))), O = (p) => {
+    if (M)
       return;
-    let _ = s(b);
-    n && _ < s(n) && (_ = s(n)), r && _ > s(r) && (_ = s(r)), l(_), M?.(_);
+    let _ = s(p);
+    n && _ < s(n) && (_ = s(n)), r && _ > s(r) && (_ = s(r)), l(_), m?.(_);
   };
   return {
     months: u,
@@ -2507,9 +2507,9 @@ function Ya(e, t) {
     navEnd: r,
     previousMonth: k,
     nextMonth: N,
-    goToMonth: v,
-    goToDay: (b) => {
-      m(b) || v(b.date);
+    goToMonth: O,
+    goToDay: (p) => {
+      w(p) || O(p.date);
     }
   };
 }
@@ -2529,16 +2529,16 @@ function Ea(e, t, n, r) {
   return s || (s = e.find((i) => wn(t(i)))), s;
 }
 function _a(e, t, n, r, s, o, i) {
-  const { ISOWeek: a, broadcastCalendar: l } = o, { addDays: d, addMonths: g, addWeeks: u, addYears: y, endOfBroadcastWeek: h, endOfISOWeek: k, endOfWeek: N, max: S, min: M, startOfBroadcastWeek: m, startOfISOWeek: v, startOfWeek: p } = i;
-  let b = {
+  const { ISOWeek: a, broadcastCalendar: l } = o, { addDays: d, addMonths: g, addWeeks: u, addYears: y, endOfBroadcastWeek: h, endOfISOWeek: k, endOfWeek: N, max: M, min: m, startOfBroadcastWeek: w, startOfISOWeek: O, startOfWeek: D } = i;
+  let p = {
     day: d,
     week: u,
     month: g,
     year: y,
-    startOfWeek: (_) => l ? m(_, i) : a ? v(_) : p(_),
+    startOfWeek: (_) => l ? w(_, i) : a ? O(_) : D(_),
     endOfWeek: (_) => l ? h(_) : a ? k(_) : N(_)
   }[e](n, t === "after" ? 1 : -1);
-  return t === "before" && r ? b = S([r, b]) : t === "after" && s && (b = M([s, b])), b;
+  return t === "before" && r ? p = M([r, p]) : t === "after" && s && (p = m([s, p])), p;
 }
 function hr(e, t, n, r, s, o, i, a = 0) {
   if (a > 365)
@@ -2555,11 +2555,11 @@ function Ia(e, t, n, r, s) {
     blur: () => {
       a(d), g(void 0);
     },
-    moveFocus: (N, S) => {
+    moveFocus: (N, M) => {
       if (!d)
         return;
-      const M = hr(N, S, d, t.navStart, t.navEnd, e, s);
-      M && (e.disableNavigation && !t.days.some((v) => v.isEqualTo(M)) || (t.goToDay(M), g(M)));
+      const m = hr(N, M, d, t.navStart, t.navEnd, e, s);
+      m && (e.disableNavigation && !t.days.some((O) => O.isEqualTo(m)) || (t.goToDay(m), g(m)));
     }
   };
 }
@@ -2568,14 +2568,14 @@ function Fa(e, t) {
   return {
     selected: a,
     select: (h, k, N) => {
-      let S = [...a ?? []];
+      let M = [...a ?? []];
       if (d(h)) {
         if (a?.length === g || r && a?.length === 1)
           return;
-        S = a?.filter((M) => !l(M, h));
+        M = a?.filter((m) => !l(m, h));
       } else
-        a?.length === u ? S = [h] : S = [...S, h];
-      return s || i(S), s?.(S, h, k, N), S;
+        a?.length === u ? M = [h] : M = [...M, h];
+      return s || i(M), s?.(M, h, k, N), M;
     },
     isSelected: d
   };
@@ -2646,8 +2646,8 @@ function Ba(e, t) {
   return {
     selected: d,
     select: (y, h, k) => {
-      const { min: N, max: S } = e, M = y ? Pa(y, d, N, S, o, t) : void 0;
-      return r && n && M?.from && M.to && $a({ from: M.from, to: M.to }, n, t) && (M.from = y, M.to = void 0), i || l(M), i?.(M, y, h, k), M;
+      const { min: N, max: M } = e, m = y ? Pa(y, d, N, M, o, t) : void 0;
+      return r && n && m?.from && m.to && $a({ from: m.from, to: m.to }, n, t) && (m.from = y, m.to = void 0), i || l(m), i?.(m, y, h, k), m;
     },
     isSelected: (y) => d && _e(d, y, !1, t)
   };
@@ -2716,11 +2716,11 @@ function He(e) {
     t.formatters,
     t.labels,
     t.classNames
-  ]), { captionLayout: l, mode: d, navLayout: g, numberOfMonths: u = 1, onDayBlur: y, onDayClick: h, onDayFocus: k, onDayKeyDown: N, onDayMouseEnter: S, onDayMouseLeave: M, onNextClick: m, onPrevClick: v, showWeekNumber: p, styles: D } = t, { formatCaption: b, formatDay: _, formatMonthDropdown: U, formatWeekNumber: X, formatWeekNumberHeader: H, formatWeekdayName: Q, formatYearDropdown: V } = r, fe = Ya(t, o), { days: re, months: he, navStart: xe, navEnd: Ue, previousMonth: ae, nextMonth: ee, goToMonth: pe } = fe, J = qo(re, t, xe, Ue, o), { isSelected: G, select: be, selected: De } = Ha(t, o) ?? {}, { blur: qe, focused: Ce, isFocusTarget: je, moveFocus: Te, setFocused: We } = Ia(t, fe, J, G ?? (() => !1), o), { labelDayButton: $e, labelGridcell: Tt, labelGrid: Wt, labelMonthDropdown: et, labelNav: pt, labelPrevious: Yt, labelNext: Et, labelWeekday: _t, labelWeekNumber: It, labelWeekNumberHeader: Ft, labelYearDropdown: Pt } = s, tt = Bt(() => oa(o, t.ISOWeek), [o, t.ISOWeek]), bt = d !== void 0 || h !== void 0, me = ye(() => {
-    ae && (pe(ae), v?.(ae));
-  }, [ae, pe, v]), nt = ye(() => {
-    ee && (pe(ee), m?.(ee));
-  }, [pe, ee, m]), Dt = ye((T, Y) => (W) => {
+  ]), { captionLayout: l, mode: d, navLayout: g, numberOfMonths: u = 1, onDayBlur: y, onDayClick: h, onDayFocus: k, onDayKeyDown: N, onDayMouseEnter: M, onDayMouseLeave: m, onNextClick: w, onPrevClick: O, showWeekNumber: D, styles: b } = t, { formatCaption: p, formatDay: _, formatMonthDropdown: U, formatWeekNumber: X, formatWeekNumberHeader: H, formatWeekdayName: Q, formatYearDropdown: V } = r, fe = Ya(t, o), { days: re, months: he, navStart: xe, navEnd: Ue, previousMonth: ae, nextMonth: ee, goToMonth: pe } = fe, J = qo(re, t, xe, Ue, o), { isSelected: G, select: be, selected: De } = Ha(t, o) ?? {}, { blur: qe, focused: Ce, isFocusTarget: je, moveFocus: Te, setFocused: We } = Ia(t, fe, J, G ?? (() => !1), o), { labelDayButton: $e, labelGridcell: Tt, labelGrid: Wt, labelMonthDropdown: et, labelNav: pt, labelPrevious: Yt, labelNext: Et, labelWeekday: _t, labelWeekNumber: It, labelWeekNumberHeader: Ft, labelYearDropdown: Pt } = s, tt = Bt(() => oa(o, t.ISOWeek), [o, t.ISOWeek]), bt = d !== void 0 || h !== void 0, me = ye(() => {
+    ae && (pe(ae), O?.(ae));
+  }, [ae, pe, O]), nt = ye(() => {
+    ee && (pe(ee), w?.(ee));
+  }, [pe, ee, w]), Dt = ye((T, Y) => (W) => {
     W.preventDefault(), W.stopPropagation(), We(T), be?.(T.date, Y, W), h?.(T.date, Y, W);
   }, [be, h, We]), wt = ye((T, Y) => (W) => {
     We(T), k?.(T.date, Y, W);
@@ -2745,15 +2745,15 @@ function He(e) {
     };
     if (I[W.key]) {
       W.preventDefault(), W.stopPropagation();
-      const [$, O] = I[W.key];
-      Te($, O);
+      const [$, S] = I[W.key];
+      Te($, S);
     }
     N?.(T.date, Y, W);
   }, [Te, N, t.dir]), Le = ye((T, Y) => (W) => {
-    S?.(T.date, Y, W);
-  }, [S]), Ut = ye((T, Y) => (W) => {
     M?.(T.date, Y, W);
-  }, [M]), $t = ye((T) => (Y) => {
+  }, [M]), Ut = ye((T, Y) => (W) => {
+    m?.(T.date, Y, W);
+  }, [m]), $t = ye((T) => (Y) => {
     const W = Number(Y.target.value), I = o.setMonth(o.startOfMonth(T), W);
     pe(I);
   }, [o, pe]), vt = ye((T) => (Y) => {
@@ -2761,15 +2761,15 @@ function He(e) {
     pe(I);
   }, [o, pe]), { className: kt, style: Ze } = Bt(() => ({
     className: [a[E.Root], t.className].filter(Boolean).join(" "),
-    style: { ...D?.[E.Root], ...t.style }
-  }), [a, t.className, t.style, D]), rt = Zo(t), c = Me(null);
+    style: { ...b?.[E.Root], ...t.style }
+  }), [a, t.className, t.style, b]), rt = Zo(t), c = Me(null);
   va(c, !!t.animate, {
     classNames: a,
     months: he,
     focused: Ce,
     dateLib: o
   });
-  const w = {
+  const x = {
     dayPickerProps: t,
     selected: De,
     select: be,
@@ -2781,26 +2781,26 @@ function He(e) {
     getModifiers: J,
     components: n,
     classNames: a,
-    styles: D,
+    styles: b,
     labels: s,
     formatters: r
   };
   return C.createElement(
     rr.Provider,
-    { value: w },
+    { value: x },
     C.createElement(
       n.Root,
       { rootRef: t.animate ? c : void 0, className: kt, style: Ze, dir: t.dir, id: t.id, lang: t.lang, nonce: t.nonce, title: t.title, role: t.role, "aria-label": t["aria-label"], "aria-labelledby": t["aria-labelledby"], ...rt },
       C.createElement(
         n.Months,
-        { className: a[E.Months], style: D?.[E.Months] },
-        !t.hideNavigation && !g && C.createElement(n.Nav, { "data-animated-nav": t.animate ? "true" : void 0, className: a[E.Nav], style: D?.[E.Nav], "aria-label": pt(), onPreviousClick: me, onNextClick: nt, previousMonth: ae, nextMonth: ee }),
+        { className: a[E.Months], style: b?.[E.Months] },
+        !t.hideNavigation && !g && C.createElement(n.Nav, { "data-animated-nav": t.animate ? "true" : void 0, className: a[E.Nav], style: b?.[E.Nav], "aria-label": pt(), onPreviousClick: me, onNextClick: nt, previousMonth: ae, nextMonth: ee }),
         he.map((T, Y) => C.createElement(
           n.Month,
           {
             "data-animated-month": t.animate ? "true" : void 0,
             className: a[E.Month],
-            style: D?.[E.Month],
+            style: b?.[E.Month],
             // biome-ignore lint/suspicious/noArrayIndexKey: breaks animation
             key: Y,
             displayIndex: Y,
@@ -2811,11 +2811,11 @@ function He(e) {
             { type: "button", className: a[E.PreviousMonthButton], tabIndex: ae ? void 0 : -1, "aria-disabled": ae ? void 0 : !0, "aria-label": Yt(ae), onClick: me, "data-animated-button": t.animate ? "true" : void 0 },
             C.createElement(n.Chevron, { disabled: ae ? void 0 : !0, className: a[E.Chevron], orientation: t.dir === "rtl" ? "right" : "left" })
           ),
-          C.createElement(n.MonthCaption, { "data-animated-caption": t.animate ? "true" : void 0, className: a[E.MonthCaption], style: D?.[E.MonthCaption], calendarMonth: T, displayIndex: Y }, l?.startsWith("dropdown") ? C.createElement(
+          C.createElement(n.MonthCaption, { "data-animated-caption": t.animate ? "true" : void 0, className: a[E.MonthCaption], style: b?.[E.MonthCaption], calendarMonth: T, displayIndex: Y }, l?.startsWith("dropdown") ? C.createElement(
             n.DropdownNav,
-            { className: a[E.Dropdowns], style: D?.[E.Dropdowns] },
+            { className: a[E.Dropdowns], style: b?.[E.Dropdowns] },
             (() => {
-              const W = l === "dropdown" || l === "dropdown-months" ? C.createElement(n.MonthsDropdown, { key: "month", className: a[E.MonthsDropdown], "aria-label": et(), classNames: a, components: n, disabled: !!t.disableNavigation, onChange: $t(T.date), options: ra(T.date, xe, Ue, r, o), style: D?.[E.Dropdown], value: o.getMonth(T.date) }) : C.createElement("span", { key: "month" }, U(T.date, o)), I = l === "dropdown" || l === "dropdown-years" ? C.createElement(n.YearsDropdown, { key: "year", className: a[E.YearsDropdown], "aria-label": Pt(o.options), classNames: a, components: n, disabled: !!t.disableNavigation, onChange: vt(T.date), options: aa(xe, Ue, r, o, !!t.reverseYears), style: D?.[E.Dropdown], value: o.getYear(T.date) }) : C.createElement("span", { key: "year" }, V(T.date, o));
+              const W = l === "dropdown" || l === "dropdown-months" ? C.createElement(n.MonthsDropdown, { key: "month", className: a[E.MonthsDropdown], "aria-label": et(), classNames: a, components: n, disabled: !!t.disableNavigation, onChange: $t(T.date), options: ra(T.date, xe, Ue, r, o), style: b?.[E.Dropdown], value: o.getMonth(T.date) }) : C.createElement("span", { key: "month" }, U(T.date, o)), I = l === "dropdown" || l === "dropdown-years" ? C.createElement(n.YearsDropdown, { key: "year", className: a[E.YearsDropdown], "aria-label": Pt(o.options), classNames: a, components: n, disabled: !!t.disableNavigation, onChange: vt(T.date), options: aa(xe, Ue, r, o, !!t.reverseYears), style: b?.[E.Dropdown], value: o.getYear(T.date) }) : C.createElement("span", { key: "year" }, V(T.date, o));
               return o.getMonthYearOrder() === "year-first" ? [I, W] : [W, I];
             })(),
             C.createElement("span", { role: "status", "aria-live": "polite", style: {
@@ -2829,43 +2829,43 @@ function He(e) {
               width: "1px",
               whiteSpace: "nowrap",
               wordWrap: "normal"
-            } }, b(T.date, o.options, o))
+            } }, p(T.date, o.options, o))
           ) : (
             // biome-ignore lint/a11y/useSemanticElements: breaking change
-            C.createElement(n.CaptionLabel, { className: a[E.CaptionLabel], role: "status", "aria-live": "polite" }, b(T.date, o.options, o))
+            C.createElement(n.CaptionLabel, { className: a[E.CaptionLabel], role: "status", "aria-live": "polite" }, p(T.date, o.options, o))
           )),
           g === "around" && !t.hideNavigation && Y === u - 1 && C.createElement(
             n.NextMonthButton,
             { type: "button", className: a[E.NextMonthButton], tabIndex: ee ? void 0 : -1, "aria-disabled": ee ? void 0 : !0, "aria-label": Et(ee), onClick: nt, "data-animated-button": t.animate ? "true" : void 0 },
             C.createElement(n.Chevron, { disabled: ee ? void 0 : !0, className: a[E.Chevron], orientation: t.dir === "rtl" ? "left" : "right" })
           ),
-          Y === u - 1 && g === "after" && !t.hideNavigation && C.createElement(n.Nav, { "data-animated-nav": t.animate ? "true" : void 0, className: a[E.Nav], style: D?.[E.Nav], "aria-label": pt(), onPreviousClick: me, onNextClick: nt, previousMonth: ae, nextMonth: ee }),
+          Y === u - 1 && g === "after" && !t.hideNavigation && C.createElement(n.Nav, { "data-animated-nav": t.animate ? "true" : void 0, className: a[E.Nav], style: b?.[E.Nav], "aria-label": pt(), onPreviousClick: me, onNextClick: nt, previousMonth: ae, nextMonth: ee }),
           C.createElement(
             n.MonthGrid,
-            { role: "grid", "aria-multiselectable": d === "multiple" || d === "range", "aria-label": Wt(T.date, o.options, o) || void 0, className: a[E.MonthGrid], style: D?.[E.MonthGrid] },
+            { role: "grid", "aria-multiselectable": d === "multiple" || d === "range", "aria-label": Wt(T.date, o.options, o) || void 0, className: a[E.MonthGrid], style: b?.[E.MonthGrid] },
             !t.hideWeekdays && C.createElement(
               n.Weekdays,
-              { "data-animated-weekdays": t.animate ? "true" : void 0, className: a[E.Weekdays], style: D?.[E.Weekdays] },
-              p && C.createElement(n.WeekNumberHeader, { "aria-label": Ft(o.options), className: a[E.WeekNumberHeader], style: D?.[E.WeekNumberHeader], scope: "col" }, H()),
-              tt.map((W) => C.createElement(n.Weekday, { "aria-label": _t(W, o.options, o), className: a[E.Weekday], key: String(W), style: D?.[E.Weekday], scope: "col" }, Q(W, o.options, o)))
+              { "data-animated-weekdays": t.animate ? "true" : void 0, className: a[E.Weekdays], style: b?.[E.Weekdays] },
+              D && C.createElement(n.WeekNumberHeader, { "aria-label": Ft(o.options), className: a[E.WeekNumberHeader], style: b?.[E.WeekNumberHeader], scope: "col" }, H()),
+              tt.map((W) => C.createElement(n.Weekday, { "aria-label": _t(W, o.options, o), className: a[E.Weekday], key: String(W), style: b?.[E.Weekday], scope: "col" }, Q(W, o.options, o)))
             ),
-            C.createElement(n.Weeks, { "data-animated-weeks": t.animate ? "true" : void 0, className: a[E.Weeks], style: D?.[E.Weeks] }, T.weeks.map((W) => C.createElement(
+            C.createElement(n.Weeks, { "data-animated-weeks": t.animate ? "true" : void 0, className: a[E.Weeks], style: b?.[E.Weeks] }, T.weeks.map((W) => C.createElement(
               n.Week,
-              { className: a[E.Week], key: W.weekNumber, style: D?.[E.Week], week: W },
-              p && // biome-ignore lint/a11y/useSemanticElements: react component
-              C.createElement(n.WeekNumber, { week: W, style: D?.[E.WeekNumber], "aria-label": It(W.weekNumber, {
+              { className: a[E.Week], key: W.weekNumber, style: b?.[E.Week], week: W },
+              D && // biome-ignore lint/a11y/useSemanticElements: react component
+              C.createElement(n.WeekNumber, { week: W, style: b?.[E.WeekNumber], "aria-label": It(W.weekNumber, {
                 locale: i
               }), className: a[E.WeekNumber], scope: "row", role: "rowheader" }, X(W.weekNumber, o)),
               W.days.map((I) => {
-                const { date: $ } = I, O = J(I);
-                if (O[Z.focused] = !O.hidden && !!Ce?.isEqualTo(I), O[we.selected] = G?.($) || O.selected, cn(De)) {
+                const { date: $ } = I, S = J(I);
+                if (S[Z.focused] = !S.hidden && !!Ce?.isEqualTo(I), S[we.selected] = G?.($) || S.selected, cn(De)) {
                   const { from: j, to: se } = De;
-                  O[we.range_start] = !!(j && se && o.isSameDay($, j)), O[we.range_end] = !!(j && se && o.isSameDay($, se)), O[we.range_middle] = _e(De, $, !0, o);
+                  S[we.range_start] = !!(j && se && o.isSameDay($, j)), S[we.range_end] = !!(j && se && o.isSameDay($, se)), S[we.range_middle] = _e(De, $, !0, o);
                 }
-                const q = sa(O, D, t.modifiersStyles), le = jo(O, a, t.modifiersClassNames), ce = !bt && !O.hidden ? Tt($, O, o.options, o) : void 0;
+                const q = sa(S, b, t.modifiersStyles), le = jo(S, a, t.modifiersClassNames), ce = !bt && !S.hidden ? Tt($, S, o.options, o) : void 0;
                 return (
                   // biome-ignore lint/a11y/useSemanticElements: react component
-                  C.createElement(n.Day, { key: `${o.format($, "yyyy-MM-dd")}_${o.format(I.displayMonth, "yyyy-MM")}`, day: I, modifiers: O, className: le.join(" "), style: q, role: "gridcell", "aria-selected": O.selected || void 0, "aria-label": ce, "data-day": o.format($, "yyyy-MM-dd"), "data-month": I.outside ? o.format($, "yyyy-MM") : void 0, "data-selected": O.selected || void 0, "data-disabled": O.disabled || void 0, "data-hidden": O.hidden || void 0, "data-outside": I.outside || void 0, "data-focused": O.focused || void 0, "data-today": O.today || void 0 }, !O.hidden && bt ? C.createElement(n.DayButton, { className: a[E.DayButton], style: D?.[E.DayButton], type: "button", day: I, modifiers: O, disabled: O.disabled || void 0, tabIndex: je(I) ? 0 : -1, "aria-label": $e($, O, o.options, o), onClick: Dt(I, O), onBlur: Be(I, O), onFocus: wt(I, O), onKeyDown: xt(I, O), onMouseEnter: Le(I, O), onMouseLeave: Ut(I, O) }, _($, o.options, o)) : !O.hidden && _(I.date, o.options, o))
+                  C.createElement(n.Day, { key: `${o.format($, "yyyy-MM-dd")}_${o.format(I.displayMonth, "yyyy-MM")}`, day: I, modifiers: S, className: le.join(" "), style: q, role: "gridcell", "aria-selected": S.selected || void 0, "aria-label": ce, "data-day": o.format($, "yyyy-MM-dd"), "data-month": I.outside ? o.format($, "yyyy-MM") : void 0, "data-selected": S.selected || void 0, "data-disabled": S.disabled || void 0, "data-hidden": S.hidden || void 0, "data-outside": I.outside || void 0, "data-focused": S.focused || void 0, "data-today": S.today || void 0 }, !S.hidden && bt ? C.createElement(n.DayButton, { className: a[E.DayButton], style: b?.[E.DayButton], type: "button", day: I, modifiers: S, disabled: S.disabled || void 0, tabIndex: je(I) ? 0 : -1, "aria-label": $e($, S, o.options, o), onClick: Dt(I, S), onBlur: Be(I, S), onFocus: wt(I, S), onKeyDown: xt(I, S), onMouseEnter: Le(I, S), onMouseLeave: Ut(I, S) }, _($, o.options, o)) : !S.hidden && _(I.date, o.options, o))
                 );
               })
             )))
@@ -2873,7 +2873,7 @@ function He(e) {
         ))
       ),
       t.footer && // biome-ignore lint/a11y/useSemanticElements: react component
-      C.createElement(n.Footer, { className: a[E.Footer], style: D?.[E.Footer], role: "status", "aria-live": "polite" }, t.footer)
+      C.createElement(n.Footer, { className: a[E.Footer], style: b?.[E.Footer], role: "status", "aria-live": "polite" }, t.footer)
     )
   );
 }
@@ -3567,251 +3567,243 @@ const Je = new Ui(), Kt = "savedDateRanges";
 function $i({
   onPresetSelect: e,
   onSavedDateSelect: t,
-  currentSelection: n,
-  themeColors: r
+  currentSelection: n
 }) {
-  const [s, o] = B([]), [i, a] = B(!1), [l, d] = B(""), [g, u] = B(!1);
+  const [r, s] = B([]), [o, i] = B(!1), [a, l] = B(""), [d, g] = B(!1);
   Ye(() => {
     (async () => {
       await Je.init();
-      const v = await Je.getData(
+      const w = await Je.getData(
         Kt
       );
-      v && o(v);
+      w && s(w);
     })();
   }, []);
-  const y = Ii(), h = (m) => {
-    const { startDateUtc: v, endDateUtc: p } = m();
-    e(v, p);
-  }, k = async () => {
-    if (l.trim() === "") {
+  const u = Ii(), y = (m) => {
+    const { startDateUtc: w, endDateUtc: O } = m();
+    e(w, O);
+  }, h = async () => {
+    if (a.trim() === "") {
       alert("Please enter a label for the saved date range");
       return;
     }
     const m = {
       id: `saved-${Date.now()}`,
-      label: l.trim(),
+      label: a.trim(),
       selection: n,
       createdAt: Date.now()
-    }, v = [...s, m];
-    o(v), await Je.saveData(Kt, v), d(""), a(!1);
-  }, N = async (m) => {
-    const v = s.filter((p) => p.id !== m);
-    o(v), await Je.saveData(Kt, v);
-  }, S = (m) => {
+    }, w = [...r, m];
+    s(w), await Je.saveData(Kt, w), l(""), i(!1);
+  }, k = async (m) => {
+    const w = r.filter((O) => O.id !== m);
+    s(w), await Je.saveData(Kt, w);
+  }, N = (m) => {
     t ? t(m.selection) : e(m.selection.startDateUtc, m.selection.endDateUtc);
-  }, M = (m, v) => {
-    const p = (D) => (/* @__PURE__ */ new Date(D + "T00:00:00")).toLocaleDateString("en-US", {
+  }, M = (m, w) => {
+    const O = (D) => (/* @__PURE__ */ new Date(D + "T00:00:00")).toLocaleDateString("en-US", {
       month: "short",
       day: "numeric",
       year: "numeric"
     });
-    return m === v ? p(m) : `${p(m)} - ${p(v)}`;
+    return m === w ? O(m) : `${O(m)} - ${O(w)}`;
   };
-  return /* @__PURE__ */ x(
-    "div",
-    {
-      className: "w-72 bg-white border-r border-gray-200 py-4 flex flex-col ",
-      style: r,
-      children: [
-        /* @__PURE__ */ x("div", { className: "mb-3 px-4 flex-shrink-0", children: [
-          /* @__PURE__ */ f("div", { className: "flex items-center justify-between mb-2", children: /* @__PURE__ */ f("h3", { className: "text-xs font-semibold text-gray-600 uppercase", children: "Quick Select" }) }),
-          /* @__PURE__ */ f("div", { className: "", children: Object.values(y).map((m) => {
-            const { startDateUtc: v, endDateUtc: p } = m.getValue();
-            return /* @__PURE__ */ x(
+  return /* @__PURE__ */ v("div", { className: "w-72 bg-white border-r border-gray-200 py-4 flex flex-col ", children: [
+    /* @__PURE__ */ v("div", { className: "mb-3 px-4 flex-shrink-0", children: [
+      /* @__PURE__ */ f("div", { className: "flex items-center justify-between mb-2", children: /* @__PURE__ */ f("h3", { className: "text-xs font-semibold text-gray-600 uppercase", children: "Quick Select" }) }),
+      /* @__PURE__ */ f("div", { className: "", children: Object.values(u).map((m) => {
+        const { startDateUtc: w, endDateUtc: O } = m.getValue();
+        return /* @__PURE__ */ v(
+          "button",
+          {
+            onClick: () => y(m.getValue),
+            className: "w-full text-left px-3 py-2 hover:bg-white hover:shadow-sm rounded-md transition-all",
+            children: [
+              /* @__PURE__ */ f("div", { className: "text-sm font-semibold text-gray-900", children: m.label }),
+              /* @__PURE__ */ f("div", { className: "text-xs text-gray-600 leading-relaxed mt-0.5", children: M(w, O) })
+            ]
+          },
+          m.label
+        );
+      }) })
+    ] }),
+    /* @__PURE__ */ v("div", { className: "flex flex-col flex-1 min-h-0 border-t border-gray-200 px-4", children: [
+      /* @__PURE__ */ f("div", { className: "flex items-center justify-between mb-2 flex-shrink-0 mt-3", children: /* @__PURE__ */ v("div", { className: "flex items-center gap-1", children: [
+        /* @__PURE__ */ f("h3", { className: "text-xs font-semibold text-gray-600 uppercase", children: "Saved Dates" }),
+        /* @__PURE__ */ f(
+          "button",
+          {
+            onClick: () => g(!d),
+            className: "text-gray-400 hover:text-gray-600",
+            children: /* @__PURE__ */ f(ti, { className: "w-3 h-3" })
+          }
+        )
+      ] }) }),
+      d && /* @__PURE__ */ f("div", { className: "mb-3 p-2 bg-blue-50 border border-blue-200 rounded text-xs text-blue-700 flex-shrink-0", children: "Save your frequently used date ranges for quick access later." }),
+      r.length === 0 ? /* @__PURE__ */ f("p", { className: "text-xs text-gray-500 mb-3 italic flex-shrink-0", children: "No saved dates yet" }) : /* @__PURE__ */ f("div", { className: "space-y-2 mb-3 overflow-y-auto flex-1 min-h-0", children: r.map((m) => /* @__PURE__ */ f(
+        "div",
+        {
+          className: "group bg-white rounded-md hover:shadow-sm transition-all border border-gray-200",
+          children: /* @__PURE__ */ v("div", { className: "flex items-start justify-between px-3 py-2", children: [
+            /* @__PURE__ */ v(
               "button",
               {
-                onClick: () => h(m.getValue),
-                className: "w-full text-left px-3 py-2 hover:bg-white hover:shadow-sm rounded-md transition-all",
+                onClick: () => N(m),
+                className: "flex-1 text-left",
                 children: [
-                  /* @__PURE__ */ f("div", { className: "text-sm font-semibold text-gray-900", children: m.label }),
-                  /* @__PURE__ */ f("div", { className: "text-xs text-gray-600 leading-relaxed mt-0.5", children: M(v, p) })
+                  /* @__PURE__ */ f("div", { className: "text-sm font-semibold text-gray-900 mb-1", children: m.label }),
+                  /* @__PURE__ */ f("div", { className: "text-xs text-gray-600 leading-relaxed", children: M(
+                    m.selection.startDateUtc,
+                    m.selection.endDateUtc
+                  ) }),
+                  (m.selection.excludedWeekdays?.length > 0 || m.selection.excludedSpecificDates && m.selection.excludedSpecificDates.length > 0 || m.selection.excludedSavedDates && m.selection.excludedSavedDates.length > 0 || m.selection.excludedDateRanges && m.selection.excludedDateRanges.length > 0) && /* @__PURE__ */ v("div", { className: "text-xs text-gray-500 mt-1 space-y-0.5", children: [
+                    m.selection.excludedWeekdays?.length > 0 && /* @__PURE__ */ v("div", { children: [
+                      "Days:",
+                      " ",
+                      m.selection.excludedWeekdays.map(
+                        (w) => [
+                          "Sun",
+                          "Mon",
+                          "Tue",
+                          "Wed",
+                          "Thu",
+                          "Fri",
+                          "Sat"
+                        ][w]
+                      ).join(", ")
+                    ] }),
+                    m.selection.excludedSpecificDates && m.selection.excludedSpecificDates.length > 0 && /* @__PURE__ */ v("div", { children: [
+                      "Specific Dates:",
+                      " ",
+                      m.selection.excludedSpecificDates.length
+                    ] }),
+                    m.selection.excludedSavedDates && m.selection.excludedSavedDates.length > 0 && /* @__PURE__ */ v("div", { children: [
+                      "Saved: ",
+                      m.selection.excludedSavedDates.length
+                    ] }),
+                    m.selection.excludedDateRanges && m.selection.excludedDateRanges.length > 0 && /* @__PURE__ */ v("div", { children: [
+                      "Ranges:",
+                      " ",
+                      m.selection.excludedDateRanges.length
+                    ] })
+                  ] })
                 ]
-              },
-              m.label
-            );
-          }) })
-        ] }),
-        /* @__PURE__ */ x("div", { className: "flex flex-col flex-1 min-h-0 border-t border-gray-200 px-4", children: [
-          /* @__PURE__ */ f("div", { className: "flex items-center justify-between mb-2 flex-shrink-0 mt-3", children: /* @__PURE__ */ x("div", { className: "flex items-center gap-1", children: [
-            /* @__PURE__ */ f("h3", { className: "text-xs font-semibold text-gray-600 uppercase", children: "Saved Dates" }),
+              }
+            ),
             /* @__PURE__ */ f(
               "button",
               {
-                onClick: () => u(!g),
-                className: "text-gray-400 hover:text-gray-600",
-                children: /* @__PURE__ */ f(ti, { className: "w-3 h-3" })
+                onClick: () => k(m.id),
+                className: "opacity-0 group-hover:opacity-100 text-red-500 hover:text-red-700 transition-opacity ml-2",
+                children: /* @__PURE__ */ f(oi, { className: "w-3.5 h-3.5" })
               }
             )
-          ] }) }),
-          g && /* @__PURE__ */ f("div", { className: "mb-3 p-2 bg-blue-50 border border-blue-200 rounded text-xs text-blue-700 flex-shrink-0", children: "Save your frequently used date ranges for quick access later." }),
-          s.length === 0 ? /* @__PURE__ */ f("p", { className: "text-xs text-gray-500 mb-3 italic flex-shrink-0", children: "No saved dates yet" }) : /* @__PURE__ */ f("div", { className: "space-y-2 mb-3 overflow-y-auto flex-1 min-h-0", children: s.map((m) => /* @__PURE__ */ f(
-            "div",
+          ] })
+        },
+        m.id
+      )) }),
+      /* @__PURE__ */ v(
+        "button",
+        {
+          onClick: () => i(!0),
+          className: "w-full flex-shrink-0 px-3 py-2 text-[#003DB8] opacity-50 hover:opacity-100 text-sm font-medium rounded-mdtransition-colors flex items-center justify-center gap-2 mt-auto",
+          children: [
+            /* @__PURE__ */ f(ri, { className: "w-4 h-4" }),
+            "Save selected date"
+          ]
+        }
+      )
+    ] }),
+    o && /* @__PURE__ */ v(ct, { children: [
+      /* @__PURE__ */ f(
+        "div",
+        {
+          className: "fixed inset-0 bg-black/30 z-50",
+          onClick: () => i(!1)
+        }
+      ),
+      /* @__PURE__ */ f("div", { className: "fixed inset-0 flex items-center justify-center z-50 pointer-events-none", children: /* @__PURE__ */ v("div", { className: "bg-white rounded-lg shadow-xl p-5 w-80 border border-gray-200 pointer-events-auto", children: [
+        /* @__PURE__ */ f("h3", { className: "text-base font-semibold mb-3 text-gray-800", children: "Save Date Range" }),
+        /* @__PURE__ */ v("div", { className: "mb-2", children: [
+          /* @__PURE__ */ f("label", { className: "block text-xs font-medium text-gray-600 mb-1", children: "Label" }),
+          /* @__PURE__ */ f(
+            "input",
             {
-              className: "group bg-white rounded-md hover:shadow-sm transition-all border border-gray-200",
-              children: /* @__PURE__ */ x("div", { className: "flex items-start justify-between px-3 py-2", children: [
-                /* @__PURE__ */ x(
-                  "button",
-                  {
-                    onClick: () => S(m),
-                    className: "flex-1 text-left",
-                    children: [
-                      /* @__PURE__ */ f("div", { className: "text-sm font-semibold text-gray-900 mb-1", children: m.label }),
-                      /* @__PURE__ */ f("div", { className: "text-xs text-gray-600 leading-relaxed", children: M(
-                        m.selection.startDateUtc,
-                        m.selection.endDateUtc
-                      ) }),
-                      (m.selection.excludedWeekdays?.length > 0 || m.selection.excludedSpecificDates && m.selection.excludedSpecificDates.length > 0 || m.selection.excludedSavedDates && m.selection.excludedSavedDates.length > 0 || m.selection.excludedDateRanges && m.selection.excludedDateRanges.length > 0) && /* @__PURE__ */ x("div", { className: "text-xs text-gray-500 mt-1 space-y-0.5", children: [
-                        m.selection.excludedWeekdays?.length > 0 && /* @__PURE__ */ x("div", { children: [
-                          "Days:",
-                          " ",
-                          m.selection.excludedWeekdays.map(
-                            (v) => [
-                              "Sun",
-                              "Mon",
-                              "Tue",
-                              "Wed",
-                              "Thu",
-                              "Fri",
-                              "Sat"
-                            ][v]
-                          ).join(", ")
-                        ] }),
-                        m.selection.excludedSpecificDates && m.selection.excludedSpecificDates.length > 0 && /* @__PURE__ */ x("div", { children: [
-                          "Specific Dates:",
-                          " ",
-                          m.selection.excludedSpecificDates.length
-                        ] }),
-                        m.selection.excludedSavedDates && m.selection.excludedSavedDates.length > 0 && /* @__PURE__ */ x("div", { children: [
-                          "Saved: ",
-                          m.selection.excludedSavedDates.length
-                        ] }),
-                        m.selection.excludedDateRanges && m.selection.excludedDateRanges.length > 0 && /* @__PURE__ */ x("div", { children: [
-                          "Ranges:",
-                          " ",
-                          m.selection.excludedDateRanges.length
-                        ] })
-                      ] })
-                    ]
-                  }
-                ),
-                /* @__PURE__ */ f(
-                  "button",
-                  {
-                    onClick: () => N(m.id),
-                    className: "opacity-0 group-hover:opacity-100 text-red-500 hover:text-red-700 transition-opacity ml-2",
-                    children: /* @__PURE__ */ f(oi, { className: "w-3.5 h-3.5" })
-                  }
-                )
-              ] })
-            },
-            m.id
-          )) }),
-          /* @__PURE__ */ x(
-            "button",
-            {
-              onClick: () => a(!0),
-              className: "w-full flex-shrink-0 px-3 py-2 text-[#003DB8] opacity-50 hover:opacity-100 text-sm font-medium rounded-mdtransition-colors flex items-center justify-center gap-2 mt-auto",
-              children: [
-                /* @__PURE__ */ f(ri, { className: "w-4 h-4" }),
-                "Save selected date"
-              ]
+              type: "text",
+              value: a,
+              onChange: (m) => l(m.target.value),
+              placeholder: "e.g., Q1 2025, Holiday Period",
+              className: "w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500",
+              autoFocus: !0,
+              onKeyDown: (m) => {
+                m.key === "Enter" && h();
+              }
             }
           )
         ] }),
-        i && /* @__PURE__ */ x(ct, { children: [
+        /* @__PURE__ */ v("div", { className: "mb-4 p-2 bg-gray-50 rounded text-xs text-gray-600 space-y-1", children: [
+          /* @__PURE__ */ v("div", { children: [
+            /* @__PURE__ */ f("strong", { children: "Range:" }),
+            " ",
+            M(
+              n.startDateUtc,
+              n.endDateUtc
+            )
+          ] }),
+          /* @__PURE__ */ v("div", { children: [
+            /* @__PURE__ */ f("strong", { children: "Duration:" }),
+            " ",
+            n.duration,
+            " ",
+            n.unit,
+            "(s)"
+          ] }),
+          n.excludedWeekdays && n.excludedWeekdays.length > 0 && /* @__PURE__ */ v("div", { children: [
+            /* @__PURE__ */ f("strong", { children: "Excluded Days:" }),
+            " ",
+            n.excludedWeekdays.map(
+              (m) => ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][m]
+            ).join(", ")
+          ] }),
+          n.excludedSpecificDates && n.excludedSpecificDates.length > 0 && /* @__PURE__ */ v("div", { children: [
+            /* @__PURE__ */ f("strong", { children: "Excluded Specific Dates:" }),
+            " ",
+            n.excludedSpecificDates.length,
+            " date(s)"
+          ] }),
+          n.excludedSavedDates && n.excludedSavedDates.length > 0 && /* @__PURE__ */ v("div", { children: [
+            /* @__PURE__ */ f("strong", { children: "Excluded Saved Dates:" }),
+            " ",
+            n.excludedSavedDates.length,
+            " saved date(s)"
+          ] }),
+          n.excludedDateRanges && n.excludedDateRanges.length > 0 && /* @__PURE__ */ v("div", { children: [
+            /* @__PURE__ */ f("strong", { children: "Excluded Date Ranges:" }),
+            " ",
+            n.excludedDateRanges.length,
+            " range(s)"
+          ] })
+        ] }),
+        /* @__PURE__ */ v("div", { className: "flex justify-end gap-2", children: [
           /* @__PURE__ */ f(
-            "div",
+            "button",
             {
-              className: "fixed inset-0 bg-black/30 z-50",
-              onClick: () => a(!1)
+              onClick: () => i(!1),
+              className: "px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 rounded-md transition-colors",
+              children: "Cancel"
             }
           ),
-          /* @__PURE__ */ f("div", { className: "fixed inset-0 flex items-center justify-center z-50 pointer-events-none", children: /* @__PURE__ */ x("div", { className: "bg-white rounded-lg shadow-xl p-5 w-80 border border-gray-200 pointer-events-auto", children: [
-            /* @__PURE__ */ f("h3", { className: "text-base font-semibold mb-3 text-gray-800", children: "Save Date Range" }),
-            /* @__PURE__ */ x("div", { className: "mb-2", children: [
-              /* @__PURE__ */ f("label", { className: "block text-xs font-medium text-gray-600 mb-1", children: "Label" }),
-              /* @__PURE__ */ f(
-                "input",
-                {
-                  type: "text",
-                  value: l,
-                  onChange: (m) => d(m.target.value),
-                  placeholder: "e.g., Q1 2025, Holiday Period",
-                  className: "w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500",
-                  autoFocus: !0,
-                  onKeyDown: (m) => {
-                    m.key === "Enter" && k();
-                  }
-                }
-              )
-            ] }),
-            /* @__PURE__ */ x("div", { className: "mb-4 p-2 bg-gray-50 rounded text-xs text-gray-600 space-y-1", children: [
-              /* @__PURE__ */ x("div", { children: [
-                /* @__PURE__ */ f("strong", { children: "Range:" }),
-                " ",
-                M(
-                  n.startDateUtc,
-                  n.endDateUtc
-                )
-              ] }),
-              /* @__PURE__ */ x("div", { children: [
-                /* @__PURE__ */ f("strong", { children: "Duration:" }),
-                " ",
-                n.duration,
-                " ",
-                n.unit,
-                "(s)"
-              ] }),
-              n.excludedWeekdays && n.excludedWeekdays.length > 0 && /* @__PURE__ */ x("div", { children: [
-                /* @__PURE__ */ f("strong", { children: "Excluded Days:" }),
-                " ",
-                n.excludedWeekdays.map(
-                  (m) => ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][m]
-                ).join(", ")
-              ] }),
-              n.excludedSpecificDates && n.excludedSpecificDates.length > 0 && /* @__PURE__ */ x("div", { children: [
-                /* @__PURE__ */ f("strong", { children: "Excluded Specific Dates:" }),
-                " ",
-                n.excludedSpecificDates.length,
-                " date(s)"
-              ] }),
-              n.excludedSavedDates && n.excludedSavedDates.length > 0 && /* @__PURE__ */ x("div", { children: [
-                /* @__PURE__ */ f("strong", { children: "Excluded Saved Dates:" }),
-                " ",
-                n.excludedSavedDates.length,
-                " saved date(s)"
-              ] }),
-              n.excludedDateRanges && n.excludedDateRanges.length > 0 && /* @__PURE__ */ x("div", { children: [
-                /* @__PURE__ */ f("strong", { children: "Excluded Date Ranges:" }),
-                " ",
-                n.excludedDateRanges.length,
-                " range(s)"
-              ] })
-            ] }),
-            /* @__PURE__ */ x("div", { className: "flex justify-end gap-2", children: [
-              /* @__PURE__ */ f(
-                "button",
-                {
-                  onClick: () => a(!1),
-                  className: "px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 rounded-md transition-colors",
-                  children: "Cancel"
-                }
-              ),
-              /* @__PURE__ */ f(
-                "button",
-                {
-                  onClick: k,
-                  className: "px-4 py-2 text-sm font-medium bg-blue-600 text-white hover:bg-blue-700 rounded-md transition-colors",
-                  children: "Save"
-                }
-              )
-            ] })
-          ] }) })
+          /* @__PURE__ */ f(
+            "button",
+            {
+              onClick: h,
+              className: "px-4 py-2 text-sm font-medium bg-blue-600 text-white hover:bg-blue-700 rounded-md transition-colors",
+              children: "Save"
+            }
+          )
         ] })
-      ]
-    }
-  );
+      ] }) })
+    ] })
+  ] });
 }
 const Bi = [
   "Jan",
@@ -3846,8 +3838,8 @@ function Ai({
     t({ from: h, to: h });
   }, i = (u, y) => {
     if (!e.from || !e.to) return !1;
-    const h = Ge(e.from), k = ne(e.from), N = Ge(e.to), S = ne(e.to), M = u * 12 + y, m = k * 12 + h, v = S * 12 + N;
-    return M >= m && M <= v;
+    const h = Ge(e.from), k = ne(e.from), N = Ge(e.to), M = ne(e.to), m = u * 12 + y, w = k * 12 + h, O = M * 12 + N;
+    return m >= w && m <= O;
   }, a = (u, y) => {
     if (!e.from) return !1;
     const h = Ge(e.from), k = ne(e.from);
@@ -3856,18 +3848,18 @@ function Ai({
     if (!e.to) return !1;
     const h = Ge(e.to), k = ne(e.to);
     return u === k && y === h;
-  }, d = (u, y) => !1, g = (u) => /* @__PURE__ */ x("div", { className: "flex-1", children: [
+  }, d = (u, y) => !1, g = (u) => /* @__PURE__ */ v("div", { className: "flex-1", children: [
     /* @__PURE__ */ f("div", { className: "text-center font-semibold text-lg mb-4", children: u }),
     /* @__PURE__ */ f("div", { className: "grid grid-cols-4 gap-2", children: Bi.map((y, h) => {
-      const k = i(u, h), N = a(u, h), S = l(u, h), M = N || S, m = d();
+      const k = i(u, h), N = a(u, h), M = l(u, h), m = N || M, w = d();
       return /* @__PURE__ */ f(
         "button",
         {
-          onClick: () => !m && o(u, h),
-          disabled: m,
+          onClick: () => !w && o(u, h),
+          disabled: w,
           className: `
                   px-3 py-2 text-sm font-medium rounded-md transition-colors
-                  ${m ? "opacity-30 bg-gray-100 text-gray-400 cursor-not-allowed" : M ? "bg-[#003DB8] text-white" : k ? "bg-[#CEDBF5] text-[#1F1F1F]" : "bg-gray-50 text-gray-700 hover:bg-gray-100"}
+                  ${w ? "opacity-30 bg-gray-100 text-gray-400 cursor-not-allowed" : m ? "bg-[#003DB8] text-white" : k ? "bg-[#CEDBF5] text-[#1F1F1F]" : "bg-gray-50 text-gray-700 hover:bg-gray-100"}
                 `,
           children: y
         },
@@ -3875,8 +3867,8 @@ function Ai({
       );
     }) })
   ] }, u);
-  return /* @__PURE__ */ x("div", { className: "w-full", children: [
-    /* @__PURE__ */ x("div", { className: "flex items-center justify-between mb-4", children: [
+  return /* @__PURE__ */ v("div", { className: "w-full", children: [
+    /* @__PURE__ */ v("div", { className: "flex items-center justify-between mb-4", children: [
       /* @__PURE__ */ f(
         "button",
         {
@@ -3885,7 +3877,7 @@ function Ai({
           children: /* @__PURE__ */ f(gr, { className: "w-5 h-5" })
         }
       ),
-      /* @__PURE__ */ x("div", { className: "text-lg font-semibold", children: [
+      /* @__PURE__ */ v("div", { className: "text-lg font-semibold", children: [
         r,
         " - ",
         r + 1
@@ -3899,7 +3891,7 @@ function Ai({
         }
       )
     ] }),
-    /* @__PURE__ */ x("div", { className: "flex gap-8", children: [
+    /* @__PURE__ */ v("div", { className: "flex gap-8", children: [
       g(r),
       g(r + 1)
     ] })
@@ -3927,8 +3919,8 @@ function Ri({
     t({ from: h, to: h });
   }, i = (u, y) => {
     if (!e.from || !e.to) return !1;
-    const h = Nt(e.from) - 1, k = ne(e.from), N = Nt(e.to) - 1, S = ne(e.to), M = u * 4 + y, m = k * 4 + h, v = S * 4 + N;
-    return M >= m && M <= v;
+    const h = Nt(e.from) - 1, k = ne(e.from), N = Nt(e.to) - 1, M = ne(e.to), m = u * 4 + y, w = k * 4 + h, O = M * 4 + N;
+    return m >= w && m <= O;
   }, a = (u, y) => {
     if (!e.from) return !1;
     const h = Nt(e.from) - 1, k = ne(e.from);
@@ -3937,18 +3929,18 @@ function Ri({
     if (!e.to) return !1;
     const h = Nt(e.to) - 1, k = ne(e.to);
     return u === k && y === h;
-  }, d = (u, y) => !1, g = (u) => /* @__PURE__ */ x("div", { className: "flex-1", children: [
+  }, d = (u, y) => !1, g = (u) => /* @__PURE__ */ v("div", { className: "flex-1", children: [
     /* @__PURE__ */ f("div", { className: "text-center font-semibold text-lg mb-4", children: u }),
     /* @__PURE__ */ f("div", { className: "grid grid-cols-2 gap-3", children: Hi.map((y, h) => {
-      const k = i(u, h), N = a(u, h), S = l(u, h), M = N || S, m = d();
+      const k = i(u, h), N = a(u, h), M = l(u, h), m = N || M, w = d();
       return /* @__PURE__ */ f(
         "button",
         {
-          onClick: () => !m && o(u, h),
-          disabled: m,
+          onClick: () => !w && o(u, h),
+          disabled: w,
           className: `
                   px-4 py-6 text-base font-medium rounded-md transition-colors
-                  ${m ? "opacity-30 bg-gray-100 text-gray-400 cursor-not-allowed" : M ? "bg-blue-600 text-white" : k ? "bg-blue-100 text-blue-900" : "bg-gray-50 text-gray-700 hover:bg-gray-100"}
+                  ${w ? "opacity-30 bg-gray-100 text-gray-400 cursor-not-allowed" : m ? "bg-blue-600 text-white" : k ? "bg-blue-100 text-blue-900" : "bg-gray-50 text-gray-700 hover:bg-gray-100"}
                 `,
           children: y
         },
@@ -3956,8 +3948,8 @@ function Ri({
       );
     }) })
   ] }, u);
-  return /* @__PURE__ */ x("div", { className: "w-full", children: [
-    /* @__PURE__ */ x("div", { className: "flex items-center justify-between mb-4", children: [
+  return /* @__PURE__ */ v("div", { className: "w-full", children: [
+    /* @__PURE__ */ v("div", { className: "flex items-center justify-between mb-4", children: [
       /* @__PURE__ */ f(
         "button",
         {
@@ -3966,7 +3958,7 @@ function Ri({
           children: /* @__PURE__ */ f(gr, { className: "w-5 h-5" })
         }
       ),
-      /* @__PURE__ */ x("div", { className: "text-lg font-semibold", children: [
+      /* @__PURE__ */ v("div", { className: "text-lg font-semibold", children: [
         r,
         " - ",
         r + 1
@@ -3980,7 +3972,7 @@ function Ri({
         }
       )
     ] }),
-    /* @__PURE__ */ x("div", { className: "flex gap-8", children: [
+    /* @__PURE__ */ v("div", { className: "flex gap-8", children: [
       g(r),
       g(r + 1)
     ] })
@@ -3994,13 +3986,13 @@ function In({
 }) {
   const s = Me(null), [o, i] = B(""), a = Me(0), l = (h) => {
     if (!h || h.length !== 10) return "";
-    const [k, N, S] = h.split("-");
-    return `${S}/${N}/${k}`;
+    const [k, N, M] = h.split("-");
+    return `${M}/${N}/${k}`;
   }, d = (h) => {
     const k = h.replace(/\D/g, "");
     if (k.length !== 8) return null;
-    const N = k.substring(0, 2), S = k.substring(2, 4), M = k.substring(4, 8), m = parseInt(S, 10), v = parseInt(N, 10), p = parseInt(M, 10);
-    return m < 1 || m > 12 || v < 1 || v > 31 || p < 1900 || p > 2100 ? null : `${M}-${S}-${N}`;
+    const N = k.substring(0, 2), M = k.substring(2, 4), m = k.substring(4, 8), w = parseInt(M, 10), O = parseInt(N, 10), D = parseInt(m, 10);
+    return w < 1 || w > 12 || O < 1 || O > 31 || D < 1900 || D > 2100 ? null : `${m}-${M}-${N}`;
   };
   return Ye(() => {
     i(l(e));
@@ -4011,65 +4003,65 @@ function In({
       type: "text",
       value: o,
       onChange: (h) => {
-        const k = h.target.value, N = h.target.selectionStart || 0, S = o;
-        if (k.length < S.length) {
-          if (k.replace(/\D/g, "").length < S.replace(/\D/g, "").length) {
-            const p = k.replace(/\D/g, "");
-            let D = "";
-            if (p.length > 0 && (D = p.substring(0, 2), p.length > 2 && (D += "/" + p.substring(2, 4)), p.length > 4 && (D += "/" + p.substring(4, 8))), i(D), setTimeout(() => {
+        const k = h.target.value, N = h.target.selectionStart || 0, M = o;
+        if (k.length < M.length) {
+          if (k.replace(/\D/g, "").length < M.replace(/\D/g, "").length) {
+            const D = k.replace(/\D/g, "");
+            let b = "";
+            if (D.length > 0 && (b = D.substring(0, 2), D.length > 2 && (b += "/" + D.substring(2, 4)), D.length > 4 && (b += "/" + D.substring(4, 8))), i(b), setTimeout(() => {
               if (s.current) {
-                const b = Math.min(N, D.length);
-                s.current.setSelectionRange(b, b);
+                const p = Math.min(N, b.length);
+                s.current.setSelectionRange(p, p);
               }
-            }, 0), p.length === 8) {
-              const b = d(D);
-              b && t(b);
+            }, 0), D.length === 8) {
+              const p = d(b);
+              p && t(p);
             }
           } else
-            i(S), setTimeout(() => {
+            i(M), setTimeout(() => {
               s.current && s.current.setSelectionRange(N, N);
             }, 0);
           return;
         }
-        const M = k.replace(/\D/g, "");
-        let m = "";
-        if (M.length > 0) {
-          let p = M.substring(0, 2);
-          if (p.length === 2) {
-            const D = parseInt(p, 10);
-            D > 31 ? p = "31" : D < 1 && p.length === 2 && (p = "01");
+        const m = k.replace(/\D/g, "");
+        let w = "";
+        if (m.length > 0) {
+          let D = m.substring(0, 2);
+          if (D.length === 2) {
+            const b = parseInt(D, 10);
+            b > 31 ? D = "31" : b < 1 && D.length === 2 && (D = "01");
           }
-          if (m = p, M.length > 2) {
-            let D = M.substring(2, 4);
-            if (D.length === 2) {
-              const b = parseInt(D, 10);
-              b > 12 ? D = "12" : b < 1 && D.length === 2 && (D = "01");
+          if (w = D, m.length > 2) {
+            let b = m.substring(2, 4);
+            if (b.length === 2) {
+              const p = parseInt(b, 10);
+              p > 12 ? b = "12" : p < 1 && b.length === 2 && (b = "01");
             }
-            m += "/" + D;
+            w += "/" + b;
           }
-          if (M.length > 4) {
-            let D = M.substring(4, 8);
-            if (D.length === 4) {
-              const b = parseInt(D, 10);
-              b > 2100 ? D = "2100" : b < 1900 && (D = "1900");
+          if (m.length > 4) {
+            let b = m.substring(4, 8);
+            if (b.length === 4) {
+              const p = parseInt(b, 10);
+              p > 2100 ? b = "2100" : p < 1900 && (b = "1900");
             }
-            m += "/" + D;
+            w += "/" + b;
           }
         }
-        i(m);
-        let v = N;
-        if (m.length > S.length) {
-          const p = m.length - S.length;
-          v = N + p;
+        i(w);
+        let O = N;
+        if (w.length > M.length) {
+          const D = w.length - M.length;
+          O = N + D;
         }
-        if (m[v] === "/" && v++, setTimeout(() => {
+        if (w[O] === "/" && O++, setTimeout(() => {
           if (s.current) {
-            const p = Math.min(v, m.length);
-            s.current.setSelectionRange(p, p);
+            const D = Math.min(O, w.length);
+            s.current.setSelectionRange(D, D);
           }
-        }, 0), M.length === 8) {
-          const p = d(m);
-          p && t(p);
+        }, 0), m.length === 8) {
+          const D = d(w);
+          D && t(D);
         }
       },
       onBlur: () => {
@@ -4084,10 +4076,10 @@ function In({
         const N = k.selectionStart || 0;
         if (a.current = N, h.key === "ArrowLeft" || h.key === "ArrowRight") {
           setTimeout(() => {
-            const S = k.selectionStart || 0;
-            if (o[S] === "/") {
-              const M = h.key === "ArrowLeft" ? -1 : 1;
-              k.setSelectionRange(S + M, S + M);
+            const M = k.selectionStart || 0;
+            if (o[M] === "/") {
+              const m = h.key === "ArrowLeft" ? -1 : 1;
+              k.setSelectionRange(M + m, M + m);
             }
           }, 0);
           return;
@@ -4099,34 +4091,34 @@ function In({
           }
           if (o[N] === "/") {
             h.preventDefault();
-            const S = o.substring(0, N) + h.key + o.substring(N + 1);
-            i(S), setTimeout(() => {
+            const M = o.substring(0, N) + h.key + o.substring(N + 1);
+            i(M), setTimeout(() => {
               if (s.current) {
-                const M = N + 1;
-                s.current.setSelectionRange(M, M);
+                const m = N + 1;
+                s.current.setSelectionRange(m, m);
               }
             }, 0);
             return;
           }
           if (N >= 3 && N <= 5) {
-            const M = o.replace(/\D/g, "").substring(2, 4), m = M.length === 1 ? M : "", v = h.key;
-            if (M.length === 1 && N === 5) {
-              const p = parseInt(m + v, 10);
-              if ((p === 0 || p > 12) && (h.preventDefault(), p > 12)) {
-                const D = o.substring(0, 3) + m + "2" + o.substring(5);
-                i(D), setTimeout(() => {
+            const m = o.replace(/\D/g, "").substring(2, 4), w = m.length === 1 ? m : "", O = h.key;
+            if (m.length === 1 && N === 5) {
+              const D = parseInt(w + O, 10);
+              if ((D === 0 || D > 12) && (h.preventDefault(), D > 12)) {
+                const b = o.substring(0, 3) + w + "2" + o.substring(5);
+                i(b), setTimeout(() => {
                   s.current && s.current.setSelectionRange(6, 6);
                 }, 0);
               }
             }
           }
           if (N >= 0 && N <= 2) {
-            const M = o.replace(/\D/g, "").substring(0, 2), m = M.length === 1 ? M : "", v = h.key;
-            if (M.length === 1 && N === 1) {
-              const p = parseInt(m + v, 10);
-              if ((p === 0 || p > 31) && (h.preventDefault(), p > 31)) {
-                const D = m + "1" + o.substring(2);
-                i(D), setTimeout(() => {
+            const m = o.replace(/\D/g, "").substring(0, 2), w = m.length === 1 ? m : "", O = h.key;
+            if (m.length === 1 && N === 1) {
+              const D = parseInt(w + O, 10);
+              if ((D === 0 || D > 31) && (h.preventDefault(), D > 31)) {
+                const b = w + "1" + o.substring(2);
+                i(b), setTimeout(() => {
                   s.current && s.current.setSelectionRange(2, 2);
                 }, 0);
               }
@@ -4176,14 +4168,14 @@ function Ki({
     e?.endDateUtc || s
   ), [u, y] = B(e?.duration || 1), [h, k] = B(
     e?.excludedWeekdays || []
-  ), [N, S] = B(
+  ), [N, M] = B(
     []
-  ), M = Me(null), [m, v] = B(0), [p, D] = B(!1), [b, _] = B([]), [U, X] = B(!1), [H, Q] = B(null), [V, fe] = B([]), [re, he] = B([]), [xe, Ue] = B(
+  ), m = Me(null), [w, O] = B(0), [D, b] = B(!1), [p, _] = B([]), [U, X] = B(!1), [H, Q] = B(null), [V, fe] = B([]), [re, he] = B([]), [xe, Ue] = B(
     void 0
   ), ae = Me(null), [ee, pe] = B([]), [J, G] = B(() => e?.startDateUtc ? te(F(e.startDateUtc)) : te(F(s))), [be, De] = B(null), [qe, Ce] = B(() => e?.startDateUtc ? ne(F(e.startDateUtc)) : ne(F(s))), [je, Te] = B(null), [We, $e] = B(() => {
     if (e?.startDateUtc) {
-      const w = ne(F(e.startDateUtc));
-      return Math.floor(w / 10) * 10;
+      const x = ne(F(e.startDateUtc));
+      return Math.floor(x / 10) * 10;
     }
     const c = ne(F(s));
     return Math.floor(c / 10) * 10;
@@ -4200,26 +4192,26 @@ function Ki({
     } else
       y(1);
   }, [a, d, o, h]), Ye(() => {
-    if (M.current) {
-      const w = document.createElement("canvas").getContext("2d");
-      if (w) {
-        w.font = "14px system-ui, -apple-system, sans-serif";
-        const T = w.measureText(u.toString()).width;
-        v(12 + T + 4);
+    if (m.current) {
+      const x = document.createElement("canvas").getContext("2d");
+      if (x) {
+        x.font = "14px system-ui, -apple-system, sans-serif";
+        const T = x.measureText(u.toString()).width;
+        O(12 + T + 4);
       }
     }
   }, [u]), Ye(() => {
-    const c = (w) => {
-      ae.current && !ae.current.contains(w.target) && X(!1);
+    const c = (x) => {
+      ae.current && !ae.current.contains(x.target) && X(!1);
     };
     return document.addEventListener("mousedown", c), () => document.removeEventListener("mousedown", c);
   }, []), Ye(() => {
     (async () => {
       await Je.init();
-      const w = await Je.getData(
+      const x = await Je.getData(
         "savedDateRanges"
       );
-      w && pe(w);
+      x && pe(x);
     })();
   }, []);
   const Tt = (c) => {
@@ -4229,35 +4221,35 @@ function Ki({
   }, et = !Xe, pt = (c) => {
     if (!(c <= 0)) {
       if (y(c), a) {
-        const w = Wi(
+        const x = Wi(
           a,
           o,
           c,
           h
         );
-        g(w), G(te(F(w)));
+        g(x), G(te(F(x)));
       } else if (d) {
-        const w = Yi(
+        const x = Yi(
           d,
           o,
           c,
           h
         );
-        l(w), G(te(F(w)));
+        l(x), G(te(F(x)));
       }
     }
   }, Yt = (c) => {
     i(c);
   }, Et = (c) => {
-    h.includes(c) ? k(h.filter((w) => w !== c)) : k([...h, c]);
-  }, _t = (c, w) => {
-    l(c), g(w), c && G(te(F(c)));
+    h.includes(c) ? k(h.filter((x) => x !== c)) : k([...h, c]);
+  }, _t = (c, x) => {
+    l(c), g(x), c && G(te(F(c)));
   }, It = (c) => {
-    l(c.startDateUtc), g(c.endDateUtc), i(c.unit), k(c.excludedWeekdays), y(c.duration), c.excludeEnabled !== void 0 && D(c.excludeEnabled), c.excludeFilterTypes ? _(c.excludeFilterTypes) : _([]), c.excludedSpecificDates ? S(c.excludedSpecificDates) : S([]), c.excludedSavedDates ? fe(c.excludedSavedDates) : fe([]), c.excludedDateRanges ? he(c.excludedDateRanges) : he([]), c.startDateUtc && G(te(F(c.startDateUtc)));
+    l(c.startDateUtc), g(c.endDateUtc), i(c.unit), k(c.excludedWeekdays), y(c.duration), c.excludeEnabled !== void 0 && b(c.excludeEnabled), c.excludeFilterTypes ? _(c.excludeFilterTypes) : _([]), c.excludedSpecificDates ? M(c.excludedSpecificDates) : M([]), c.excludedSavedDates ? fe(c.excludedSavedDates) : fe([]), c.excludedDateRanges ? he(c.excludedDateRanges) : he([]), c.startDateUtc && G(te(F(c.startDateUtc)));
   }, Ft = () => {
     l(s), g(s), k([]), G(te(F(s)));
   }, Pt = () => {
-    l(""), g(""), y(1), i("day"), k([]), D(!1), _([]), S([]), fe([]), he([]), Ue(void 0), Q(null), G(te(F(s)));
+    l(""), g(""), y(1), i("day"), k([]), b(!1), _([]), M([]), fe([]), he([]), Ue(void 0), Q(null), G(te(F(s)));
   }, tt = !a || a.trim() === "" || !d || d.trim() === "", bt = () => {
     if (tt)
       return;
@@ -4266,8 +4258,8 @@ function Ki({
       d,
       o,
       h,
+      D,
       p,
-      b,
       N,
       V,
       re
@@ -4275,21 +4267,21 @@ function Ki({
     t(c);
   }, me = (c) => {
     if (c?.from) {
-      const w = R(c.from);
-      if (l(w), c?.to) {
+      const x = R(c.from);
+      if (l(x), c?.to) {
         const T = R(c.to);
         g(T);
       } else
-        g(w);
+        g(x);
     }
-  }, nt = (c, w) => {
+  }, nt = (c, x) => {
     if (a && d && c?.to) {
-      l(R(w)), console.log(
+      l(R(x)), console.log(
         "dayPickerProps",
-        w,
+        x,
         "parseUtc(endDateUtc)",
         F(d)
-      ), w.getTime() > F(d).getTime() && g("");
+      ), x.getTime() > F(d).getTime() && g("");
       return;
     }
     if (!a && d && c?.from) {
@@ -4310,16 +4302,16 @@ function Ki({
     }
   }, Dt = (c) => {
     if (c && c.from) {
-      const w = Fe(c.from, {
+      const x = Fe(c.from, {
         weekStartsOn: tn
-      }), T = Se(w, 6);
+      }), T = Se(x, 6);
       if (c.to) {
         const Y = Fe(c.to, {
           weekStartsOn: tn
         }), W = Se(Y, 6);
-        me({ from: w, to: W });
+        me({ from: x, to: W });
       } else
-        me({ from: w, to: T });
+        me({ from: x, to: T });
     }
   }, wt = F(s), Be = {
     from: a ? F(a) : void 0,
@@ -4328,12 +4320,12 @@ function Ki({
     from: a ? F(a) : wt,
     to: d ? F(d) : wt
   }, Le = (c) => {
-    const w = !Xe, T = p && b.includes("days") && h.includes(c.getDay()), Y = p && b.includes("specific-date") && N.includes(R(c)), W = p && b.includes("saved-dates") && V.some(($) => {
-      const O = ee.find((j) => j.id === $);
-      if (!O) return !1;
+    const x = !Xe, T = D && p.includes("days") && h.includes(c.getDay()), Y = D && p.includes("specific-date") && N.includes(R(c)), W = D && p.includes("saved-dates") && V.some(($) => {
+      const S = ee.find((j) => j.id === $);
+      if (!S) return !1;
       const q = R(c);
-      if (!(q >= O.selection.startDateUtc && q <= O.selection.endDateUtc)) return !1;
-      if (O.selection.excludedWeekdays && O.selection.excludedWeekdays.length > 0 && O.selection.excludedWeekdays.includes(c.getDay()) || O.selection.excludedSpecificDates && O.selection.excludedSpecificDates.length > 0 && O.selection.excludedSpecificDates.includes(q) || O.selection.excludedSavedDates && O.selection.excludedSavedDates.some(
+      if (!(q >= S.selection.startDateUtc && q <= S.selection.endDateUtc)) return !1;
+      if (S.selection.excludedWeekdays && S.selection.excludedWeekdays.length > 0 && S.selection.excludedWeekdays.includes(c.getDay()) || S.selection.excludedSpecificDates && S.selection.excludedSpecificDates.length > 0 && S.selection.excludedSpecificDates.includes(q) || S.selection.excludedSavedDates && S.selection.excludedSavedDates.some(
         (se) => {
           const L = ee.find(
             (K) => K.id === se
@@ -4343,22 +4335,22 @@ function Ki({
       ))
         return !0;
       let ce = !1;
-      return !!(O.selection.excludedDateRanges && (ce = O.selection.excludedDateRanges.some(
+      return !!(S.selection.excludedDateRanges && (ce = S.selection.excludedDateRanges.some(
         (j) => q >= j.start && q <= j.end
       ), ce));
-    }), I = p && b.includes("date-range") && re.some(($) => {
-      const O = R(c);
-      return O >= $.start && O <= $.end;
+    }), I = D && p.includes("date-range") && re.some(($) => {
+      const S = R(c);
+      return S >= $.start && S <= $.end;
     });
-    return w || T || Y || W || I;
-  }, Ut = (c, w) => {
+    return x || T || Y || W || I;
+  }, Ut = (c, x) => {
     const T = te(
-      ft(ht(/* @__PURE__ */ new Date(), c), w)
+      ft(ht(/* @__PURE__ */ new Date(), c), x)
     );
     G(T), De(null), Ce(c);
   }, $t = (c) => {
-    const w = Ge(J), T = te(
-      ft(ht(/* @__PURE__ */ new Date(), c), w)
+    const x = Ge(J), T = te(
+      ft(ht(/* @__PURE__ */ new Date(), c), x)
     );
     G(T), Te(null), $e(Math.floor(c / 10) * 10);
   };
@@ -4366,11 +4358,11 @@ function Ki({
     be === null && Ce(ne(J));
   }, [J, be]);
   const vt = (c) => {
-    const w = c - 1, T = c + 10, Y = ne(J), W = [];
-    for (let I = w; I <= T; I++)
+    const x = c - 1, T = c + 10, Y = ne(J), W = [];
+    for (let I = x; I <= T; I++)
       W.push(I);
-    return /* @__PURE__ */ x("div", { className: "flex flex-col w-full", children: [
-      /* @__PURE__ */ x("div", { className: "flex items-center justify-between mb-4", children: [
+    return /* @__PURE__ */ v("div", { className: "flex flex-col w-full", children: [
+      /* @__PURE__ */ v("div", { className: "flex items-center justify-between mb-4", children: [
         /* @__PURE__ */ f(
           "button",
           {
@@ -4379,7 +4371,7 @@ function Ki({
             children: /* @__PURE__ */ f("span", { className: "text-lg", children: "<<" })
           }
         ),
-        /* @__PURE__ */ x("div", { className: "text-lg font-semibold", children: [
+        /* @__PURE__ */ v("div", { className: "text-lg font-semibold", children: [
           c,
           "-",
           c + 9
@@ -4394,7 +4386,7 @@ function Ki({
         )
       ] }),
       /* @__PURE__ */ f("div", { className: "grid grid-cols-3 gap-2 w-full", children: W.map((I) => {
-        const $ = !Xe, O = I < c || I > c + 9;
+        const $ = !Xe, S = I < c || I > c + 9;
         return /* @__PURE__ */ f(
           "button",
           {
@@ -4402,7 +4394,7 @@ function Ki({
             disabled: $,
             className: `
                   px-3 py-4 border border-gray-300 text-sm font-medium rounded-md transition-colors 
-                  ${O ? "opacity-50 bg-gray-50 text-gray-500" : Y === I ? "bg-[#003DB8] text-white" : "bg-gray-50 text-gray-700 hover:bg-gray-100"}
+                  ${S ? "opacity-50 bg-gray-50 text-gray-500" : Y === I ? "bg-[#003DB8] text-white" : "bg-gray-50 text-gray-700 hover:bg-gray-100"}
                 `,
             children: I
           },
@@ -4410,8 +4402,8 @@ function Ki({
         );
       }) })
     ] });
-  }, kt = (c) => /* @__PURE__ */ x("div", { className: "flex flex-col w-full", children: [
-    /* @__PURE__ */ x("div", { className: "flex items-center justify-between mb-4", children: [
+  }, kt = (c) => /* @__PURE__ */ v("div", { className: "flex flex-col w-full", children: [
+    /* @__PURE__ */ v("div", { className: "flex items-center justify-between mb-4", children: [
       /* @__PURE__ */ f(
         "button",
         {
@@ -4430,7 +4422,7 @@ function Ki({
         }
       )
     ] }),
-    /* @__PURE__ */ f("div", { className: "grid grid-cols-3 gap-2 w-full", children: ji.map((w, T) => {
+    /* @__PURE__ */ f("div", { className: "grid grid-cols-3 gap-2 w-full", children: ji.map((x, T) => {
       const Y = !Xe, W = ne(J) === c && Ge(J) === T;
       return /* @__PURE__ */ f(
         "button",
@@ -4441,9 +4433,9 @@ function Ki({
                   px-3 py-4 border border-gray-300 text-sm font-medium rounded-md transition-colors
                   ${W ? "bg-[#003DB8] text-white" : "bg-gray-50 text-gray-700 hover:bg-gray-100"}
                 `,
-          children: w
+          children: x
         },
-        w
+        x
       );
     }) })
   ] }), Ze = Me(null), rt = Me(null);
@@ -4497,12 +4489,12 @@ function Ki({
         };
         return;
       }
-      const O = Y.textContent || "", q = O.trim().split(/\s+/);
+      const S = Y.textContent || "", q = S.trim().split(/\s+/);
       let le = "", ce = "";
       if (q.length >= 2)
         le = q[0], ce = q[1];
       else if (q.length === 1) {
-        const j = O.match(/^([A-Za-z]+)(\d{4})$/);
+        const j = S.match(/^([A-Za-z]+)(\d{4})$/);
         if (j)
           le = j[1], ce = j[2];
         else
@@ -4531,783 +4523,789 @@ function Ki({
           Y.appendChild(Mt), Y.appendChild(ge);
         }
       }
-    }, w = (Y, W) => {
+    }, x = (Y, W) => {
       if (!Y) return;
-      Y.querySelectorAll(".rdp-caption_label").forEach(($, O) => {
-        const q = $, le = W !== null ? W : O === 0 ? 0 : 1;
+      Y.querySelectorAll(".rdp-caption_label").forEach(($, S) => {
+        const q = $, le = W !== null ? W : S === 0 ? 0 : 1;
         be === le || je === le || c(q, le);
       });
     }, T = setTimeout(() => {
-      be === null && je === null ? w(Ze.current, null) : (w(Ze.current, 0), w(rt.current, 1));
+      be === null && je === null ? x(Ze.current, null) : (x(Ze.current, 0), x(rt.current, 1));
     }, 150);
     return () => clearTimeout(T);
-  }, [o, J, be, je]), /* @__PURE__ */ x("div", { className: "flex gap-4 bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden max-h-[85vh]", children: [
-    /* @__PURE__ */ f(
-      $i,
-      {
-        onPresetSelect: _t,
-        onSavedDateSelect: It,
-        currentSelection: _n(
-          a,
-          d,
-          o,
-          h,
-          p,
-          b,
-          N,
-          V,
-          re
+  }, [o, J, be, je]), /* @__PURE__ */ v(
+    "div",
+    {
+      className: "flex gap-4 bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden max-h-[85vh]",
+      style: r,
+      children: [
+        /* @__PURE__ */ f(
+          $i,
+          {
+            onPresetSelect: _t,
+            onSavedDateSelect: It,
+            currentSelection: _n(
+              a,
+              d,
+              o,
+              h,
+              D,
+              p,
+              N,
+              V,
+              re
+            )
+          }
         ),
-        themeColors: r
-      }
-    ),
-    /* @__PURE__ */ x("div", { className: "flex-1 flex flex-col min-h-0", children: [
-      /* @__PURE__ */ x("div", { className: "px-6 pt-6 overflow-y-auto flex-1", children: [
-        /* @__PURE__ */ f("div", { className: "flex gap-2 mb-4", children: ["day", "week", "month", "quarter"].map(
-          (c) => /* @__PURE__ */ f(
-            "button",
-            {
-              onClick: () => Yt(c),
-              className: `px-4 py-2 rounded-lg text-sm font-light transition-colors ${o === c ? "bg-[#EBF0F9] text-[#003DB8] border border-[#003DB8]" : "bg-[#EBF0F9] text-gray-500 hover:bg-[#EBF0F9]"}`,
-              children: c.charAt(0).toUpperCase() + c.slice(1)
-            },
-            c
-          )
-        ) }),
-        /* @__PURE__ */ x("div", { className: "grid grid-cols-3 gap-4 mb-4", children: [
-          /* @__PURE__ */ x("div", { children: [
-            /* @__PURE__ */ f("label", { className: "block text-xs font-medium text-gray-600 mb-1", children: "Start Date" }),
-            /* @__PURE__ */ f(
-              In,
-              {
-                value: a,
-                onChange: Tt,
-                placeholder: "DD/MM/YYYY",
-                className: "w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              }
-            )
-          ] }),
-          /* @__PURE__ */ x("div", { children: [
-            /* @__PURE__ */ f("label", { className: "block text-xs font-medium text-gray-600 mb-1", children: "End Date" }),
-            /* @__PURE__ */ f(
-              In,
-              {
-                value: d,
-                onChange: Wt,
-                placeholder: "DD/MM/YYYY",
-                className: "w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              }
-            )
-          ] }),
-          /* @__PURE__ */ x("div", { children: [
-            /* @__PURE__ */ f("label", { className: "block text-xs font-medium text-gray-600 mb-1", children: "Duration" }),
-            /* @__PURE__ */ x("div", { className: "relative", children: [
-              /* @__PURE__ */ f(
-                "input",
-                {
-                  ref: M,
-                  type: "number",
-                  min: "1",
-                  value: u,
-                  onChange: (c) => pt(Number(c.target.value)),
-                  className: "w-full pl-3 pr-10 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [-moz-appearance:textfield]"
-                }
-              ),
-              /* @__PURE__ */ f(
-                "span",
-                {
-                  className: "absolute top-1/2 -translate-y-1/2 text-sm text-gray-500 pointer-events-none",
-                  style: { left: `${m}px` },
-                  children: _i(o)
-                }
-              )
-            ] })
-          ] })
-        ] }),
-        et,
-        /* @__PURE__ */ x("div", { className: "mb-4", children: [
-          /* @__PURE__ */ x("div", { className: "flex items-center gap-3 mb-3", children: [
-            /* @__PURE__ */ f(
-              "input",
-              {
-                type: "checkbox",
-                id: "exclude-checkbox",
-                checked: p,
-                onChange: (c) => D(c.target.checked),
-                className: "w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-              }
-            ),
-            /* @__PURE__ */ f(
-              "label",
-              {
-                htmlFor: "exclude-checkbox",
-                className: "text-sm text-gray-700",
-                children: "exclude from selection"
-              }
-            ),
-            /* @__PURE__ */ x("div", { className: "relative flex-1", ref: ae, children: [
-              /* @__PURE__ */ f(
+        /* @__PURE__ */ v("div", { className: "flex-1 flex flex-col min-h-0", children: [
+          /* @__PURE__ */ v("div", { className: "px-6 pt-6 overflow-y-auto flex-1", children: [
+            /* @__PURE__ */ f("div", { className: "flex gap-2 mb-4", children: ["day", "week", "month", "quarter"].map(
+              (c) => /* @__PURE__ */ f(
                 "button",
                 {
-                  type: "button",
-                  onClick: () => p && X(!U),
-                  disabled: !p,
-                  className: "w-full px-3 py-2 pr-8 border border-gray-300 rounded-md text-sm text-left bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50",
-                  children: /* @__PURE__ */ f(
+                  onClick: () => Yt(c),
+                  className: `px-4 py-2 rounded-lg text-sm font-light transition-colors ${o === c ? "bg-[#EBF0F9] text-[#003DB8] border border-[#003DB8]" : "bg-[#EBF0F9] text-gray-500 hover:bg-[#EBF0F9]"}`,
+                  children: c.charAt(0).toUpperCase() + c.slice(1)
+                },
+                c
+              )
+            ) }),
+            /* @__PURE__ */ v("div", { className: "grid grid-cols-3 gap-4 mb-4", children: [
+              /* @__PURE__ */ v("div", { children: [
+                /* @__PURE__ */ f("label", { className: "block text-xs font-medium text-gray-600 mb-1", children: "Start Date" }),
+                /* @__PURE__ */ f(
+                  In,
+                  {
+                    value: a,
+                    onChange: Tt,
+                    placeholder: "DD/MM/YYYY",
+                    className: "w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ v("div", { children: [
+                /* @__PURE__ */ f("label", { className: "block text-xs font-medium text-gray-600 mb-1", children: "End Date" }),
+                /* @__PURE__ */ f(
+                  In,
+                  {
+                    value: d,
+                    onChange: Wt,
+                    placeholder: "DD/MM/YYYY",
+                    className: "w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ v("div", { children: [
+                /* @__PURE__ */ f("label", { className: "block text-xs font-medium text-gray-600 mb-1", children: "Duration" }),
+                /* @__PURE__ */ v("div", { className: "relative", children: [
+                  /* @__PURE__ */ f(
+                    "input",
+                    {
+                      ref: m,
+                      type: "number",
+                      min: "1",
+                      value: u,
+                      onChange: (c) => pt(Number(c.target.value)),
+                      className: "w-full pl-3 pr-10 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [-moz-appearance:textfield]"
+                    }
+                  ),
+                  /* @__PURE__ */ f(
                     "span",
                     {
-                      className: b.length === 0 ? "text-gray-400" : "text-gray-700",
-                      children: b.length === 0 ? "select a filter" : b.length === 1 ? (() => {
-                        switch (b[0]) {
-                          case "days":
-                            return "Days";
-                          case "specific-date":
-                            return "Specific Date";
-                          case "saved-dates":
-                            return "Saved Dates";
-                          case "date-range":
-                            return "Date Range";
-                          default:
-                            return "Specific Date";
-                        }
-                      })() : `${b.length} filters selected`
+                      className: "absolute top-1/2 -translate-y-1/2 text-sm text-gray-500 pointer-events-none",
+                      style: { left: `${w}px` },
+                      children: _i(o)
                     }
                   )
-                }
-              ),
-              /* @__PURE__ */ f(Ka, { className: "absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" }),
-              U && p && /* @__PURE__ */ f("div", { className: "absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg", children: /* @__PURE__ */ x("div", { className: "p-2 space-y-1", children: [
-                /* @__PURE__ */ x("label", { className: "flex items-center gap-2 px-3 py-2 hover:bg-gray-50 rounded cursor-pointer", children: [
-                  /* @__PURE__ */ f(
-                    "input",
-                    {
-                      type: "checkbox",
-                      checked: b.includes("days"),
-                      onChange: (c) => {
-                        c.target.checked ? _([
-                          ...b,
-                          "days"
-                        ]) : _(
-                          b.filter((w) => w !== "days")
-                        );
-                      },
-                      className: "w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                    }
-                  ),
-                  /* @__PURE__ */ f("span", { className: "text-sm text-gray-700", children: "Days" })
-                ] }),
-                /* @__PURE__ */ x("label", { className: "flex items-center gap-2 px-3 py-2 hover:bg-gray-50 rounded cursor-pointer", children: [
-                  /* @__PURE__ */ f(
-                    "input",
-                    {
-                      type: "checkbox",
-                      checked: b.includes("specific-date"),
-                      onChange: (c) => {
-                        c.target.checked ? _([
-                          ...b,
-                          "specific-date"
-                        ]) : _(
-                          b.filter(
-                            (w) => w !== "specific-date"
-                          )
-                        );
-                      },
-                      className: "w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                    }
-                  ),
-                  /* @__PURE__ */ f("span", { className: "text-sm text-gray-700", children: "Specific Date" })
-                ] }),
-                /* @__PURE__ */ x("label", { className: "flex items-center gap-2 px-3 py-2 hover:bg-gray-50 rounded cursor-pointer", children: [
-                  /* @__PURE__ */ f(
-                    "input",
-                    {
-                      type: "checkbox",
-                      checked: b.includes("saved-dates"),
-                      onChange: (c) => {
-                        c.target.checked ? _([
-                          ...b,
-                          "saved-dates"
-                        ]) : _(
-                          b.filter(
-                            (w) => w !== "saved-dates"
-                          )
-                        );
-                      },
-                      className: "w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                    }
-                  ),
-                  /* @__PURE__ */ f("span", { className: "text-sm text-gray-700", children: "Saved Dates" })
-                ] }),
-                /* @__PURE__ */ x("label", { className: "flex items-center gap-2 px-3 py-2 hover:bg-gray-50 rounded cursor-pointer", children: [
-                  /* @__PURE__ */ f(
-                    "input",
-                    {
-                      type: "checkbox",
-                      checked: b.includes("date-range"),
-                      onChange: (c) => {
-                        c.target.checked ? _([
-                          ...b,
-                          "date-range"
-                        ]) : _(
-                          b.filter(
-                            (w) => w !== "date-range"
-                          )
-                        );
-                      },
-                      className: "w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                    }
-                  ),
-                  /* @__PURE__ */ f("span", { className: "text-sm text-gray-700", children: "Date Range" })
                 ] })
-              ] }) })
-            ] })
-          ] }),
-          p && b.length > 0 && /* @__PURE__ */ x("div", { className: "flex gap-2 items-center", children: [
-            b.includes("days") && /* @__PURE__ */ x(
-              "button",
-              {
-                onClick: () => Q(
-                  H === "days" ? null : "days"
+              ] })
+            ] }),
+            et,
+            /* @__PURE__ */ v("div", { className: "mb-4", children: [
+              /* @__PURE__ */ v("div", { className: "flex items-center gap-3 mb-3", children: [
+                /* @__PURE__ */ f(
+                  "input",
+                  {
+                    type: "checkbox",
+                    id: "exclude-checkbox",
+                    checked: D,
+                    onChange: (c) => b(c.target.checked),
+                    className: "w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                  }
                 ),
-                className: `flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${H === "days" ? "bg-blue-100 text-blue-700 border border-blue-300" : "bg-gray-100 text-gray-700 hover:bg-gray-200"}`,
-                children: [
-                  /* @__PURE__ */ f(Zt, { className: "w-4 h-4" }),
-                  /* @__PURE__ */ x("span", { children: [
-                    "Days (",
-                    h.length,
-                    " selected)"
-                  ] })
-                ]
-              }
-            ),
-            b.includes("specific-date") && /* @__PURE__ */ x(
-              "button",
-              {
-                onClick: () => Q(
-                  H === "specific-date" ? null : "specific-date"
+                /* @__PURE__ */ f(
+                  "label",
+                  {
+                    htmlFor: "exclude-checkbox",
+                    className: "text-sm text-gray-700",
+                    children: "exclude from selection"
+                  }
                 ),
-                className: `flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${H === "specific-date" ? "bg-blue-100 text-blue-700 border border-blue-300" : "bg-gray-100 text-gray-700 hover:bg-gray-200"}`,
-                children: [
-                  /* @__PURE__ */ f(Zt, { className: "w-4 h-4" }),
-                  /* @__PURE__ */ x("span", { children: [
-                    "Dates (",
-                    N.length,
-                    " selected)"
-                  ] })
-                ]
-              }
-            ),
-            b.includes("saved-dates") && /* @__PURE__ */ x(
-              "button",
-              {
-                onClick: () => Q(
-                  H === "saved-dates" ? null : "saved-dates"
-                ),
-                className: `flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${H === "saved-dates" ? "bg-blue-100 text-blue-700 border border-blue-300" : "bg-gray-100 text-gray-700 hover:bg-gray-200"}`,
-                children: [
-                  /* @__PURE__ */ f(Qa, { className: "w-4 h-4" }),
-                  /* @__PURE__ */ x("span", { children: [
-                    "Saved (",
-                    V.length,
-                    " selected)"
-                  ] })
-                ]
-              }
-            ),
-            b.includes("date-range") && /* @__PURE__ */ x(
-              "button",
-              {
-                onClick: () => Q(
-                  H === "date-range" ? null : "date-range"
-                ),
-                className: `flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${H === "date-range" ? "bg-blue-100 text-blue-700 border border-blue-300" : "bg-gray-100 text-gray-700 hover:bg-gray-200"}`,
-                children: [
-                  /* @__PURE__ */ f(Zt, { className: "w-4 h-4" }),
-                  /* @__PURE__ */ x("span", { children: [
-                    "Date Ranges (",
-                    re.length,
-                    " selected)"
-                  ] })
-                ]
-              }
-            )
-          ] }),
-          p && H === "days" && b.includes("days") && /* @__PURE__ */ f("div", { className: "mt-3 flex gap-2", children: qi.map((c) => /* @__PURE__ */ f(
-            "button",
-            {
-              onClick: () => Et(c.value),
-              className: `flex-1 px-3 py-2 rounded-md text-sm font-medium transition-colors ${h.includes(c.value) ? "bg-red-100 text-red-700 border-2 border-red-400" : "bg-gray-100 text-gray-700 hover:bg-gray-200"}`,
-              children: c.label
-            },
-            c.value
-          )) }),
-          p && H === "specific-date" && b.includes("specific-date") && /* @__PURE__ */ x("div", { className: "mt-3 flex flex-col gap-3", children: [
-            /* @__PURE__ */ f("p", { className: "text-xs text-gray-500 text-center mb-2", children: "Click individual dates to exclude them" }),
-            /* @__PURE__ */ f("div", { className: "flex justify-center p-4 border border-gray-200 rounded-md bg-gray-50", children: /* @__PURE__ */ f(
-              He,
-              {
-                mode: "multiple",
-                selected: N.map((c) => F(c)),
-                onSelect: (c) => {
-                  c && S(
-                    c.map((w) => R(w))
-                  );
-                },
-                numberOfMonths: 2,
-                modifiersClassNames: {
-                  selected: "bg-red-500 text-white hover:bg-red-600 rounded-md"
-                }
-              }
-            ) }),
-            N.length > 0 && /* @__PURE__ */ f("div", { className: "flex flex-wrap gap-2", children: N.map((c) => /* @__PURE__ */ x(
-              "div",
-              {
-                className: "flex items-center gap-1 px-2 py-1 bg-red-100 text-red-700 rounded text-xs",
-                children: [
-                  /* @__PURE__ */ f("span", { children: (/* @__PURE__ */ new Date(c + "T00:00:00")).toLocaleDateString(
-                    "en-US",
+                /* @__PURE__ */ v("div", { className: "relative flex-1", ref: ae, children: [
+                  /* @__PURE__ */ f(
+                    "button",
                     {
-                      month: "short",
-                      day: "numeric",
-                      year: "numeric"
+                      type: "button",
+                      onClick: () => D && X(!U),
+                      disabled: !D,
+                      className: "w-full px-3 py-2 pr-8 border border-gray-300 rounded-md text-sm text-left bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50",
+                      children: /* @__PURE__ */ f(
+                        "span",
+                        {
+                          className: p.length === 0 ? "text-gray-400" : "text-gray-700",
+                          children: p.length === 0 ? "select a filter" : p.length === 1 ? (() => {
+                            switch (p[0]) {
+                              case "days":
+                                return "Days";
+                              case "specific-date":
+                                return "Specific Date";
+                              case "saved-dates":
+                                return "Saved Dates";
+                              case "date-range":
+                                return "Date Range";
+                              default:
+                                return "Specific Date";
+                            }
+                          })() : `${p.length} filters selected`
+                        }
+                      )
                     }
-                  ) }),
+                  ),
+                  /* @__PURE__ */ f(Ka, { className: "absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" }),
+                  U && D && /* @__PURE__ */ f("div", { className: "absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg", children: /* @__PURE__ */ v("div", { className: "p-2 space-y-1", children: [
+                    /* @__PURE__ */ v("label", { className: "flex items-center gap-2 px-3 py-2 hover:bg-gray-50 rounded cursor-pointer", children: [
+                      /* @__PURE__ */ f(
+                        "input",
+                        {
+                          type: "checkbox",
+                          checked: p.includes("days"),
+                          onChange: (c) => {
+                            c.target.checked ? _([
+                              ...p,
+                              "days"
+                            ]) : _(
+                              p.filter((x) => x !== "days")
+                            );
+                          },
+                          className: "w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                        }
+                      ),
+                      /* @__PURE__ */ f("span", { className: "text-sm text-gray-700", children: "Days" })
+                    ] }),
+                    /* @__PURE__ */ v("label", { className: "flex items-center gap-2 px-3 py-2 hover:bg-gray-50 rounded cursor-pointer", children: [
+                      /* @__PURE__ */ f(
+                        "input",
+                        {
+                          type: "checkbox",
+                          checked: p.includes("specific-date"),
+                          onChange: (c) => {
+                            c.target.checked ? _([
+                              ...p,
+                              "specific-date"
+                            ]) : _(
+                              p.filter(
+                                (x) => x !== "specific-date"
+                              )
+                            );
+                          },
+                          className: "w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                        }
+                      ),
+                      /* @__PURE__ */ f("span", { className: "text-sm text-gray-700", children: "Specific Date" })
+                    ] }),
+                    /* @__PURE__ */ v("label", { className: "flex items-center gap-2 px-3 py-2 hover:bg-gray-50 rounded cursor-pointer", children: [
+                      /* @__PURE__ */ f(
+                        "input",
+                        {
+                          type: "checkbox",
+                          checked: p.includes("saved-dates"),
+                          onChange: (c) => {
+                            c.target.checked ? _([
+                              ...p,
+                              "saved-dates"
+                            ]) : _(
+                              p.filter(
+                                (x) => x !== "saved-dates"
+                              )
+                            );
+                          },
+                          className: "w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                        }
+                      ),
+                      /* @__PURE__ */ f("span", { className: "text-sm text-gray-700", children: "Saved Dates" })
+                    ] }),
+                    /* @__PURE__ */ v("label", { className: "flex items-center gap-2 px-3 py-2 hover:bg-gray-50 rounded cursor-pointer", children: [
+                      /* @__PURE__ */ f(
+                        "input",
+                        {
+                          type: "checkbox",
+                          checked: p.includes("date-range"),
+                          onChange: (c) => {
+                            c.target.checked ? _([
+                              ...p,
+                              "date-range"
+                            ]) : _(
+                              p.filter(
+                                (x) => x !== "date-range"
+                              )
+                            );
+                          },
+                          className: "w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                        }
+                      ),
+                      /* @__PURE__ */ f("span", { className: "text-sm text-gray-700", children: "Date Range" })
+                    ] })
+                  ] }) })
+                ] })
+              ] }),
+              D && p.length > 0 && /* @__PURE__ */ v("div", { className: "flex gap-2 items-center", children: [
+                p.includes("days") && /* @__PURE__ */ v(
+                  "button",
+                  {
+                    onClick: () => Q(
+                      H === "days" ? null : "days"
+                    ),
+                    className: `flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${H === "days" ? "bg-blue-100 text-blue-700 border border-blue-300" : "bg-gray-100 text-gray-700 hover:bg-gray-200"}`,
+                    children: [
+                      /* @__PURE__ */ f(Zt, { className: "w-4 h-4" }),
+                      /* @__PURE__ */ v("span", { children: [
+                        "Days (",
+                        h.length,
+                        " selected)"
+                      ] })
+                    ]
+                  }
+                ),
+                p.includes("specific-date") && /* @__PURE__ */ v(
+                  "button",
+                  {
+                    onClick: () => Q(
+                      H === "specific-date" ? null : "specific-date"
+                    ),
+                    className: `flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${H === "specific-date" ? "bg-blue-100 text-blue-700 border border-blue-300" : "bg-gray-100 text-gray-700 hover:bg-gray-200"}`,
+                    children: [
+                      /* @__PURE__ */ f(Zt, { className: "w-4 h-4" }),
+                      /* @__PURE__ */ v("span", { children: [
+                        "Dates (",
+                        N.length,
+                        " selected)"
+                      ] })
+                    ]
+                  }
+                ),
+                p.includes("saved-dates") && /* @__PURE__ */ v(
+                  "button",
+                  {
+                    onClick: () => Q(
+                      H === "saved-dates" ? null : "saved-dates"
+                    ),
+                    className: `flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${H === "saved-dates" ? "bg-blue-100 text-blue-700 border border-blue-300" : "bg-gray-100 text-gray-700 hover:bg-gray-200"}`,
+                    children: [
+                      /* @__PURE__ */ f(Qa, { className: "w-4 h-4" }),
+                      /* @__PURE__ */ v("span", { children: [
+                        "Saved (",
+                        V.length,
+                        " selected)"
+                      ] })
+                    ]
+                  }
+                ),
+                p.includes("date-range") && /* @__PURE__ */ v(
+                  "button",
+                  {
+                    onClick: () => Q(
+                      H === "date-range" ? null : "date-range"
+                    ),
+                    className: `flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${H === "date-range" ? "bg-blue-100 text-blue-700 border border-blue-300" : "bg-gray-100 text-gray-700 hover:bg-gray-200"}`,
+                    children: [
+                      /* @__PURE__ */ f(Zt, { className: "w-4 h-4" }),
+                      /* @__PURE__ */ v("span", { children: [
+                        "Date Ranges (",
+                        re.length,
+                        " selected)"
+                      ] })
+                    ]
+                  }
+                )
+              ] }),
+              D && H === "days" && p.includes("days") && /* @__PURE__ */ f("div", { className: "mt-3 flex gap-2", children: qi.map((c) => /* @__PURE__ */ f(
+                "button",
+                {
+                  onClick: () => Et(c.value),
+                  className: `flex-1 px-3 py-2 rounded-md text-sm font-medium transition-colors ${h.includes(c.value) ? "bg-red-100 text-red-700 border-2 border-red-400" : "bg-gray-100 text-gray-700 hover:bg-gray-200"}`,
+                  children: c.label
+                },
+                c.value
+              )) }),
+              D && H === "specific-date" && p.includes("specific-date") && /* @__PURE__ */ v("div", { className: "mt-3 flex flex-col gap-3", children: [
+                /* @__PURE__ */ f("p", { className: "text-xs text-gray-500 text-center mb-2", children: "Click individual dates to exclude them" }),
+                /* @__PURE__ */ f("div", { className: "flex justify-center p-4 border border-gray-200 rounded-md bg-gray-50", children: /* @__PURE__ */ f(
+                  He,
+                  {
+                    mode: "multiple",
+                    selected: N.map((c) => F(c)),
+                    onSelect: (c) => {
+                      c && M(
+                        c.map((x) => R(x))
+                      );
+                    },
+                    numberOfMonths: 2,
+                    modifiersClassNames: {
+                      selected: "bg-red-500 text-white hover:bg-red-600 rounded-md"
+                    }
+                  }
+                ) }),
+                N.length > 0 && /* @__PURE__ */ f("div", { className: "flex flex-wrap gap-2", children: N.map((c) => /* @__PURE__ */ v(
+                  "div",
+                  {
+                    className: "flex items-center gap-1 px-2 py-1 bg-red-100 text-red-700 rounded text-xs",
+                    children: [
+                      /* @__PURE__ */ f("span", { children: (/* @__PURE__ */ new Date(c + "T00:00:00")).toLocaleDateString(
+                        "en-US",
+                        {
+                          month: "short",
+                          day: "numeric",
+                          year: "numeric"
+                        }
+                      ) }),
+                      /* @__PURE__ */ f(
+                        "button",
+                        {
+                          onClick: () => {
+                            M(
+                              N.filter((x) => x !== c)
+                            );
+                          },
+                          className: "hover:bg-red-200 rounded-full p-0.5",
+                          children: /* @__PURE__ */ f(kn, { className: "w-3 h-3" })
+                        }
+                      )
+                    ]
+                  },
+                  c
+                )) })
+              ] }),
+              D && H === "saved-dates" && p.includes("saved-dates") && /* @__PURE__ */ f("div", { className: "mt-3 flex flex-col gap-3", children: ee.length === 0 ? /* @__PURE__ */ f("p", { className: "text-sm text-gray-500 text-center py-4", children: "No saved dates available" }) : /* @__PURE__ */ f("div", { className: "space-y-2 max-h-64 overflow-y-auto border border-gray-200 rounded-md p-2", children: ee.map((c) => {
+                const x = V.includes(
+                  c.id
+                );
+                return /* @__PURE__ */ v(
+                  "div",
+                  {
+                    className: `flex items-center justify-between px-3 py-2 rounded-md cursor-pointer transition-colors ${x ? "bg-red-50 border border-red-300" : "bg-white hover:bg-gray-50 border border-gray-200"}`,
+                    onClick: () => {
+                      fe(
+                        x ? V.filter(
+                          (T) => T !== c.id
+                        ) : [
+                          ...V,
+                          c.id
+                        ]
+                      );
+                    },
+                    children: [
+                      /* @__PURE__ */ v("div", { className: "flex-1", children: [
+                        /* @__PURE__ */ f("div", { className: "text-sm font-medium text-gray-900", children: c.label }),
+                        /* @__PURE__ */ v("div", { className: "text-xs text-gray-600", children: [
+                          (/* @__PURE__ */ new Date(
+                            c.selection.startDateUtc + "T00:00:00"
+                          )).toLocaleDateString("en-US", {
+                            month: "short",
+                            day: "numeric",
+                            year: "numeric"
+                          }),
+                          " ",
+                          "-",
+                          " ",
+                          (/* @__PURE__ */ new Date(
+                            c.selection.endDateUtc + "T00:00:00"
+                          )).toLocaleDateString("en-US", {
+                            month: "short",
+                            day: "numeric",
+                            year: "numeric"
+                          })
+                        ] })
+                      ] }),
+                      /* @__PURE__ */ f(
+                        "input",
+                        {
+                          type: "checkbox",
+                          checked: x,
+                          onChange: () => {
+                          },
+                          className: "w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+                        }
+                      )
+                    ]
+                  },
+                  c.id
+                );
+              }) }) }),
+              D && H === "date-range" && p.includes("date-range") && /* @__PURE__ */ v("div", { className: "mt-3 flex flex-col gap-3", children: [
+                /* @__PURE__ */ f("div", { className: "border border-gray-200 rounded-md bg-gray-50 p-4", children: /* @__PURE__ */ f(
+                  He,
+                  {
+                    mode: "range",
+                    selected: xe,
+                    onSelect: (c) => Ue(c),
+                    numberOfMonths: 2,
+                    disabled: (c) => !Xe,
+                    modifiersClassNames: {
+                      selected: "bg-red-500 text-white hover:bg-red-600 rounded-md"
+                    }
+                  }
+                ) }),
+                xe?.from && xe?.to && /* @__PURE__ */ v("div", { className: "flex items-center gap-2", children: [
                   /* @__PURE__ */ f(
                     "button",
                     {
                       onClick: () => {
-                        S(
-                          N.filter((w) => w !== c)
+                        const c = {
+                          id: `range-${Date.now()}`,
+                          start: R(xe.from),
+                          end: R(xe.to)
+                        };
+                        he([
+                          ...re,
+                          c
+                        ]), Ue(void 0);
+                      },
+                      className: "px-3 py-1.5 bg-red-600 text-white rounded-md text-sm font-medium hover:bg-red-700 transition-colors",
+                      children: "Add Date Range"
+                    }
+                  ),
+                  /* @__PURE__ */ f(
+                    "button",
+                    {
+                      onClick: () => Ue(void 0),
+                      className: "px-3 py-1.5 bg-gray-200 text-gray-700 rounded-md text-sm font-medium hover:bg-gray-300 transition-colors",
+                      children: "Clear Selection"
+                    }
+                  )
+                ] }),
+                re.length > 0 && /* @__PURE__ */ v("div", { className: "flex flex-col gap-2", children: [
+                  /* @__PURE__ */ f("p", { className: "text-xs text-gray-600 font-medium", children: "Excluded Date Ranges:" }),
+                  /* @__PURE__ */ f("div", { className: "flex flex-wrap gap-2", children: re.map((c) => /* @__PURE__ */ v(
+                    "div",
+                    {
+                      className: "flex items-center gap-1 px-2 py-1 bg-red-100 text-red-700 rounded text-xs",
+                      children: [
+                        /* @__PURE__ */ v("span", { children: [
+                          (/* @__PURE__ */ new Date(
+                            c.start + "T00:00:00"
+                          )).toLocaleDateString("en-US", {
+                            month: "short",
+                            day: "numeric",
+                            year: "numeric"
+                          }),
+                          " - ",
+                          (/* @__PURE__ */ new Date(
+                            c.end + "T00:00:00"
+                          )).toLocaleDateString("en-US", {
+                            month: "short",
+                            day: "numeric",
+                            year: "numeric"
+                          })
+                        ] }),
+                        /* @__PURE__ */ f(
+                          "button",
+                          {
+                            onClick: () => {
+                              he(
+                                re.filter(
+                                  (x) => x.id !== c.id
+                                )
+                              );
+                            },
+                            className: "hover:bg-red-200 rounded-full p-0.5",
+                            children: /* @__PURE__ */ f(kn, { className: "w-3 h-3" })
+                          }
+                        )
+                      ]
+                    },
+                    c.id
+                  )) })
+                ] })
+              ] })
+            ] }),
+            /* @__PURE__ */ v("div", { className: "flex gap-4 justify-center mb-4", children: [
+              o === "day" && /* @__PURE__ */ f("div", { className: "flex gap-4", children: je !== null ? je === 0 ? (
+                // When yearsViewIndex === 0, show years grid on left and single calendar on right
+                /* @__PURE__ */ v(ct, { children: [
+                  /* @__PURE__ */ f(
+                    "div",
+                    {
+                      className: "w-full flex-shrink-0",
+                      style: { minWidth: "280px", maxWidth: "280px" },
+                      children: vt(We)
+                    }
+                  ),
+                  /* @__PURE__ */ f("div", { ref: rt, children: /* @__PURE__ */ f(
+                    He,
+                    {
+                      mode: "range",
+                      navLayout: "around",
+                      selected: Be,
+                      onSelect: me,
+                      month: te(Ee(J, 1)),
+                      onMonthChange: (c) => {
+                        const x = new Date(J), Y = new Date(c).getMonth() - x.getMonth();
+                        Y !== 1 && Y !== -11 && G(
+                          te(Ee(c, -1))
                         );
                       },
-                      className: "hover:bg-red-200 rounded-full p-0.5",
-                      children: /* @__PURE__ */ f(kn, { className: "w-3 h-3" })
-                    }
-                  )
-                ]
-              },
-              c
-            )) })
-          ] }),
-          p && H === "saved-dates" && b.includes("saved-dates") && /* @__PURE__ */ f("div", { className: "mt-3 flex flex-col gap-3", children: ee.length === 0 ? /* @__PURE__ */ f("p", { className: "text-sm text-gray-500 text-center py-4", children: "No saved dates available" }) : /* @__PURE__ */ f("div", { className: "space-y-2 max-h-64 overflow-y-auto border border-gray-200 rounded-md p-2", children: ee.map((c) => {
-            const w = V.includes(
-              c.id
-            );
-            return /* @__PURE__ */ x(
-              "div",
-              {
-                className: `flex items-center justify-between px-3 py-2 rounded-md cursor-pointer transition-colors ${w ? "bg-red-50 border border-red-300" : "bg-white hover:bg-gray-50 border border-gray-200"}`,
-                onClick: () => {
-                  fe(
-                    w ? V.filter(
-                      (T) => T !== c.id
-                    ) : [
-                      ...V,
-                      c.id
-                    ]
-                  );
-                },
-                children: [
-                  /* @__PURE__ */ x("div", { className: "flex-1", children: [
-                    /* @__PURE__ */ f("div", { className: "text-sm font-medium text-gray-900", children: c.label }),
-                    /* @__PURE__ */ x("div", { className: "text-xs text-gray-600", children: [
-                      (/* @__PURE__ */ new Date(
-                        c.selection.startDateUtc + "T00:00:00"
-                      )).toLocaleDateString("en-US", {
-                        month: "short",
-                        day: "numeric",
-                        year: "numeric"
-                      }),
-                      " ",
-                      "-",
-                      " ",
-                      (/* @__PURE__ */ new Date(
-                        c.selection.endDateUtc + "T00:00:00"
-                      )).toLocaleDateString("en-US", {
-                        month: "short",
-                        day: "numeric",
-                        year: "numeric"
-                      })
-                    ] })
-                  ] }),
-                  /* @__PURE__ */ f(
-                    "input",
-                    {
-                      type: "checkbox",
-                      checked: w,
-                      onChange: () => {
+                      numberOfMonths: 1,
+                      disabled: Le,
+                      modifiersClassNames: {
+                        selected: "rdp-day_selected bg-[#003DB8]",
+                        disabled: "rdp-day_disabled opacity-30 bg-gray-100 text-black"
                       },
-                      className: "w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+                      classNames: {
+                        chevron: "fill-black"
+                      }
+                    }
+                  ) })
+                ] })
+              ) : (
+                // When yearsViewIndex === 1, show single calendar on left and years grid on right
+                /* @__PURE__ */ v(ct, { children: [
+                  /* @__PURE__ */ f("div", { ref: Ze, children: /* @__PURE__ */ f(
+                    He,
+                    {
+                      mode: "range",
+                      navLayout: "around",
+                      selected: Be,
+                      onSelect: me,
+                      month: J,
+                      onMonthChange: G,
+                      numberOfMonths: 1,
+                      disabled: Le,
+                      modifiersClassNames: {
+                        selected: "rdp-day_selected bg-[#003DB8]",
+                        disabled: "rdp-day_disabled opacity-30 bg-gray-100 text-black"
+                      },
+                      classNames: {
+                        chevron: "fill-black"
+                      }
+                    }
+                  ) }),
+                  /* @__PURE__ */ f(
+                    "div",
+                    {
+                      className: "w-full flex-shrink-0",
+                      style: { minWidth: "280px", maxWidth: "280px" },
+                      children: vt(We)
                     }
                   )
-                ]
-              },
-              c.id
-            );
-          }) }) }),
-          p && H === "date-range" && b.includes("date-range") && /* @__PURE__ */ x("div", { className: "mt-3 flex flex-col gap-3", children: [
-            /* @__PURE__ */ f("div", { className: "border border-gray-200 rounded-md bg-gray-50 p-4", children: /* @__PURE__ */ f(
-              He,
-              {
-                mode: "range",
-                selected: xe,
-                onSelect: (c) => Ue(c),
-                numberOfMonths: 2,
-                disabled: (c) => !Xe,
-                modifiersClassNames: {
-                  selected: "bg-red-500 text-white hover:bg-red-600 rounded-md"
+                ] })
+              ) : be === null ? (
+                // When monthsViewIndex === null, show single DayPicker with 2 months (original UI)
+                /* @__PURE__ */ f("div", { ref: Ze, children: /* @__PURE__ */ f(
+                  He,
+                  {
+                    mode: "range",
+                    navLayout: "around",
+                    selected: Be,
+                    onSelect: (c, x) => {
+                      nt(c, x);
+                    },
+                    month: J,
+                    onMonthChange: G,
+                    numberOfMonths: 2,
+                    disabled: Le,
+                    modifiersClassNames: {
+                      selected: "rdp-day_selected bg-[#003DB8]",
+                      disabled: "rdp-day_disabled opacity-30 bg-gray-100 text-black"
+                    },
+                    classNames: {
+                      chevron: "fill-black"
+                    }
+                  }
+                ) })
+              ) : be === 0 ? (
+                // When monthsViewIndex === 0, show months grid on left and single calendar on right
+                /* @__PURE__ */ v(ct, { children: [
+                  /* @__PURE__ */ f(
+                    "div",
+                    {
+                      className: "w-full flex-shrink-0",
+                      style: { minWidth: "280px", maxWidth: "280px" },
+                      children: kt(qe)
+                    }
+                  ),
+                  /* @__PURE__ */ f("div", { ref: rt, children: /* @__PURE__ */ f(
+                    He,
+                    {
+                      mode: "range",
+                      navLayout: "around",
+                      selected: Be,
+                      onSelect: me,
+                      month: te(Ee(J, 1)),
+                      onMonthChange: (c) => {
+                        const x = new Date(J), Y = new Date(c).getMonth() - x.getMonth();
+                        Y !== 1 && Y !== -11 && G(
+                          te(Ee(c, -1))
+                        );
+                      },
+                      numberOfMonths: 1,
+                      disabled: Le,
+                      modifiersClassNames: {
+                        selected: "rdp-day_selected bg-[#003DB8]",
+                        disabled: "rdp-day_disabled opacity-30 bg-gray-100 text-black"
+                      },
+                      classNames: {
+                        chevron: "fill-black"
+                      }
+                    }
+                  ) })
+                ] })
+              ) : (
+                // When monthsViewIndex === 1, show single calendar on left and months grid on right
+                /* @__PURE__ */ v(ct, { children: [
+                  /* @__PURE__ */ f("div", { ref: Ze, children: /* @__PURE__ */ f(
+                    He,
+                    {
+                      mode: "range",
+                      navLayout: "around",
+                      selected: Be,
+                      onSelect: me,
+                      month: J,
+                      onMonthChange: G,
+                      numberOfMonths: 1,
+                      disabled: Le,
+                      modifiersClassNames: {
+                        selected: "rdp-day_selected bg-[#003DB8]",
+                        disabled: "rdp-day_disabled opacity-30 bg-gray-100 text-black"
+                      },
+                      classNames: {
+                        chevron: "fill-black"
+                      }
+                    }
+                  ) }),
+                  /* @__PURE__ */ f(
+                    "div",
+                    {
+                      className: "w-full flex-shrink-0",
+                      style: { minWidth: "280px", maxWidth: "280px" },
+                      children: kt(qe)
+                    }
+                  )
+                ] })
+              ) }),
+              o === "week" && /* @__PURE__ */ f(
+                He,
+                {
+                  mode: "range",
+                  navLayout: "around",
+                  showWeekNumber: !0,
+                  locale: void 0,
+                  formatters: {
+                    formatWeekNumber: (c) => `W${String(c).padStart(2, "0")}`
+                  },
+                  selected: Be,
+                  onSelect: Dt,
+                  onWeekNumberClick: (c, x) => {
+                    x && x.length > 0 && Dt({
+                      from: x[0],
+                      to: x[x.length - 1]
+                    });
+                  },
+                  month: J,
+                  onMonthChange: G,
+                  numberOfMonths: 2,
+                  disabled: (c) => {
+                    const x = !Xe, T = D && p.includes("days") && h.includes(c.getDay()), Y = D && p.includes("specific-date") && N.includes(R(c)), W = D && p.includes("saved-dates") && V.some(($) => {
+                      const S = ee.find(
+                        (j) => j.id === $
+                      );
+                      if (!S) return !1;
+                      const q = R(c);
+                      if (!(q >= S.selection.startDateUtc && q <= S.selection.endDateUtc)) return !1;
+                      if (S.selection.excludedWeekdays && S.selection.excludedWeekdays.length > 0 && S.selection.excludedWeekdays.includes(c.getDay()) || S.selection.excludedSpecificDates && S.selection.excludedSpecificDates.length > 0 && S.selection.excludedSpecificDates.includes(q) || S.selection.excludedSavedDates && S.selection.excludedSavedDates.some(
+                        (se) => {
+                          const L = ee.find(
+                            (K) => K.id === se
+                          );
+                          return L ? q >= L.selection.startDateUtc && q <= L.selection.endDateUtc : !1;
+                        }
+                      ))
+                        return !0;
+                      let ce = !1;
+                      return !!(S.selection.excludedDateRanges && (ce = S.selection.excludedDateRanges.some(
+                        (j) => q >= j.start && q <= j.end
+                      ), ce));
+                    }), I = D && p.includes("date-range") && re.some(($) => {
+                      const S = R(c);
+                      return S >= $.start && S <= $.end;
+                    });
+                    return x || T || Y || W || I;
+                  },
+                  modifiersClassNames: {
+                    selected: "rdp-day_selected bg-[#003DB8]",
+                    disabled: "rdp-day_disabled opacity-30 bg-gray-100 text-black"
+                  },
+                  classNames: {
+                    chevron: "fill-black"
+                  }
                 }
+              ),
+              o === "month" && /* @__PURE__ */ f(
+                Ai,
+                {
+                  selectedRange: xt,
+                  onSelect: me
+                }
+              ),
+              o === "quarter" && /* @__PURE__ */ f(
+                Ri,
+                {
+                  selectedRange: xt,
+                  onSelect: me
+                }
+              )
+            ] })
+          ] }),
+          /* @__PURE__ */ v("div", { className: "flex items-center justify-between pt-4 pb-6 px-6 border-t border-gray-200", children: [
+            /* @__PURE__ */ f(
+              "button",
+              {
+                onClick: Ft,
+                className: "px-4 py-2 text-sm font-medium text-blue-600 hover:bg-blue-50 rounded-md transition-colors",
+                children: "Today"
               }
-            ) }),
-            xe?.from && xe?.to && /* @__PURE__ */ x("div", { className: "flex items-center gap-2", children: [
+            ),
+            /* @__PURE__ */ v("div", { className: "flex gap-2", children: [
               /* @__PURE__ */ f(
                 "button",
                 {
-                  onClick: () => {
-                    const c = {
-                      id: `range-${Date.now()}`,
-                      start: R(xe.from),
-                      end: R(xe.to)
-                    };
-                    he([
-                      ...re,
-                      c
-                    ]), Ue(void 0);
-                  },
-                  className: "px-3 py-1.5 bg-red-600 text-white rounded-md text-sm font-medium hover:bg-red-700 transition-colors",
-                  children: "Add Date Range"
+                  onClick: Pt,
+                  className: "px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 rounded-md transition-colors",
+                  children: "Clear dates"
                 }
               ),
               /* @__PURE__ */ f(
                 "button",
                 {
-                  onClick: () => Ue(void 0),
-                  className: "px-3 py-1.5 bg-gray-200 text-gray-700 rounded-md text-sm font-medium hover:bg-gray-300 transition-colors",
-                  children: "Clear Selection"
+                  onClick: n,
+                  className: "px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 rounded-md transition-colors",
+                  children: "Cancel"
+                }
+              ),
+              /* @__PURE__ */ f(
+                "button",
+                {
+                  onClick: bt,
+                  disabled: !!(tt || et),
+                  className: `px-4 py-2 text-sm font-medium rounded-md transition-colors ${tt || et ? "bg-gray-300 text-gray-500 cursor-not-allowed" : "bg-blue-600 text-white hover:bg-blue-700"}`,
+                  children: "Apply"
                 }
               )
-            ] }),
-            re.length > 0 && /* @__PURE__ */ x("div", { className: "flex flex-col gap-2", children: [
-              /* @__PURE__ */ f("p", { className: "text-xs text-gray-600 font-medium", children: "Excluded Date Ranges:" }),
-              /* @__PURE__ */ f("div", { className: "flex flex-wrap gap-2", children: re.map((c) => /* @__PURE__ */ x(
-                "div",
-                {
-                  className: "flex items-center gap-1 px-2 py-1 bg-red-100 text-red-700 rounded text-xs",
-                  children: [
-                    /* @__PURE__ */ x("span", { children: [
-                      (/* @__PURE__ */ new Date(
-                        c.start + "T00:00:00"
-                      )).toLocaleDateString("en-US", {
-                        month: "short",
-                        day: "numeric",
-                        year: "numeric"
-                      }),
-                      " - ",
-                      (/* @__PURE__ */ new Date(
-                        c.end + "T00:00:00"
-                      )).toLocaleDateString("en-US", {
-                        month: "short",
-                        day: "numeric",
-                        year: "numeric"
-                      })
-                    ] }),
-                    /* @__PURE__ */ f(
-                      "button",
-                      {
-                        onClick: () => {
-                          he(
-                            re.filter(
-                              (w) => w.id !== c.id
-                            )
-                          );
-                        },
-                        className: "hover:bg-red-200 rounded-full p-0.5",
-                        children: /* @__PURE__ */ f(kn, { className: "w-3 h-3" })
-                      }
-                    )
-                  ]
-                },
-                c.id
-              )) })
             ] })
           ] })
-        ] }),
-        /* @__PURE__ */ x("div", { className: "flex gap-4 justify-center mb-4", children: [
-          o === "day" && /* @__PURE__ */ f("div", { className: "flex gap-4", children: je !== null ? je === 0 ? (
-            // When yearsViewIndex === 0, show years grid on left and single calendar on right
-            /* @__PURE__ */ x(ct, { children: [
-              /* @__PURE__ */ f(
-                "div",
-                {
-                  className: "w-full flex-shrink-0",
-                  style: { minWidth: "280px", maxWidth: "280px" },
-                  children: vt(We)
-                }
-              ),
-              /* @__PURE__ */ f("div", { ref: rt, children: /* @__PURE__ */ f(
-                He,
-                {
-                  mode: "range",
-                  navLayout: "around",
-                  selected: Be,
-                  onSelect: me,
-                  month: te(Ee(J, 1)),
-                  onMonthChange: (c) => {
-                    const w = new Date(J), Y = new Date(c).getMonth() - w.getMonth();
-                    Y !== 1 && Y !== -11 && G(
-                      te(Ee(c, -1))
-                    );
-                  },
-                  numberOfMonths: 1,
-                  disabled: Le,
-                  modifiersClassNames: {
-                    selected: "rdp-day_selected bg-[#003DB8]",
-                    disabled: "rdp-day_disabled opacity-30 bg-gray-100 text-black"
-                  },
-                  classNames: {
-                    chevron: "fill-black"
-                  }
-                }
-              ) })
-            ] })
-          ) : (
-            // When yearsViewIndex === 1, show single calendar on left and years grid on right
-            /* @__PURE__ */ x(ct, { children: [
-              /* @__PURE__ */ f("div", { ref: Ze, children: /* @__PURE__ */ f(
-                He,
-                {
-                  mode: "range",
-                  navLayout: "around",
-                  selected: Be,
-                  onSelect: me,
-                  month: J,
-                  onMonthChange: G,
-                  numberOfMonths: 1,
-                  disabled: Le,
-                  modifiersClassNames: {
-                    selected: "rdp-day_selected bg-[#003DB8]",
-                    disabled: "rdp-day_disabled opacity-30 bg-gray-100 text-black"
-                  },
-                  classNames: {
-                    chevron: "fill-black"
-                  }
-                }
-              ) }),
-              /* @__PURE__ */ f(
-                "div",
-                {
-                  className: "w-full flex-shrink-0",
-                  style: { minWidth: "280px", maxWidth: "280px" },
-                  children: vt(We)
-                }
-              )
-            ] })
-          ) : be === null ? (
-            // When monthsViewIndex === null, show single DayPicker with 2 months (original UI)
-            /* @__PURE__ */ f("div", { ref: Ze, children: /* @__PURE__ */ f(
-              He,
-              {
-                mode: "range",
-                navLayout: "around",
-                selected: Be,
-                onSelect: (c, w) => {
-                  nt(c, w);
-                },
-                month: J,
-                onMonthChange: G,
-                numberOfMonths: 2,
-                disabled: Le,
-                modifiersClassNames: {
-                  selected: "rdp-day_selected bg-[#003DB8]",
-                  disabled: "rdp-day_disabled opacity-30 bg-gray-100 text-black"
-                },
-                classNames: {
-                  chevron: "fill-black"
-                }
-              }
-            ) })
-          ) : be === 0 ? (
-            // When monthsViewIndex === 0, show months grid on left and single calendar on right
-            /* @__PURE__ */ x(ct, { children: [
-              /* @__PURE__ */ f(
-                "div",
-                {
-                  className: "w-full flex-shrink-0",
-                  style: { minWidth: "280px", maxWidth: "280px" },
-                  children: kt(qe)
-                }
-              ),
-              /* @__PURE__ */ f("div", { ref: rt, children: /* @__PURE__ */ f(
-                He,
-                {
-                  mode: "range",
-                  navLayout: "around",
-                  selected: Be,
-                  onSelect: me,
-                  month: te(Ee(J, 1)),
-                  onMonthChange: (c) => {
-                    const w = new Date(J), Y = new Date(c).getMonth() - w.getMonth();
-                    Y !== 1 && Y !== -11 && G(
-                      te(Ee(c, -1))
-                    );
-                  },
-                  numberOfMonths: 1,
-                  disabled: Le,
-                  modifiersClassNames: {
-                    selected: "rdp-day_selected bg-[#003DB8]",
-                    disabled: "rdp-day_disabled opacity-30 bg-gray-100 text-black"
-                  },
-                  classNames: {
-                    chevron: "fill-black"
-                  }
-                }
-              ) })
-            ] })
-          ) : (
-            // When monthsViewIndex === 1, show single calendar on left and months grid on right
-            /* @__PURE__ */ x(ct, { children: [
-              /* @__PURE__ */ f("div", { ref: Ze, children: /* @__PURE__ */ f(
-                He,
-                {
-                  mode: "range",
-                  navLayout: "around",
-                  selected: Be,
-                  onSelect: me,
-                  month: J,
-                  onMonthChange: G,
-                  numberOfMonths: 1,
-                  disabled: Le,
-                  modifiersClassNames: {
-                    selected: "rdp-day_selected bg-[#003DB8]",
-                    disabled: "rdp-day_disabled opacity-30 bg-gray-100 text-black"
-                  },
-                  classNames: {
-                    chevron: "fill-black"
-                  }
-                }
-              ) }),
-              /* @__PURE__ */ f(
-                "div",
-                {
-                  className: "w-full flex-shrink-0",
-                  style: { minWidth: "280px", maxWidth: "280px" },
-                  children: kt(qe)
-                }
-              )
-            ] })
-          ) }),
-          o === "week" && /* @__PURE__ */ f(
-            He,
-            {
-              mode: "range",
-              navLayout: "around",
-              showWeekNumber: !0,
-              locale: void 0,
-              formatters: {
-                formatWeekNumber: (c) => `W${String(c).padStart(2, "0")}`
-              },
-              selected: Be,
-              onSelect: Dt,
-              onWeekNumberClick: (c, w) => {
-                w && w.length > 0 && Dt({
-                  from: w[0],
-                  to: w[w.length - 1]
-                });
-              },
-              month: J,
-              onMonthChange: G,
-              numberOfMonths: 2,
-              disabled: (c) => {
-                const w = !Xe, T = p && b.includes("days") && h.includes(c.getDay()), Y = p && b.includes("specific-date") && N.includes(R(c)), W = p && b.includes("saved-dates") && V.some(($) => {
-                  const O = ee.find(
-                    (j) => j.id === $
-                  );
-                  if (!O) return !1;
-                  const q = R(c);
-                  if (!(q >= O.selection.startDateUtc && q <= O.selection.endDateUtc)) return !1;
-                  if (O.selection.excludedWeekdays && O.selection.excludedWeekdays.length > 0 && O.selection.excludedWeekdays.includes(c.getDay()) || O.selection.excludedSpecificDates && O.selection.excludedSpecificDates.length > 0 && O.selection.excludedSpecificDates.includes(q) || O.selection.excludedSavedDates && O.selection.excludedSavedDates.some(
-                    (se) => {
-                      const L = ee.find(
-                        (K) => K.id === se
-                      );
-                      return L ? q >= L.selection.startDateUtc && q <= L.selection.endDateUtc : !1;
-                    }
-                  ))
-                    return !0;
-                  let ce = !1;
-                  return !!(O.selection.excludedDateRanges && (ce = O.selection.excludedDateRanges.some(
-                    (j) => q >= j.start && q <= j.end
-                  ), ce));
-                }), I = p && b.includes("date-range") && re.some(($) => {
-                  const O = R(c);
-                  return O >= $.start && O <= $.end;
-                });
-                return w || T || Y || W || I;
-              },
-              modifiersClassNames: {
-                selected: "rdp-day_selected bg-[#003DB8]",
-                disabled: "rdp-day_disabled opacity-30 bg-gray-100 text-black"
-              },
-              classNames: {
-                chevron: "fill-black"
-              }
-            }
-          ),
-          o === "month" && /* @__PURE__ */ f(
-            Ai,
-            {
-              selectedRange: xt,
-              onSelect: me
-            }
-          ),
-          o === "quarter" && /* @__PURE__ */ f(
-            Ri,
-            {
-              selectedRange: xt,
-              onSelect: me
-            }
-          )
         ] })
-      ] }),
-      /* @__PURE__ */ x("div", { className: "flex items-center justify-between pt-4 pb-6 px-6 border-t border-gray-200", children: [
-        /* @__PURE__ */ f(
-          "button",
-          {
-            onClick: Ft,
-            className: "px-4 py-2 text-sm font-medium text-blue-600 hover:bg-blue-50 rounded-md transition-colors",
-            children: "Today"
-          }
-        ),
-        /* @__PURE__ */ x("div", { className: "flex gap-2", children: [
-          /* @__PURE__ */ f(
-            "button",
-            {
-              onClick: Pt,
-              className: "px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 rounded-md transition-colors",
-              children: "Clear dates"
-            }
-          ),
-          /* @__PURE__ */ f(
-            "button",
-            {
-              onClick: n,
-              className: "px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 rounded-md transition-colors",
-              children: "Cancel"
-            }
-          ),
-          /* @__PURE__ */ f(
-            "button",
-            {
-              onClick: bt,
-              disabled: !!(tt || et),
-              className: `px-4 py-2 text-sm font-medium rounded-md transition-colors ${tt || et ? "bg-gray-300 text-gray-500 cursor-not-allowed" : "bg-blue-600 text-white hover:bg-blue-700"}`,
-              children: "Apply"
-            }
-          )
-        ] })
-      ] })
-    ] })
-  ] });
+      ]
+    }
+  );
 }
 export {
   Xe as ALLOW_FUTURE_DATES,
