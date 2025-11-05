@@ -434,22 +434,71 @@ export default function AdvancedDateRangePicker({
 
   const handleResetCalendarSelect = (
     range: { from?: Date; to?: Date } | undefined,
-    dayPickerProps: Date
+    selectedDay?: Date
   ) => {
-    if (startDateUtc && endDateUtc && range?.to) {
-      setStartDateUtc(formatUtc(dayPickerProps));
-      setEndDateUtc("");
+    if (!range?.from && !selectedDay) return;
+
+    // Third click: If we have a complete range and user clicks again, reset to start selecting from the clicked date
+    if (startDateUtc && endDateUtc && endDateUtc !== "" && range?.to) {
+      // User clicked on a new date after having a complete range - reset and start fresh
+      const clickedDate = selectedDay || range.from;
+      if (clickedDate) {
+        setStartDateUtc(formatUtc(clickedDate));
+        setEndDateUtc("");
+      }
       return;
     }
-    if (!startDateUtc && endDateUtc && range?.from) {
-      setEndDateUtc(formatUtc(range?.from));
+
+    // First click: No start date yet, set start date
+    if (!startDateUtc || startDateUtc === "") {
+      const clickedDate = range?.from || selectedDay;
+      if (clickedDate) {
+        setStartDateUtc(formatUtc(clickedDate));
+        setEndDateUtc("");
+      }
       return;
     }
-    if (!startDateUtc && !endDateUtc && range?.from) {
-      setStartDateUtc(formatUtc(range?.from));
-      setEndDateUtc("");
+
+    // Second click: Start date exists, set end date
+    if (startDateUtc && (!endDateUtc || endDateUtc === "")) {
+      if (range?.to) {
+        // DayPicker provided complete range
+        const endDate = formatUtc(range.to);
+        if (endDate < startDateUtc) {
+          // If end date is before start date, swap them
+          setEndDateUtc(startDateUtc);
+          setStartDateUtc(endDate);
+        } else {
+          setEndDateUtc(endDate);
+        }
+      } else if (range?.from) {
+        // Only from is provided, use it as end date
+        const clickedDate = formatUtc(range.from);
+        if (clickedDate !== startDateUtc) {
+          if (clickedDate < startDateUtc) {
+            setEndDateUtc(startDateUtc);
+            setStartDateUtc(clickedDate);
+          } else {
+            setEndDateUtc(clickedDate);
+          }
+        } else {
+          // Same date clicked, use it as end date (single day range)
+          setEndDateUtc(clickedDate);
+        }
+      } else if (selectedDay) {
+        // Use selectedDay as end date
+        const endDate = formatUtc(selectedDay);
+        if (endDate < startDateUtc) {
+          setEndDateUtc(startDateUtc);
+          setStartDateUtc(endDate);
+        } else {
+          setEndDateUtc(endDate);
+        }
+      }
       return;
     }
+
+    // Fallback: Handle range with both from and to
     if (range?.from) {
       const newStart = formatUtc(range.from);
       setStartDateUtc(newStart);
@@ -1631,8 +1680,8 @@ export default function AdvancedDateRangePicker({
                       mode="range"
                       navLayout="around"
                       selected={selectedRange}
-                      onSelect={(range, _dayPickerProps) => {
-                        handleResetCalendarSelect(range, _dayPickerProps);
+                      onSelect={(range, selectedDay) => {
+                        handleResetCalendarSelect(range, selectedDay);
                       }}
                       month={displayedMonth}
                       onMonthChange={setDisplayedMonth}
