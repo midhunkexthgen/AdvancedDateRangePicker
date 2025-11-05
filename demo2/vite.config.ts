@@ -4,12 +4,6 @@ import react from "@vitejs/plugin-react-swc";
 export default defineConfig({
   plugins: [react()],
   optimizeDeps: {
-    include: [
-      "lucide-react",
-      "react-day-picker",
-      "date-fns",
-      "date-fns-tz",
-    ],
+    include: ["lucide-react", "react-day-picker", "date-fns"],
   },
 });
-

@@ -1,4 +1,4 @@
-import { jsxs as x, jsx as f, Fragment as ct } from "react/jsx-runtime";
+import { jsxs as v, jsx as f, Fragment as ct } from "react/jsx-runtime";
 import S, { createContext as xr, useContext as vr, useCallback as ge, useRef as ke, useLayoutEffect as kr, useState as B, useEffect as We, useMemo as $t, forwardRef as In, createElement as Kt } from "react";
 function Mr(e, t, n = "long") {
   return new Intl.DateTimeFormat("en-US", {
@@ -2762,8 +2762,8 @@ function Ae(e) {
   }, [o, L]), { className: Le, style: rt } = $t(() => ({
     className: [i[W.Root], t.className].filter(Boolean).join(" "),
     style: { ...g?.[W.Root], ...t.style }
-  }), [i, t.className, t.style, g]), c = Lo(t), v = ke(null);
-  xa(v, !!t.animate, {
+  }), [i, t.className, t.style, g]), c = Lo(t), x = ke(null);
+  xa(x, !!t.animate, {
     classNames: i,
     months: he,
     focused: Pe,
@@ -2790,7 +2790,7 @@ function Ae(e) {
     { value: H },
     S.createElement(
       n.Root,
-      { rootRef: t.animate ? v : void 0, className: Le, style: rt, dir: t.dir, id: t.id, lang: t.lang, nonce: t.nonce, title: t.title, role: t.role, "aria-label": t["aria-label"], "aria-labelledby": t["aria-labelledby"], ...c },
+      { rootRef: t.animate ? x : void 0, className: Le, style: rt, dir: t.dir, id: t.id, lang: t.lang, nonce: t.nonce, title: t.title, role: t.role, "aria-label": t["aria-label"], "aria-labelledby": t["aria-labelledby"], ...c },
       S.createElement(
         n.Months,
         { className: i[W.Months], style: g?.[W.Months] },
@@ -3683,12 +3683,12 @@ function Ui({
     });
     return h === w ? b(h) : `${b(h)} - ${b(w)}`;
   };
-  return /* @__PURE__ */ x("div", { className: "w-72 bg-white border-r border-gray-200 py-4 flex flex-col ", children: [
-    /* @__PURE__ */ x("div", { className: "mb-3 px-4 flex-shrink-0", children: [
+  return /* @__PURE__ */ v("div", { className: "w-72 bg-white border-r border-gray-200 py-4 flex flex-col ", children: [
+    /* @__PURE__ */ v("div", { className: "mb-3 px-4 flex-shrink-0", children: [
       /* @__PURE__ */ f("div", { className: "flex items-center justify-between mb-2", children: /* @__PURE__ */ f("h3", { className: "text-xs font-semibold text-gray-600 uppercase", children: "Quick Select" }) }),
       /* @__PURE__ */ f("div", { className: "", children: Object.values(d).map((h) => {
         const { startDateUtc: w, endDateUtc: b } = h.getValue();
-        return /* @__PURE__ */ x(
+        return /* @__PURE__ */ v(
           "button",
           {
             onClick: () => y(h.getValue),
@@ -3702,8 +3702,8 @@ function Ui({
         );
       }) })
     ] }),
-    /* @__PURE__ */ x("div", { className: "flex flex-col flex-1 min-h-0 border-t border-gray-200 px-4", children: [
-      /* @__PURE__ */ f("div", { className: "flex items-center justify-between mb-2 flex-shrink-0 mt-3", children: /* @__PURE__ */ x("div", { className: "flex items-center gap-1", children: [
+    /* @__PURE__ */ v("div", { className: "flex flex-col flex-1 min-h-0 border-t border-gray-200 px-4", children: [
+      /* @__PURE__ */ f("div", { className: "flex items-center justify-between mb-2 flex-shrink-0 mt-3", children: /* @__PURE__ */ v("div", { className: "flex items-center gap-1", children: [
         /* @__PURE__ */ f("h3", { className: "text-xs font-semibold text-gray-600 uppercase", children: "Saved Dates" }),
         /* @__PURE__ */ f(
           "button",
@@ -3719,8 +3719,8 @@ function Ui({
         "div",
         {
           className: "group bg-white rounded-md hover:shadow-sm transition-all border border-gray-200",
-          children: /* @__PURE__ */ x("div", { className: "flex items-start justify-between px-3 py-2", children: [
-            /* @__PURE__ */ x(
+          children: /* @__PURE__ */ v("div", { className: "flex items-start justify-between px-3 py-2", children: [
+            /* @__PURE__ */ v(
               "button",
               {
                 onClick: () => N(h),
@@ -3731,8 +3731,8 @@ function Ui({
                     h.selection.startDateUtc,
                     h.selection.endDateUtc
                   ) }),
-                  (h.selection.excludedWeekdays?.length > 0 || h.selection.excludedSpecificDates && h.selection.excludedSpecificDates.length > 0 || h.selection.excludedSavedDates && h.selection.excludedSavedDates.length > 0 || h.selection.excludedDateRanges && h.selection.excludedDateRanges.length > 0) && /* @__PURE__ */ x("div", { className: "text-xs text-gray-500 mt-1 space-y-0.5", children: [
-                    h.selection.excludedWeekdays?.length > 0 && /* @__PURE__ */ x("div", { children: [
+                  (h.selection.excludedWeekdays?.length > 0 || h.selection.excludedSpecificDates && h.selection.excludedSpecificDates.length > 0 || h.selection.excludedSavedDates && h.selection.excludedSavedDates.length > 0 || h.selection.excludedDateRanges && h.selection.excludedDateRanges.length > 0) && /* @__PURE__ */ v("div", { className: "text-xs text-gray-500 mt-1 space-y-0.5", children: [
+                    h.selection.excludedWeekdays?.length > 0 && /* @__PURE__ */ v("div", { children: [
                       "Days:",
                       " ",
                       h.selection.excludedWeekdays.map(
@@ -3747,16 +3747,16 @@ function Ui({
                         ][w]
                       ).join(", ")
                     ] }),
-                    h.selection.excludedSpecificDates && h.selection.excludedSpecificDates.length > 0 && /* @__PURE__ */ x("div", { children: [
+                    h.selection.excludedSpecificDates && h.selection.excludedSpecificDates.length > 0 && /* @__PURE__ */ v("div", { children: [
                       "Specific Dates:",
                       " ",
                       h.selection.excludedSpecificDates.length
                     ] }),
-                    h.selection.excludedSavedDates && h.selection.excludedSavedDates.length > 0 && /* @__PURE__ */ x("div", { children: [
+                    h.selection.excludedSavedDates && h.selection.excludedSavedDates.length > 0 && /* @__PURE__ */ v("div", { children: [
                       "Saved: ",
                       h.selection.excludedSavedDates.length
                     ] }),
-                    h.selection.excludedDateRanges && h.selection.excludedDateRanges.length > 0 && /* @__PURE__ */ x("div", { children: [
+                    h.selection.excludedDateRanges && h.selection.excludedDateRanges.length > 0 && /* @__PURE__ */ v("div", { children: [
                       "Ranges:",
                       " ",
                       h.selection.excludedDateRanges.length
@@ -3777,7 +3777,7 @@ function Ui({
         },
         h.id
       )) }),
-      /* @__PURE__ */ x(
+      /* @__PURE__ */ v(
         "button",
         {
           onClick: () => a(!0),
@@ -3789,7 +3789,7 @@ function Ui({
         }
       )
     ] }),
-    o && /* @__PURE__ */ x(ct, { children: [
+    o && /* @__PURE__ */ v(ct, { children: [
       /* @__PURE__ */ f(
         "div",
         {
@@ -3797,9 +3797,9 @@ function Ui({
           onClick: () => a(!1)
         }
       ),
-      /* @__PURE__ */ f("div", { className: "fixed inset-0 flex items-center justify-center z-50 pointer-events-none", children: /* @__PURE__ */ x("div", { className: "bg-white rounded-lg shadow-xl p-5 w-80 border border-gray-200 pointer-events-auto", children: [
+      /* @__PURE__ */ f("div", { className: "fixed inset-0 flex items-center justify-center z-50 pointer-events-none", children: /* @__PURE__ */ v("div", { className: "bg-white rounded-lg shadow-xl p-5 w-80 border border-gray-200 pointer-events-auto", children: [
         /* @__PURE__ */ f("h3", { className: "text-base font-semibold mb-3 text-gray-800", children: "Save Date Range" }),
-        /* @__PURE__ */ x("div", { className: "mb-2", children: [
+        /* @__PURE__ */ v("div", { className: "mb-2", children: [
           /* @__PURE__ */ f("label", { className: "block text-xs font-medium text-gray-600 mb-1", children: "Label" }),
           /* @__PURE__ */ f(
             "input",
@@ -3816,8 +3816,8 @@ function Ui({
             }
           )
         ] }),
-        /* @__PURE__ */ x("div", { className: "mb-4 p-2 bg-gray-50 rounded text-xs text-gray-600 space-y-1", children: [
-          /* @__PURE__ */ x("div", { children: [
+        /* @__PURE__ */ v("div", { className: "mb-4 p-2 bg-gray-50 rounded text-xs text-gray-600 space-y-1", children: [
+          /* @__PURE__ */ v("div", { children: [
             /* @__PURE__ */ f("strong", { children: "Range:" }),
             " ",
             k(
@@ -3825,7 +3825,7 @@ function Ui({
               n.endDateUtc
             )
           ] }),
-          /* @__PURE__ */ x("div", { children: [
+          /* @__PURE__ */ v("div", { children: [
             /* @__PURE__ */ f("strong", { children: "Duration:" }),
             " ",
             n.duration,
@@ -3833,33 +3833,33 @@ function Ui({
             n.unit,
             "(s)"
           ] }),
-          n.excludedWeekdays && n.excludedWeekdays.length > 0 && /* @__PURE__ */ x("div", { children: [
+          n.excludedWeekdays && n.excludedWeekdays.length > 0 && /* @__PURE__ */ v("div", { children: [
             /* @__PURE__ */ f("strong", { children: "Excluded Days:" }),
             " ",
             n.excludedWeekdays.map(
               (h) => ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][h]
             ).join(", ")
           ] }),
-          n.excludedSpecificDates && n.excludedSpecificDates.length > 0 && /* @__PURE__ */ x("div", { children: [
+          n.excludedSpecificDates && n.excludedSpecificDates.length > 0 && /* @__PURE__ */ v("div", { children: [
             /* @__PURE__ */ f("strong", { children: "Excluded Specific Dates:" }),
             " ",
             n.excludedSpecificDates.length,
             " date(s)"
           ] }),
-          n.excludedSavedDates && n.excludedSavedDates.length > 0 && /* @__PURE__ */ x("div", { children: [
+          n.excludedSavedDates && n.excludedSavedDates.length > 0 && /* @__PURE__ */ v("div", { children: [
             /* @__PURE__ */ f("strong", { children: "Excluded Saved Dates:" }),
             " ",
             n.excludedSavedDates.length,
             " saved date(s)"
           ] }),
-          n.excludedDateRanges && n.excludedDateRanges.length > 0 && /* @__PURE__ */ x("div", { children: [
+          n.excludedDateRanges && n.excludedDateRanges.length > 0 && /* @__PURE__ */ v("div", { children: [
             /* @__PURE__ */ f("strong", { children: "Excluded Date Ranges:" }),
             " ",
             n.excludedDateRanges.length,
             " range(s)"
           ] })
         ] }),
-        /* @__PURE__ */ x("div", { className: "flex justify-end gap-2", children: [
+        /* @__PURE__ */ v("div", { className: "flex justify-end gap-2", children: [
           /* @__PURE__ */ f(
             "button",
             {
@@ -3924,7 +3924,7 @@ function Bi({
     if (!e.to) return !1;
     const m = Ve(e.to), D = te(e.to);
     return d === D && y === m;
-  }, u = (d, y) => !1, p = (d) => /* @__PURE__ */ x("div", { className: "flex-1", children: [
+  }, u = (d, y) => !1, p = (d) => /* @__PURE__ */ v("div", { className: "flex-1", children: [
     /* @__PURE__ */ f("div", { className: "text-center font-semibold text-lg mb-4", children: d }),
     /* @__PURE__ */ f("div", { className: "grid grid-cols-4 gap-2", children: $i.map((y, m) => {
       const D = a(d, m), N = i(d, m), k = l(d, m), h = N || k, w = u();
@@ -3943,8 +3943,8 @@ function Bi({
       );
     }) })
   ] }, d);
-  return /* @__PURE__ */ x("div", { className: "w-full", children: [
-    /* @__PURE__ */ x("div", { className: "flex items-center justify-between mb-4", children: [
+  return /* @__PURE__ */ v("div", { className: "w-full", children: [
+    /* @__PURE__ */ v("div", { className: "flex items-center justify-between mb-4", children: [
       /* @__PURE__ */ f(
         "button",
         {
@@ -3953,7 +3953,7 @@ function Bi({
           children: /* @__PURE__ */ f(mr, { className: "w-5 h-5" })
         }
       ),
-      /* @__PURE__ */ x("div", { className: "text-lg font-semibold", children: [
+      /* @__PURE__ */ v("div", { className: "text-lg font-semibold", children: [
         r,
         " - ",
         r + 1
@@ -3967,7 +3967,7 @@ function Bi({
         }
       )
     ] }),
-    /* @__PURE__ */ x("div", { className: "flex gap-8", children: [
+    /* @__PURE__ */ v("div", { className: "flex gap-8", children: [
       p(r),
       p(r + 1)
     ] })
@@ -4005,7 +4005,7 @@ function Hi({
     if (!e.to) return !1;
     const m = kt(e.to) - 1, D = te(e.to);
     return d === D && y === m;
-  }, u = (d, y) => !1, p = (d) => /* @__PURE__ */ x("div", { className: "flex-1", children: [
+  }, u = (d, y) => !1, p = (d) => /* @__PURE__ */ v("div", { className: "flex-1", children: [
     /* @__PURE__ */ f("div", { className: "text-center font-semibold text-lg mb-4", children: d }),
     /* @__PURE__ */ f("div", { className: "grid grid-cols-2 gap-3", children: Ai.map((y, m) => {
       const D = a(d, m), N = i(d, m), k = l(d, m), h = N || k, w = u();
@@ -4024,8 +4024,8 @@ function Hi({
       );
     }) })
   ] }, d);
-  return /* @__PURE__ */ x("div", { className: "w-full", children: [
-    /* @__PURE__ */ x("div", { className: "flex items-center justify-between mb-4", children: [
+  return /* @__PURE__ */ v("div", { className: "w-full", children: [
+    /* @__PURE__ */ v("div", { className: "flex items-center justify-between mb-4", children: [
       /* @__PURE__ */ f(
         "button",
         {
@@ -4034,7 +4034,7 @@ function Hi({
           children: /* @__PURE__ */ f(mr, { className: "w-5 h-5" })
         }
       ),
-      /* @__PURE__ */ x("div", { className: "text-lg font-semibold", children: [
+      /* @__PURE__ */ v("div", { className: "text-lg font-semibold", children: [
         r,
         " - ",
         r + 1
@@ -4048,7 +4048,7 @@ function Hi({
         }
       )
     ] }),
-    /* @__PURE__ */ x("div", { className: "flex gap-8", children: [
+    /* @__PURE__ */ v("div", { className: "flex gap-8", children: [
       p(r),
       p(r + 1)
     ] })
@@ -4249,8 +4249,8 @@ function Gi({
     void 0
   ), Re = ke(null), [J, ce] = B([]), [L, K] = B(() => e?.startDateUtc ? ee(U(e.startDateUtc)) : ee(U(r))), [ye, we] = B(null), [Ce, Te] = B(() => e?.startDateUtc ? te(U(e.startDateUtc)) : te(U(r))), [Pe, Ue] = B(null), [qe, pe] = B(() => {
     if (e?.startDateUtc) {
-      const v = te(U(e.startDateUtc));
-      return Math.floor(v / 10) * 10;
+      const x = te(U(e.startDateUtc));
+      return Math.floor(x / 10) * 10;
     }
     const c = te(U(r));
     return Math.floor(c / 10) * 10;
@@ -4268,25 +4268,25 @@ function Gi({
       d(1);
   }, [a, l, s, y]), We(() => {
     if (k.current) {
-      const v = document.createElement("canvas").getContext("2d");
-      if (v) {
-        v.font = "14px system-ui, -apple-system, sans-serif";
-        const H = v.measureText(p.toString()).width;
+      const x = document.createElement("canvas").getContext("2d");
+      if (x) {
+        x.font = "14px system-ui, -apple-system, sans-serif";
+        const H = x.measureText(p.toString()).width;
         w(12 + H + 4);
       }
     }
   }, [p]), We(() => {
-    const c = (v) => {
-      Re.current && !Re.current.contains(v.target) && $(!1);
+    const c = (x) => {
+      Re.current && !Re.current.contains(x.target) && $(!1);
     };
     return document.addEventListener("mousedown", c), () => document.removeEventListener("mousedown", c);
   }, []), We(() => {
     (async () => {
       await Je.init();
-      const v = await Je.getData(
+      const x = await Je.getData(
         "savedDateRanges"
       );
-      v && ce(v);
+      x && ce(x);
     })();
   }, []);
   const Ot = (c) => {
@@ -4296,29 +4296,29 @@ function Gi({
   }, et = !Xe, Tt = (c) => {
     if (!(c <= 0)) {
       if (d(c), a) {
-        const v = Ti(
+        const x = Ti(
           a,
           s,
           c,
           y
         );
-        u(v), K(ee(U(v)));
+        u(x), K(ee(U(x)));
       } else if (l) {
-        const v = Wi(
+        const x = Wi(
           l,
           s,
           c,
           y
         );
-        i(v), K(ee(U(v)));
+        i(x), K(ee(U(x)));
       }
     }
   }, pt = (c) => {
     o(c);
   }, Wt = (c) => {
-    y.includes(c) ? m(y.filter((v) => v !== c)) : m([...y, c]);
-  }, Yt = (c, v) => {
-    i(c), u(v), c && K(ee(U(c)));
+    y.includes(c) ? m(y.filter((x) => x !== c)) : m([...y, c]);
+  }, Yt = (c, x) => {
+    i(c), u(x), c && K(ee(U(c)));
   }, Et = (c) => {
     i(c.startDateUtc), u(c.endDateUtc), o(c.unit), m(c.excludedWeekdays), d(c.duration), c.excludeEnabled !== void 0 && O(c.excludeEnabled), c.excludeFilterTypes ? C(c.excludeFilterTypes) : C([]), c.excludedSpecificDates ? N(c.excludedSpecificDates) : N([]), c.excludedSavedDates ? ne(c.excludedSavedDates) : ne([]), c.excludedDateRanges ? fe(c.excludedDateRanges) : fe([]), c.startDateUtc && K(ee(U(c.startDateUtc)));
   }, _t = () => {
@@ -4342,16 +4342,16 @@ function Gi({
     t(c);
   }, be = (c) => {
     if (c?.from) {
-      const v = j(c.from);
-      if (i(v), c?.to) {
+      const x = j(c.from);
+      if (i(x), c?.to) {
         const H = j(c.to);
         u(H);
       } else
-        u(v);
+        u(x);
     }
-  }, nt = (c, v) => {
+  }, nt = (c, x) => {
     if (a && l && c?.to) {
-      i(j(v)), u("");
+      i(j(x)), x > U(l) && u("");
       return;
     }
     if (!a && l && c?.from) {
@@ -4372,16 +4372,16 @@ function Gi({
     }
   }, Ge = (c) => {
     if (c && c.from) {
-      const v = Ie(c.from, {
+      const x = Ie(c.from, {
         weekStartsOn: en
-      }), H = Ne(v, 6);
+      }), H = Ne(x, 6);
       if (c.to) {
         const M = Ie(c.to, {
           weekStartsOn: en
         }), F = Ne(M, 6);
-        be({ from: v, to: F });
+        be({ from: x, to: F });
       } else
-        be({ from: v, to: H });
+        be({ from: x, to: H });
     }
   }, bt = U(r), $e = {
     from: a ? U(a) : void 0,
@@ -4390,7 +4390,7 @@ function Gi({
     from: a ? U(a) : bt,
     to: l ? U(l) : bt
   }, je = (c) => {
-    const v = !Xe, H = b && g.includes("days") && y.includes(c.getDay()), M = b && g.includes("specific-date") && D.includes(j(c)), F = b && g.includes("saved-dates") && Z.some((_) => {
+    const x = !Xe, H = b && g.includes("days") && y.includes(c.getDay()), M = b && g.includes("specific-date") && D.includes(j(c)), F = b && g.includes("saved-dates") && Z.some((_) => {
       const E = J.find((z) => z.id === _);
       if (!E) return !1;
       const Y = j(c);
@@ -4412,15 +4412,15 @@ function Gi({
       const E = j(c);
       return E >= _.start && E <= _.end;
     });
-    return v || H || M || F || T;
-  }, Pt = (c, v) => {
+    return x || H || M || F || T;
+  }, Pt = (c, x) => {
     const H = ee(
-      ft(ht(/* @__PURE__ */ new Date(), c), v)
+      ft(ht(/* @__PURE__ */ new Date(), c), x)
     );
     K(H), we(null), Te(c);
   }, Ut = (c) => {
-    const v = Ve(L), H = ee(
-      ft(ht(/* @__PURE__ */ new Date(), c), v)
+    const x = Ve(L), H = ee(
+      ft(ht(/* @__PURE__ */ new Date(), c), x)
     );
     K(H), Ue(null), pe(Math.floor(c / 10) * 10);
   };
@@ -4428,11 +4428,11 @@ function Gi({
     ye === null && Te(te(L));
   }, [L, ye]);
   const wt = (c) => {
-    const v = c - 1, H = c + 10, M = te(L), F = [];
-    for (let T = v; T <= H; T++)
+    const x = c - 1, H = c + 10, M = te(L), F = [];
+    for (let T = x; T <= H; T++)
       F.push(T);
-    return /* @__PURE__ */ x("div", { className: "flex flex-col w-full", children: [
-      /* @__PURE__ */ x("div", { className: "flex items-center justify-between mb-4", children: [
+    return /* @__PURE__ */ v("div", { className: "flex flex-col w-full", children: [
+      /* @__PURE__ */ v("div", { className: "flex items-center justify-between mb-4", children: [
         /* @__PURE__ */ f(
           "button",
           {
@@ -4441,7 +4441,7 @@ function Gi({
             children: /* @__PURE__ */ f("span", { className: "text-lg", children: "<<" })
           }
         ),
-        /* @__PURE__ */ x("div", { className: "text-lg font-semibold", children: [
+        /* @__PURE__ */ v("div", { className: "text-lg font-semibold", children: [
           c,
           "-",
           c + 9
@@ -4472,8 +4472,8 @@ function Gi({
         );
       }) })
     ] });
-  }, xt = (c) => /* @__PURE__ */ x("div", { className: "flex flex-col w-full", children: [
-    /* @__PURE__ */ x("div", { className: "flex items-center justify-between mb-4", children: [
+  }, xt = (c) => /* @__PURE__ */ v("div", { className: "flex flex-col w-full", children: [
+    /* @__PURE__ */ v("div", { className: "flex items-center justify-between mb-4", children: [
       /* @__PURE__ */ f(
         "button",
         {
@@ -4492,7 +4492,7 @@ function Gi({
         }
       )
     ] }),
-    /* @__PURE__ */ f("div", { className: "grid grid-cols-3 gap-2 w-full", children: qi.map((v, H) => {
+    /* @__PURE__ */ f("div", { className: "grid grid-cols-3 gap-2 w-full", children: qi.map((x, H) => {
       const M = !Xe, F = te(L) === c && Ve(L) === H;
       return /* @__PURE__ */ f(
         "button",
@@ -4503,9 +4503,9 @@ function Gi({
                   px-3 py-4 border border-gray-300 text-sm font-medium rounded-md transition-colors
                   ${F ? "bg-[#003DB8] text-white" : "bg-gray-50 text-gray-700 hover:bg-gray-100"}
                 `,
-          children: v
+          children: x
         },
-        v
+        x
       );
     }) })
   ] }), Le = ke(null), rt = ke(null);
@@ -4593,17 +4593,17 @@ function Gi({
           M.appendChild(vt), M.appendChild(me);
         }
       }
-    }, v = (M, F) => {
+    }, x = (M, F) => {
       if (!M) return;
       M.querySelectorAll(".rdp-caption_label").forEach((_, E) => {
         const Y = _, le = F !== null ? F : E === 0 ? 0 : 1;
         ye === le || Pe === le || c(Y, le);
       });
     }, H = setTimeout(() => {
-      ye === null && Pe === null ? v(Le.current, null) : (v(Le.current, 0), v(rt.current, 1));
+      ye === null && Pe === null ? x(Le.current, null) : (x(Le.current, 0), x(rt.current, 1));
     }, 150);
     return () => clearTimeout(H);
-  }, [s, L, ye, Pe]), /* @__PURE__ */ x("div", { className: "flex gap-4 bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden max-h-[85vh]", children: [
+  }, [s, L, ye, Pe]), /* @__PURE__ */ v("div", { className: "flex gap-4 bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden max-h-[85vh]", children: [
     /* @__PURE__ */ f(
       Ui,
       {
@@ -4622,8 +4622,8 @@ function Gi({
         )
       }
     ),
-    /* @__PURE__ */ x("div", { className: "flex-1 flex flex-col min-h-0", children: [
-      /* @__PURE__ */ x("div", { className: "px-6 pt-6 overflow-y-auto flex-1", children: [
+    /* @__PURE__ */ v("div", { className: "flex-1 flex flex-col min-h-0", children: [
+      /* @__PURE__ */ v("div", { className: "px-6 pt-6 overflow-y-auto flex-1", children: [
         /* @__PURE__ */ f("div", { className: "flex gap-2 mb-4", children: ["day", "week", "month", "quarter"].map(
           (c) => /* @__PURE__ */ f(
             "button",
@@ -4635,8 +4635,8 @@ function Gi({
             c
           )
         ) }),
-        /* @__PURE__ */ x("div", { className: "grid grid-cols-3 gap-4 mb-4", children: [
-          /* @__PURE__ */ x("div", { children: [
+        /* @__PURE__ */ v("div", { className: "grid grid-cols-3 gap-4 mb-4", children: [
+          /* @__PURE__ */ v("div", { children: [
             /* @__PURE__ */ f("label", { className: "block text-xs font-medium text-gray-600 mb-1", children: "Start Date" }),
             /* @__PURE__ */ f(
               _n,
@@ -4648,7 +4648,7 @@ function Gi({
               }
             )
           ] }),
-          /* @__PURE__ */ x("div", { children: [
+          /* @__PURE__ */ v("div", { children: [
             /* @__PURE__ */ f("label", { className: "block text-xs font-medium text-gray-600 mb-1", children: "End Date" }),
             /* @__PURE__ */ f(
               _n,
@@ -4660,9 +4660,9 @@ function Gi({
               }
             )
           ] }),
-          /* @__PURE__ */ x("div", { children: [
+          /* @__PURE__ */ v("div", { children: [
             /* @__PURE__ */ f("label", { className: "block text-xs font-medium text-gray-600 mb-1", children: "Duration" }),
-            /* @__PURE__ */ x("div", { className: "relative", children: [
+            /* @__PURE__ */ v("div", { className: "relative", children: [
               /* @__PURE__ */ f(
                 "input",
                 {
@@ -4686,8 +4686,8 @@ function Gi({
           ] })
         ] }),
         et,
-        /* @__PURE__ */ x("div", { className: "mb-4", children: [
-          /* @__PURE__ */ x("div", { className: "flex items-center gap-3 mb-3", children: [
+        /* @__PURE__ */ v("div", { className: "mb-4", children: [
+          /* @__PURE__ */ v("div", { className: "flex items-center gap-3 mb-3", children: [
             /* @__PURE__ */ f(
               "input",
               {
@@ -4706,7 +4706,7 @@ function Gi({
                 children: "exclude from selection"
               }
             ),
-            /* @__PURE__ */ x("div", { className: "relative flex-1", ref: Re, children: [
+            /* @__PURE__ */ v("div", { className: "relative flex-1", ref: Re, children: [
               /* @__PURE__ */ f(
                 "button",
                 {
@@ -4737,8 +4737,8 @@ function Gi({
                 }
               ),
               /* @__PURE__ */ f(Ga, { className: "absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" }),
-              I && b && /* @__PURE__ */ f("div", { className: "absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg", children: /* @__PURE__ */ x("div", { className: "p-2 space-y-1", children: [
-                /* @__PURE__ */ x("label", { className: "flex items-center gap-2 px-3 py-2 hover:bg-gray-50 rounded cursor-pointer", children: [
+              I && b && /* @__PURE__ */ f("div", { className: "absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg", children: /* @__PURE__ */ v("div", { className: "p-2 space-y-1", children: [
+                /* @__PURE__ */ v("label", { className: "flex items-center gap-2 px-3 py-2 hover:bg-gray-50 rounded cursor-pointer", children: [
                   /* @__PURE__ */ f(
                     "input",
                     {
@@ -4749,7 +4749,7 @@ function Gi({
                           ...g,
                           "days"
                         ]) : C(
-                          g.filter((v) => v !== "days")
+                          g.filter((x) => x !== "days")
                         );
                       },
                       className: "w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
@@ -4757,7 +4757,7 @@ function Gi({
                   ),
                   /* @__PURE__ */ f("span", { className: "text-sm text-gray-700", children: "Days" })
                 ] }),
-                /* @__PURE__ */ x("label", { className: "flex items-center gap-2 px-3 py-2 hover:bg-gray-50 rounded cursor-pointer", children: [
+                /* @__PURE__ */ v("label", { className: "flex items-center gap-2 px-3 py-2 hover:bg-gray-50 rounded cursor-pointer", children: [
                   /* @__PURE__ */ f(
                     "input",
                     {
@@ -4769,7 +4769,7 @@ function Gi({
                           "specific-date"
                         ]) : C(
                           g.filter(
-                            (v) => v !== "specific-date"
+                            (x) => x !== "specific-date"
                           )
                         );
                       },
@@ -4778,7 +4778,7 @@ function Gi({
                   ),
                   /* @__PURE__ */ f("span", { className: "text-sm text-gray-700", children: "Specific Date" })
                 ] }),
-                /* @__PURE__ */ x("label", { className: "flex items-center gap-2 px-3 py-2 hover:bg-gray-50 rounded cursor-pointer", children: [
+                /* @__PURE__ */ v("label", { className: "flex items-center gap-2 px-3 py-2 hover:bg-gray-50 rounded cursor-pointer", children: [
                   /* @__PURE__ */ f(
                     "input",
                     {
@@ -4790,7 +4790,7 @@ function Gi({
                           "saved-dates"
                         ]) : C(
                           g.filter(
-                            (v) => v !== "saved-dates"
+                            (x) => x !== "saved-dates"
                           )
                         );
                       },
@@ -4799,7 +4799,7 @@ function Gi({
                   ),
                   /* @__PURE__ */ f("span", { className: "text-sm text-gray-700", children: "Saved Dates" })
                 ] }),
-                /* @__PURE__ */ x("label", { className: "flex items-center gap-2 px-3 py-2 hover:bg-gray-50 rounded cursor-pointer", children: [
+                /* @__PURE__ */ v("label", { className: "flex items-center gap-2 px-3 py-2 hover:bg-gray-50 rounded cursor-pointer", children: [
                   /* @__PURE__ */ f(
                     "input",
                     {
@@ -4811,7 +4811,7 @@ function Gi({
                           "date-range"
                         ]) : C(
                           g.filter(
-                            (v) => v !== "date-range"
+                            (x) => x !== "date-range"
                           )
                         );
                       },
@@ -4823,8 +4823,8 @@ function Gi({
               ] }) })
             ] })
           ] }),
-          b && g.length > 0 && /* @__PURE__ */ x("div", { className: "flex gap-2 items-center", children: [
-            g.includes("days") && /* @__PURE__ */ x(
+          b && g.length > 0 && /* @__PURE__ */ v("div", { className: "flex gap-2 items-center", children: [
+            g.includes("days") && /* @__PURE__ */ v(
               "button",
               {
                 onClick: () => G(
@@ -4833,7 +4833,7 @@ function Gi({
                 className: `flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${A === "days" ? "bg-blue-100 text-blue-700 border border-blue-300" : "bg-gray-100 text-gray-700 hover:bg-gray-200"}`,
                 children: [
                   /* @__PURE__ */ f(Lt, { className: "w-4 h-4" }),
-                  /* @__PURE__ */ x("span", { children: [
+                  /* @__PURE__ */ v("span", { children: [
                     "Days (",
                     y.length,
                     " selected)"
@@ -4841,7 +4841,7 @@ function Gi({
                 ]
               }
             ),
-            g.includes("specific-date") && /* @__PURE__ */ x(
+            g.includes("specific-date") && /* @__PURE__ */ v(
               "button",
               {
                 onClick: () => G(
@@ -4850,7 +4850,7 @@ function Gi({
                 className: `flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${A === "specific-date" ? "bg-blue-100 text-blue-700 border border-blue-300" : "bg-gray-100 text-gray-700 hover:bg-gray-200"}`,
                 children: [
                   /* @__PURE__ */ f(Lt, { className: "w-4 h-4" }),
-                  /* @__PURE__ */ x("span", { children: [
+                  /* @__PURE__ */ v("span", { children: [
                     "Dates (",
                     D.length,
                     " selected)"
@@ -4858,7 +4858,7 @@ function Gi({
                 ]
               }
             ),
-            g.includes("saved-dates") && /* @__PURE__ */ x(
+            g.includes("saved-dates") && /* @__PURE__ */ v(
               "button",
               {
                 onClick: () => G(
@@ -4867,7 +4867,7 @@ function Gi({
                 className: `flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${A === "saved-dates" ? "bg-blue-100 text-blue-700 border border-blue-300" : "bg-gray-100 text-gray-700 hover:bg-gray-200"}`,
                 children: [
                   /* @__PURE__ */ f(za, { className: "w-4 h-4" }),
-                  /* @__PURE__ */ x("span", { children: [
+                  /* @__PURE__ */ v("span", { children: [
                     "Saved (",
                     Z.length,
                     " selected)"
@@ -4875,7 +4875,7 @@ function Gi({
                 ]
               }
             ),
-            g.includes("date-range") && /* @__PURE__ */ x(
+            g.includes("date-range") && /* @__PURE__ */ v(
               "button",
               {
                 onClick: () => G(
@@ -4884,7 +4884,7 @@ function Gi({
                 className: `flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${A === "date-range" ? "bg-blue-100 text-blue-700 border border-blue-300" : "bg-gray-100 text-gray-700 hover:bg-gray-200"}`,
                 children: [
                   /* @__PURE__ */ f(Lt, { className: "w-4 h-4" }),
-                  /* @__PURE__ */ x("span", { children: [
+                  /* @__PURE__ */ v("span", { children: [
                     "Date Ranges (",
                     re.length,
                     " selected)"
@@ -4902,7 +4902,7 @@ function Gi({
             },
             c.value
           )) }),
-          b && A === "specific-date" && g.includes("specific-date") && /* @__PURE__ */ x("div", { className: "mt-3 flex flex-col gap-3", children: [
+          b && A === "specific-date" && g.includes("specific-date") && /* @__PURE__ */ v("div", { className: "mt-3 flex flex-col gap-3", children: [
             /* @__PURE__ */ f("p", { className: "text-xs text-gray-500 text-center mb-2", children: "Click individual dates to exclude them" }),
             /* @__PURE__ */ f("div", { className: "flex justify-center p-4 border border-gray-200 rounded-md bg-gray-50", children: /* @__PURE__ */ f(
               Ae,
@@ -4911,7 +4911,7 @@ function Gi({
                 selected: D.map((c) => U(c)),
                 onSelect: (c) => {
                   c && N(
-                    c.map((v) => j(v))
+                    c.map((x) => j(x))
                   );
                 },
                 numberOfMonths: 2,
@@ -4920,7 +4920,7 @@ function Gi({
                 }
               }
             ) }),
-            D.length > 0 && /* @__PURE__ */ f("div", { className: "flex flex-wrap gap-2", children: D.map((c) => /* @__PURE__ */ x(
+            D.length > 0 && /* @__PURE__ */ f("div", { className: "flex flex-wrap gap-2", children: D.map((c) => /* @__PURE__ */ v(
               "div",
               {
                 className: "flex items-center gap-1 px-2 py-1 bg-red-100 text-red-700 rounded text-xs",
@@ -4938,7 +4938,7 @@ function Gi({
                     {
                       onClick: () => {
                         N(
-                          D.filter((v) => v !== c)
+                          D.filter((x) => x !== c)
                         );
                       },
                       className: "hover:bg-red-200 rounded-full p-0.5",
@@ -4951,16 +4951,16 @@ function Gi({
             )) })
           ] }),
           b && A === "saved-dates" && g.includes("saved-dates") && /* @__PURE__ */ f("div", { className: "mt-3 flex flex-col gap-3", children: J.length === 0 ? /* @__PURE__ */ f("p", { className: "text-sm text-gray-500 text-center py-4", children: "No saved dates available" }) : /* @__PURE__ */ f("div", { className: "space-y-2 max-h-64 overflow-y-auto border border-gray-200 rounded-md p-2", children: J.map((c) => {
-            const v = Z.includes(
+            const x = Z.includes(
               c.id
             );
-            return /* @__PURE__ */ x(
+            return /* @__PURE__ */ v(
               "div",
               {
-                className: `flex items-center justify-between px-3 py-2 rounded-md cursor-pointer transition-colors ${v ? "bg-red-50 border border-red-300" : "bg-white hover:bg-gray-50 border border-gray-200"}`,
+                className: `flex items-center justify-between px-3 py-2 rounded-md cursor-pointer transition-colors ${x ? "bg-red-50 border border-red-300" : "bg-white hover:bg-gray-50 border border-gray-200"}`,
                 onClick: () => {
                   ne(
-                    v ? Z.filter(
+                    x ? Z.filter(
                       (H) => H !== c.id
                     ) : [
                       ...Z,
@@ -4969,9 +4969,9 @@ function Gi({
                   );
                 },
                 children: [
-                  /* @__PURE__ */ x("div", { className: "flex-1", children: [
+                  /* @__PURE__ */ v("div", { className: "flex-1", children: [
                     /* @__PURE__ */ f("div", { className: "text-sm font-medium text-gray-900", children: c.label }),
-                    /* @__PURE__ */ x("div", { className: "text-xs text-gray-600", children: [
+                    /* @__PURE__ */ v("div", { className: "text-xs text-gray-600", children: [
                       (/* @__PURE__ */ new Date(
                         c.selection.startDateUtc + "T00:00:00"
                       )).toLocaleDateString("en-US", {
@@ -4995,7 +4995,7 @@ function Gi({
                     "input",
                     {
                       type: "checkbox",
-                      checked: v,
+                      checked: x,
                       onChange: () => {
                       },
                       className: "w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
@@ -5006,7 +5006,7 @@ function Gi({
               c.id
             );
           }) }) }),
-          b && A === "date-range" && g.includes("date-range") && /* @__PURE__ */ x("div", { className: "mt-3 flex flex-col gap-3", children: [
+          b && A === "date-range" && g.includes("date-range") && /* @__PURE__ */ v("div", { className: "mt-3 flex flex-col gap-3", children: [
             /* @__PURE__ */ f("div", { className: "border border-gray-200 rounded-md bg-gray-50 p-4", children: /* @__PURE__ */ f(
               Ae,
               {
@@ -5020,7 +5020,7 @@ function Gi({
                 }
               }
             ) }),
-            he?.from && he?.to && /* @__PURE__ */ x("div", { className: "flex items-center gap-2", children: [
+            he?.from && he?.to && /* @__PURE__ */ v("div", { className: "flex items-center gap-2", children: [
               /* @__PURE__ */ f(
                 "button",
                 {
@@ -5048,14 +5048,14 @@ function Gi({
                 }
               )
             ] }),
-            re.length > 0 && /* @__PURE__ */ x("div", { className: "flex flex-col gap-2", children: [
+            re.length > 0 && /* @__PURE__ */ v("div", { className: "flex flex-col gap-2", children: [
               /* @__PURE__ */ f("p", { className: "text-xs text-gray-600 font-medium", children: "Excluded Date Ranges:" }),
-              /* @__PURE__ */ f("div", { className: "flex flex-wrap gap-2", children: re.map((c) => /* @__PURE__ */ x(
+              /* @__PURE__ */ f("div", { className: "flex flex-wrap gap-2", children: re.map((c) => /* @__PURE__ */ v(
                 "div",
                 {
                   className: "flex items-center gap-1 px-2 py-1 bg-red-100 text-red-700 rounded text-xs",
                   children: [
-                    /* @__PURE__ */ x("span", { children: [
+                    /* @__PURE__ */ v("span", { children: [
                       (/* @__PURE__ */ new Date(
                         c.start + "T00:00:00"
                       )).toLocaleDateString("en-US", {
@@ -5078,7 +5078,7 @@ function Gi({
                         onClick: () => {
                           fe(
                             re.filter(
-                              (v) => v.id !== c.id
+                              (x) => x.id !== c.id
                             )
                           );
                         },
@@ -5093,10 +5093,10 @@ function Gi({
             ] })
           ] })
         ] }),
-        /* @__PURE__ */ x("div", { className: "flex gap-4 justify-center mb-4", children: [
+        /* @__PURE__ */ v("div", { className: "flex gap-4 justify-center mb-4", children: [
           s === "day" && /* @__PURE__ */ f("div", { className: "flex gap-4", children: Pe !== null ? Pe === 0 ? (
             // When yearsViewIndex === 0, show years grid on left and single calendar on right
-            /* @__PURE__ */ x(ct, { children: [
+            /* @__PURE__ */ v(ct, { children: [
               /* @__PURE__ */ f(
                 "div",
                 {
@@ -5114,7 +5114,7 @@ function Gi({
                   onSelect: be,
                   month: ee(Ye(L, 1)),
                   onMonthChange: (c) => {
-                    const v = new Date(L), M = new Date(c).getMonth() - v.getMonth();
+                    const x = new Date(L), M = new Date(c).getMonth() - x.getMonth();
                     M !== 1 && M !== -11 && K(
                       ee(Ye(c, -1))
                     );
@@ -5133,7 +5133,7 @@ function Gi({
             ] })
           ) : (
             // When yearsViewIndex === 1, show single calendar on left and years grid on right
-            /* @__PURE__ */ x(ct, { children: [
+            /* @__PURE__ */ v(ct, { children: [
               /* @__PURE__ */ f("div", { ref: Le, children: /* @__PURE__ */ f(
                 Ae,
                 {
@@ -5171,8 +5171,8 @@ function Gi({
                 mode: "range",
                 navLayout: "around",
                 selected: $e,
-                onSelect: (c, v) => {
-                  nt(c, v);
+                onSelect: (c, x) => {
+                  nt(c, x);
                 },
                 month: L,
                 onMonthChange: K,
@@ -5189,7 +5189,7 @@ function Gi({
             ) })
           ) : ye === 0 ? (
             // When monthsViewIndex === 0, show months grid on left and single calendar on right
-            /* @__PURE__ */ x(ct, { children: [
+            /* @__PURE__ */ v(ct, { children: [
               /* @__PURE__ */ f(
                 "div",
                 {
@@ -5207,7 +5207,7 @@ function Gi({
                   onSelect: be,
                   month: ee(Ye(L, 1)),
                   onMonthChange: (c) => {
-                    const v = new Date(L), M = new Date(c).getMonth() - v.getMonth();
+                    const x = new Date(L), M = new Date(c).getMonth() - x.getMonth();
                     M !== 1 && M !== -11 && K(
                       ee(Ye(c, -1))
                     );
@@ -5226,7 +5226,7 @@ function Gi({
             ] })
           ) : (
             // When monthsViewIndex === 1, show single calendar on left and months grid on right
-            /* @__PURE__ */ x(ct, { children: [
+            /* @__PURE__ */ v(ct, { children: [
               /* @__PURE__ */ f("div", { ref: Le, children: /* @__PURE__ */ f(
                 Ae,
                 {
@@ -5269,17 +5269,17 @@ function Gi({
               },
               selected: $e,
               onSelect: Ge,
-              onWeekNumberClick: (c, v) => {
-                v && v.length > 0 && Ge({
-                  from: v[0],
-                  to: v[v.length - 1]
+              onWeekNumberClick: (c, x) => {
+                x && x.length > 0 && Ge({
+                  from: x[0],
+                  to: x[x.length - 1]
                 });
               },
               month: L,
               onMonthChange: K,
               numberOfMonths: 2,
               disabled: (c) => {
-                const v = !Xe, H = b && g.includes("days") && y.includes(c.getDay()), M = b && g.includes("specific-date") && D.includes(j(c)), F = b && g.includes("saved-dates") && Z.some((_) => {
+                const x = !Xe, H = b && g.includes("days") && y.includes(c.getDay()), M = b && g.includes("specific-date") && D.includes(j(c)), F = b && g.includes("saved-dates") && Z.some((_) => {
                   const E = J.find(
                     (z) => z.id === _
                   );
@@ -5303,7 +5303,7 @@ function Gi({
                   const E = j(c);
                   return E >= _.start && E <= _.end;
                 });
-                return v || H || M || F || T;
+                return x || H || M || F || T;
               },
               modifiersClassNames: {
                 selected: "rdp-day_selected bg-[#003DB8]",
@@ -5330,7 +5330,7 @@ function Gi({
           )
         ] })
       ] }),
-      /* @__PURE__ */ x("div", { className: "flex items-center justify-between pt-4 pb-6 px-6 border-t border-gray-200", children: [
+      /* @__PURE__ */ v("div", { className: "flex items-center justify-between pt-4 pb-6 px-6 border-t border-gray-200", children: [
         /* @__PURE__ */ f(
           "button",
           {
@@ -5339,7 +5339,7 @@ function Gi({
             children: "Today"
           }
         ),
-        /* @__PURE__ */ x("div", { className: "flex gap-2", children: [
+        /* @__PURE__ */ v("div", { className: "flex gap-2", children: [
           /* @__PURE__ */ f(
             "button",
             {

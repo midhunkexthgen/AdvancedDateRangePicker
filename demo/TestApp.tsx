@@ -1,10 +1,7 @@
-import React, { useState } from "react";
-import {
-  AdvancedDateRangePicker,
-  DateRangeSelection,
-} from "advanced-date-range-picker";
+import { useState } from "react";
+import { AdvancedDateRangePicker, DateRangeSelection } from "../src";
 // Import the CSS file
-import "advanced-date-range-picker/dist/advanced-date-range-picker.css";
+import "../dist/advanced-date-range-picker.css";
 
 function TestApp() {
   const [showPicker, setShowPicker] = useState(false);
@@ -27,9 +24,11 @@ function TestApp() {
       <button onClick={() => setShowPicker(!showPicker)}>
         {showPicker ? "Hide" : "Show"} Picker
       </button>
-      
+
       {dateRange && (
-        <div style={{ marginTop: "20px", padding: "10px", background: "#f0f0f0" }}>
+        <div
+          style={{ marginTop: "20px", padding: "10px", background: "#f0f0f0" }}
+        >
           <p>Start: {dateRange.startDateUtc}</p>
           <p>End: {dateRange.endDateUtc}</p>
         </div>
@@ -48,4 +47,3 @@ function TestApp() {
 }
 
 export default TestApp;
-

@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 /* Import the package CSS */
-@import "advanced-date-range-picker/dist/advanced-date-range-picker.css";
 
 body {
   margin: 0;

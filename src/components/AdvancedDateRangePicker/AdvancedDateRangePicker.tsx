@@ -438,7 +438,9 @@ export default function AdvancedDateRangePicker({
   ) => {
     if (startDateUtc && endDateUtc && range?.to) {
       setStartDateUtc(formatUtc(dayPickerProps));
-      setEndDateUtc("");
+      if (dayPickerProps > parseUtc(endDateUtc)) {
+        setEndDateUtc("");
+      }
       return;
     }
     if (!startDateUtc && endDateUtc && range?.from) {

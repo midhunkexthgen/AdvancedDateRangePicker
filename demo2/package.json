@@ -1,5 +1,5 @@
 {
-  "name": "advanced-date-range-picker-demo",
+  "name": "advanced-date-range-picker-demo2",
   "version": "1.0.0",
   "type": "module",
   "scripts": {
@@ -26,3 +26,4 @@
     "vite": "^5.0.8"
   }
 }
+
