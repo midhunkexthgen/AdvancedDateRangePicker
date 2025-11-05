@@ -27,7 +27,7 @@
     "build": "tsc && vite build",
     "dev": "vite",
     "prepublishOnly": "npm run build",
-    "postinstall": "npm run build"
+    "postinstall": "node scripts/postinstall.js || npm run build"
   },
   "keywords": [
     "react",
