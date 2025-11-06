@@ -99,6 +99,9 @@ const MONTHS = [
 // Consumers can override the fixed container height by defining the
 // `--adrp-container-height` CSS custom property on a parent element.
 const DEFAULT_PICKER_HEIGHT = "var(--adrp-container-height, min(720px, 85vh))";
+// Consumers can override the fixed container width by defining the
+// `--adrp-container-width` CSS custom property on a parent element.
+const DEFAULT_PICKER_WIDTH = "var(--adrp-container-width, min(1200px, 98vw))";
 
 export default function AdvancedDateRangePicker({
   initialSelection,
@@ -112,6 +115,9 @@ export default function AdvancedDateRangePicker({
     height: DEFAULT_PICKER_HEIGHT,
     minHeight: DEFAULT_PICKER_HEIGHT,
     maxHeight: DEFAULT_PICKER_HEIGHT,
+    width: DEFAULT_PICKER_WIDTH,
+    minWidth: DEFAULT_PICKER_WIDTH,
+    maxWidth: DEFAULT_PICKER_WIDTH,
     overflow: "hidden",
     ...themeColors,
   };
