@@ -152,15 +152,15 @@ const Rn = 6048e5, Fr = 864e5, qn = 6e4, jn = 36e5, yn = Symbol.for("constructDa
 function Z(e, t) {
   return typeof e == "function" ? e(t) : e && typeof e == "object" && yn in e ? e[yn](t) : e instanceof Date ? new e.constructor(t) : new Date(t);
 }
-function P(e, t) {
+function U(e, t) {
   return Z(t || e, e);
 }
 function We(e, t, n) {
-  const r = P(e, n?.in);
+  const r = U(e, n?.in);
   return isNaN(t) ? Z(e, NaN) : (t && r.setDate(r.getDate() + t), r);
 }
 function Ee(e, t, n) {
-  const r = P(e, n?.in);
+  const r = U(e, n?.in);
   if (isNaN(t)) return Z(e, NaN);
   if (!t)
     return r;
@@ -178,14 +178,14 @@ function bt() {
   return Ir;
 }
 function Ie(e, t) {
-  const n = bt(), r = t?.weekStartsOn ?? t?.locale?.options?.weekStartsOn ?? n.weekStartsOn ?? n.locale?.options?.weekStartsOn ?? 0, s = P(e, t?.in), o = s.getDay(), i = (o < r ? 7 : 0) + o - r;
+  const n = bt(), r = t?.weekStartsOn ?? t?.locale?.options?.weekStartsOn ?? n.weekStartsOn ?? n.locale?.options?.weekStartsOn ?? 0, s = U(e, t?.in), o = s.getDay(), i = (o < r ? 7 : 0) + o - r;
   return s.setDate(s.getDate() - i), s.setHours(0, 0, 0, 0), s;
 }
 function mt(e, t) {
   return Ie(e, { ...t, weekStartsOn: 1 });
 }
 function Ln(e, t) {
-  const n = P(e, t?.in), r = n.getFullYear(), s = Z(n, 0);
+  const n = U(e, t?.in), r = n.getFullYear(), s = Z(n, 0);
   s.setFullYear(r + 1, 0, 4), s.setHours(0, 0, 0, 0);
   const o = mt(s), i = Z(n, 0);
   i.setFullYear(r, 0, 4), i.setHours(0, 0, 0, 0);
@@ -193,7 +193,7 @@ function Ln(e, t) {
   return n.getTime() >= o.getTime() ? r + 1 : n.getTime() >= a.getTime() ? r : r - 1;
 }
 function pn(e) {
-  const t = P(e), n = new Date(
+  const t = U(e), n = new Date(
     Date.UTC(
       t.getFullYear(),
       t.getMonth(),
@@ -214,7 +214,7 @@ function qe(e, ...t) {
   return t.map(n);
 }
 function gt(e, t) {
-  const n = P(e, t?.in);
+  const n = U(e, t?.in);
   return n.setHours(0, 0, 0, 0), n;
 }
 function cn(e, t, n) {
@@ -242,7 +242,7 @@ function $r(e, t) {
   let n, r = t?.in;
   return e.forEach((s) => {
     !r && typeof s == "object" && (r = Z.bind(null, s));
-    const o = P(s, r);
+    const o = U(s, r);
     (!n || n < o || isNaN(+o)) && (n = o);
   }), Z(r, n || NaN);
 }
@@ -250,12 +250,12 @@ function Br(e, t) {
   let n, r = t?.in;
   return e.forEach((s) => {
     !r && typeof s == "object" && (r = Z.bind(null, s));
-    const o = P(s, r);
+    const o = U(s, r);
     (!n || n > o || isNaN(+o)) && (n = o);
   }), Z(r, n || NaN);
 }
 function qt(e, t) {
-  const n = +P(e) - +P(t);
+  const n = +U(e) - +U(t);
   return n < 0 ? -1 : n > 0 ? 1 : n;
 }
 function Ar(e, t, n) {
@@ -270,7 +270,7 @@ function zn(e) {
   return e instanceof Date || typeof e == "object" && Object.prototype.toString.call(e) === "[object Date]";
 }
 function Hr(e) {
-  return !(!zn(e) && typeof e != "number" || isNaN(+P(e)));
+  return !(!zn(e) && typeof e != "number" || isNaN(+U(e)));
 }
 function Qn(e, t, n) {
   const [r, s] = qe(
@@ -281,7 +281,7 @@ function Qn(e, t, n) {
   return o * 12 + i;
 }
 function Ct(e, t) {
-  const n = P(e, t?.in);
+  const n = U(e, t?.in);
   return Math.trunc(n.getMonth() / 3) + 1;
 }
 function Vn(e, t, n) {
@@ -307,15 +307,15 @@ function Gn(e) {
   };
 }
 function Rr(e, t) {
-  const n = P(e, t?.in);
+  const n = U(e, t?.in);
   return n.setHours(23, 59, 59, 999), n;
 }
 function Kn(e, t) {
-  const n = P(e, t?.in), r = n.getMonth();
+  const n = U(e, t?.in), r = n.getMonth();
   return n.setFullYear(n.getFullYear(), r + 1, 0), n.setHours(23, 59, 59, 999), n;
 }
 function qr(e, t) {
-  const n = P(e, t?.in);
+  const n = U(e, t?.in);
   return +Rr(n, t) == +Kn(n, t);
 }
 function Xn(e, t, n) {
@@ -369,19 +369,19 @@ function Zr(e, t) {
   return s ? l.reverse() : l;
 }
 function zr(e, t) {
-  const n = P(e, t?.in), r = n.getMonth(), s = r - r % 3;
+  const n = U(e, t?.in), r = n.getMonth(), s = r - r % 3;
   return n.setMonth(s, 1), n.setHours(0, 0, 0, 0), n;
 }
 function te(e, t) {
-  const n = P(e, t?.in);
+  const n = U(e, t?.in);
   return n.setDate(1), n.setHours(0, 0, 0, 0), n;
 }
 function Qr(e, t) {
-  const n = P(e, t?.in), r = n.getFullYear();
+  const n = U(e, t?.in), r = n.getFullYear();
   return n.setFullYear(r + 1, 0, 0), n.setHours(23, 59, 59, 999), n;
 }
 function un(e, t) {
-  const n = P(e, t?.in);
+  const n = U(e, t?.in);
   return n.setFullYear(n.getFullYear(), 0, 1), n.setHours(0, 0, 0, 0), n;
 }
 function Vr(e, t) {
@@ -396,7 +396,7 @@ function Vr(e, t) {
   return s ? l.reverse() : l;
 }
 function er(e, t) {
-  const n = bt(), r = t?.weekStartsOn ?? t?.locale?.options?.weekStartsOn ?? n.weekStartsOn ?? n.locale?.options?.weekStartsOn ?? 0, s = P(e, t?.in), o = s.getDay(), i = (o < r ? -7 : 0) + 6 - (o - r);
+  const n = bt(), r = t?.weekStartsOn ?? t?.locale?.options?.weekStartsOn ?? n.weekStartsOn ?? n.locale?.options?.weekStartsOn ?? 0, s = U(e, t?.in), o = s.getDay(), i = (o < r ? -7 : 0) + 6 - (o - r);
   return s.setDate(s.getDate() + i), s.setHours(23, 59, 59, 999), s;
 }
 function Gr(e, t) {
@@ -834,15 +834,15 @@ const ys = /^(\d+)(th|st|nd|rd)?/i, ps = /\d+/i, bs = {
   }
 };
 function Ts(e, t) {
-  const n = P(e, t?.in);
+  const n = U(e, t?.in);
   return cn(n, un(n)) + 1;
 }
 function tr(e, t) {
-  const n = P(e, t?.in), r = +mt(n) - +Pr(n);
+  const n = U(e, t?.in), r = +mt(n) - +Pr(n);
   return Math.round(r / Rn) + 1;
 }
 function nr(e, t) {
-  const n = P(e, t?.in), r = n.getFullYear(), s = bt(), o = t?.firstWeekContainsDate ?? t?.locale?.options?.firstWeekContainsDate ?? s.firstWeekContainsDate ?? s.locale?.options?.firstWeekContainsDate ?? 1, i = Z(t?.in || e, 0);
+  const n = U(e, t?.in), r = n.getFullYear(), s = bt(), o = t?.firstWeekContainsDate ?? t?.locale?.options?.firstWeekContainsDate ?? s.firstWeekContainsDate ?? s.locale?.options?.firstWeekContainsDate ?? 1, i = Z(t?.in || e, 0);
   i.setFullYear(r + 1, 0, o), i.setHours(0, 0, 0, 0);
   const a = Ie(i, t), l = Z(t?.in || e, 0);
   l.setFullYear(r, 0, o), l.setHours(0, 0, 0, 0);
@@ -854,7 +854,7 @@ function Ws(e, t) {
   return o.setFullYear(s, 0, r), o.setHours(0, 0, 0, 0), Ie(o, t);
 }
 function rr(e, t) {
-  const n = P(e, t?.in), r = +Ie(n, t) - +Ws(n, t);
+  const n = U(e, t?.in), r = +Ie(n, t) - +Ws(n, t);
   return Math.round(r / Rn) + 1;
 }
 function A(e, t) {
@@ -1553,7 +1553,7 @@ function Bs(e, t, n) {
 }
 const As = /[yYQqMLwIdDecihHKkms]o|(\w)\1*|''|'(''|[^'])+('|$)|./g, Hs = /P+p+|P+|p+|''|'(''|[^'])+('|$)|./g, Rs = /^'([^]*?)'?$/, qs = /''/g, js = /[a-zA-Z]/;
 function Ls(e, t, n) {
-  const r = bt(), s = n?.locale ?? r.locale ?? fn, o = n?.firstWeekContainsDate ?? n?.locale?.options?.firstWeekContainsDate ?? r.firstWeekContainsDate ?? r.locale?.options?.firstWeekContainsDate ?? 1, i = n?.weekStartsOn ?? n?.locale?.options?.weekStartsOn ?? r.weekStartsOn ?? r.locale?.options?.weekStartsOn ?? 0, a = P(e, n?.in);
+  const r = bt(), s = n?.locale ?? r.locale ?? fn, o = n?.firstWeekContainsDate ?? n?.locale?.options?.firstWeekContainsDate ?? r.firstWeekContainsDate ?? r.locale?.options?.firstWeekContainsDate ?? 1, i = n?.weekStartsOn ?? n?.locale?.options?.weekStartsOn ?? r.weekStartsOn ?? r.locale?.options?.weekStartsOn ?? 0, a = U(e, n?.in);
   if (!Hr(a))
     throw new RangeError("Invalid time value");
   let l = t.match(Hs).map((g) => {
@@ -1596,20 +1596,20 @@ function Zs(e) {
   return t ? t[1].replace(qs, "'") : e;
 }
 function zs(e, t) {
-  const n = P(e, t?.in), r = n.getFullYear(), s = n.getMonth(), o = Z(n, 0);
+  const n = U(e, t?.in), r = n.getFullYear(), s = n.getMonth(), o = Z(n, 0);
   return o.setFullYear(r, s + 1, 0), o.setHours(0, 0, 0, 0), o.getDate();
 }
 function Je(e, t) {
-  return P(e, t?.in).getMonth();
+  return U(e, t?.in).getMonth();
 }
 function ne(e, t) {
-  return P(e, t?.in).getFullYear();
+  return U(e, t?.in).getFullYear();
 }
 function Qs(e, t) {
-  return +P(e) > +P(t);
+  return +U(e) > +U(t);
 }
 function Vs(e, t) {
-  return +P(e) < +P(t);
+  return +U(e) < +U(t);
 }
 function Gs(e, t, n) {
   const [r, s] = qe(
@@ -1642,7 +1642,7 @@ function Xs(e, t) {
   if (s.timezone) {
     if (l = ao(s.timezone), isNaN(l)) return n();
   } else {
-    const u = new Date(i + a), g = P(0, t?.in);
+    const u = new Date(i + a), g = U(0, t?.in);
     return g.setFullYear(
       u.getUTCFullYear(),
       u.getUTCMonth(),
@@ -1654,7 +1654,7 @@ function Xs(e, t) {
       u.getUTCMilliseconds()
     ), g;
   }
-  return P(i + a + l, t?.in);
+  return U(i + a + l, t?.in);
 }
 const Tt = {
   dateTimeDelimiter: /[T ]/,
@@ -1743,17 +1743,17 @@ function mo(e, t) {
   return t >= 0 && t <= 59;
 }
 function yt(e, t, n) {
-  const r = P(e, n?.in), s = r.getFullYear(), o = r.getDate(), i = Z(e, 0);
+  const r = U(e, n?.in), s = r.getFullYear(), o = r.getDate(), i = Z(e, 0);
   i.setFullYear(s, t, 15), i.setHours(0, 0, 0, 0);
   const a = zs(i);
   return r.setMonth(t, Math.min(o, a)), r;
 }
 function go(e, t, n) {
-  const r = P(e, n?.in), s = Math.trunc(r.getMonth() / 3) + 1, o = t - s;
+  const r = U(e, n?.in), s = Math.trunc(r.getMonth() / 3) + 1, o = t - s;
   return yt(r, r.getMonth() + o * 3);
 }
 function pt(e, t, n) {
-  const r = P(e, n?.in);
+  const r = U(e, n?.in);
   return isNaN(+r) ? Z(e, NaN) : (r.setFullYear(t), r);
 }
 const kn = 5, yo = 4;
@@ -3293,7 +3293,7 @@ function Ei(e, t, n) {
   return o.setFullYear(s.getUTCFullYear(), s.getUTCMonth(), s.getUTCDate()), o.setHours(s.getUTCHours(), s.getUTCMinutes(), s.getUTCSeconds(), s.getUTCMilliseconds()), o;
 }
 const an = 0, Xi = !1, nt = !0, Ji = "firstFullWeek", _i = "UTC";
-function U(e) {
+function P(e) {
   const t = Xs(`${e}T00:00:00.000Z`);
   return Ei(t, _i);
 }
@@ -3306,7 +3306,7 @@ function Yt() {
   return `${t}-${n}-${r}`;
 }
 function Fi(e, t, n) {
-  const r = U(e);
+  const r = P(e);
   let s;
   switch (t) {
     case "day":
@@ -3329,7 +3329,7 @@ function Fi(e, t, n) {
 function Ii(e, t, n, r) {
   if (n <= 0) return e;
   if (t === "day" && r.length > 0) {
-    let s = U(e), o = 0;
+    let s = P(e), o = 0;
     for (r.includes(s.getDay()) || (o = 1); o < n; )
       s = We(s, 1), r.includes(s.getDay()) || o++;
     return q(s);
@@ -3339,12 +3339,12 @@ function Ii(e, t, n, r) {
 function Pi(e, t, n, r) {
   if (n <= 0) return e;
   if (t === "day" && r.length > 0) {
-    let s = U(e), o = 0;
+    let s = P(e), o = 0;
     for (r.includes(s.getDay()) || (o = 1); o < n; )
       s = We(s, -1), r.includes(s.getDay()) || o++;
     return q(s);
   } else {
-    const s = U(e);
+    const s = P(e);
     let o;
     switch (t) {
       case "day":
@@ -3366,7 +3366,7 @@ function Pi(e, t, n, r) {
   }
 }
 function Nr(e, t, n, r) {
-  const s = U(e), o = U(t);
+  const s = P(e), o = P(t);
   if (s > o) return 0;
   if (n === "day" && r.length > 0)
     return Jn({ start: s, end: o }).filter(
@@ -3386,7 +3386,7 @@ function Nr(e, t, n, r) {
   }
 }
 function Ui(e, t, n) {
-  const r = U(e), s = U(t);
+  const r = P(e), s = P(t);
   if (r > s) return [];
   const o = Jn({ start: r, end: s });
   return n.length === 0 ? o.map(q) : o.filter((i) => !n.includes(i.getDay())).map(q);
@@ -3439,7 +3439,7 @@ function $i(e) {
   }
 }
 function Bi() {
-  const e = Yt(), t = U(e);
+  const e = Yt(), t = P(e);
   return {
     today: {
       label: "Today",
@@ -3832,7 +3832,7 @@ function Li({
   onSelect: t
 }) {
   const n = ne(e.from), [r, s] = B(n);
-  U(Yt());
+  P(Yt());
   const o = (d, p) => {
     const y = yt(pt(/* @__PURE__ */ new Date(), d), p);
     if (!e.from) {
@@ -3911,7 +3911,7 @@ function zi({
   onSelect: t
 }) {
   const n = ne(e.from), [r, s] = B(n);
-  U(Yt());
+  P(Yt());
   const o = (d, p) => {
     const y = zr(
       go(pt(/* @__PURE__ */ new Date(), d), p + 1)
@@ -4195,12 +4195,12 @@ function nc({
     []
   ), Y = Ce(null), [D, N] = B(0), [M, $] = B(!1), [W, H] = B([]), [ee, le] = B(!1), [X, me] = B(null), [ae, xe] = B([]), [ue, re] = B([]), [se, de] = B(
     void 0
-  ), je = Ce(null), [ve, st] = B([]), [G, J] = B(() => e?.startDateUtc ? te(U(e.startDateUtc)) : te(U(s))), [ke, Ue] = B(null), [Le, De] = B(() => e?.startDateUtc ? ne(U(e.startDateUtc)) : ne(U(s))), [Ze, $e] = B(null), [et, Be] = B(() => {
+  ), je = Ce(null), [ve, st] = B([]), [G, J] = B(() => e?.startDateUtc ? te(P(e.startDateUtc)) : te(P(s))), [ke, Ue] = B(null), [Le, De] = B(() => e?.startDateUtc ? ne(P(e.startDateUtc)) : ne(P(s))), [Ze, $e] = B(null), [et, Be] = B(() => {
     if (e?.startDateUtc) {
-      const m = ne(U(e.startDateUtc));
+      const m = ne(P(e.startDateUtc));
       return Math.floor(m / 10) * 10;
     }
-    const c = ne(U(s));
+    const c = ne(P(s));
     return Math.floor(c / 10) * 10;
   });
   Oe(() => {
@@ -4240,9 +4240,9 @@ function nc({
     l && !g ? y("end") : !l && g && y("start");
   }, [l, g]);
   const xt = (c) => {
-    u(c), y(c ? "end" : "start"), c && g && U(c) > U(g) && d(c), c && J(te(U(c)));
+    u(c), c ? g || y("end") : y("start"), c && g && P(c) > P(g) && d(c), c && J(te(P(c)));
   }, Et = (c) => {
-    d(c), y(c ? "start" : "end"), c && l && U(c) < U(l) && u(c), c && J(te(U(c)));
+    d(c), c ? l || y("start") : y("end"), c && l && P(c) < P(l) && u(c), c && J(te(P(c)));
   }, ot = !nt, _t = (c) => {
     if (!(c <= 0)) {
       if (O(c), l) {
@@ -4252,7 +4252,7 @@ function nc({
           c,
           x
         );
-        d(m), J(te(U(m)));
+        d(m), J(te(P(m)));
       } else if (g) {
         const m = Pi(
           g,
@@ -4260,7 +4260,7 @@ function nc({
           c,
           x
         );
-        u(m), J(te(U(m)));
+        u(m), J(te(P(m)));
       }
       y("start");
     }
@@ -4269,13 +4269,13 @@ function nc({
   }, It = (c) => {
     x.includes(c) ? k(x.filter((m) => m !== c)) : k([...x, c]);
   }, Pt = (c, m) => {
-    u(c), d(m), y("start"), c && J(te(U(c)));
+    u(c), d(m), y("start"), c && J(te(P(c)));
   }, Ut = (c) => {
-    u(c.startDateUtc), d(c.endDateUtc), a(c.unit), k(c.excludedWeekdays), O(c.duration), y("start"), c.excludeEnabled !== void 0 && $(c.excludeEnabled), c.excludeFilterTypes ? H(c.excludeFilterTypes) : H([]), c.excludedSpecificDates ? w(c.excludedSpecificDates) : w([]), c.excludedSavedDates ? xe(c.excludedSavedDates) : xe([]), c.excludedDateRanges ? re(c.excludedDateRanges) : re([]), c.startDateUtc && J(te(U(c.startDateUtc)));
+    u(c.startDateUtc), d(c.endDateUtc), a(c.unit), k(c.excludedWeekdays), O(c.duration), y("start"), c.excludeEnabled !== void 0 && $(c.excludeEnabled), c.excludeFilterTypes ? H(c.excludeFilterTypes) : H([]), c.excludedSpecificDates ? w(c.excludedSpecificDates) : w([]), c.excludedSavedDates ? xe(c.excludedSavedDates) : xe([]), c.excludedDateRanges ? re(c.excludedDateRanges) : re([]), c.startDateUtc && J(te(P(c.startDateUtc)));
   }, vt = () => {
-    u(s), d(s), k([]), y("start"), J(te(U(s)));
+    u(s), d(s), k([]), y("start"), J(te(P(s)));
   }, at = () => {
-    u(""), d(""), O(1), a("day"), k([]), y("start"), $(!1), H([]), w([]), xe([]), re([]), de(void 0), me(null), J(te(U(s)));
+    u(""), d(""), O(1), a("day"), k([]), y("start"), $(!1), H([]), w([]), xe([]), re([]), de(void 0), me(null), J(te(P(s)));
   }, ze = !l || l.trim() === "" || !g || g.trim() === "", $t = () => {
     if (ze)
       return;
@@ -4303,7 +4303,7 @@ function nc({
   }, Bt = (c, m) => {
     if (l && g && c?.to) {
       const C = q(m);
-      u(C), m.getTime() > U(g).getTime() && d(""), y("end");
+      p === "start" ? P(g).getTime() > P(C).getTime() ? u(C) : (u(C), d("")) : P(l).getTime() > P(C).getTime() ? (d(l), u(C)) : (d(C), u(l)), y(p === "start" ? "end" : "start");
       return;
     }
     if (!l && g && c?.from) {
@@ -4335,12 +4335,12 @@ function nc({
       } else
         Me({ from: m, to: C });
     }
-  }, Mt = U(s), Ae = {
-    from: l ? U(l) : void 0,
-    to: g ? U(g) : void 0
+  }, Mt = P(s), Ae = {
+    from: l ? P(l) : void 0,
+    to: g ? P(g) : void 0
   }, Nt = {
-    from: l ? U(l) : Mt,
-    to: g ? U(g) : Mt
+    from: l ? P(l) : Mt,
+    to: g ? P(g) : Mt
   }, Qe = (c) => {
     const m = !nt, C = M && W.includes("days") && x.includes(c.getDay()), _ = M && W.includes("specific-date") && h.includes(q(c)), E = M && W.includes("saved-dates") && ae.some((Q) => {
       const F = ve.find((V) => V.id === Q);
@@ -4880,7 +4880,7 @@ function nc({
                   Re,
                   {
                     mode: "multiple",
-                    selected: h.map((c) => U(c)),
+                    selected: h.map((c) => P(c)),
                     onSelect: (c) => {
                       c && w(
                         c.map((m) => q(m))
@@ -5360,5 +5360,5 @@ export {
   Yt as getTodayUtc,
   $i as getUnitAbbreviation,
   tc as parseDisplayDate,
-  U as parseUtc
+  P as parseUtc
 };

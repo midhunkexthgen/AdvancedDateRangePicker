@@ -276,7 +276,13 @@ export default function AdvancedDateRangePicker({
 
   const handleStartDateChange = (value: string) => {
     setStartDateUtc(value);
-    setActiveDateField(value ? "end" : "start");
+    if (value) {
+      if (!endDateUtc) {
+        setActiveDateField("end");
+      }
+    } else {
+      setActiveDateField("start");
+    }
     // If new start is after end, adjust end (only if both dates are valid)
     if (value && endDateUtc && parseUtc(value) > parseUtc(endDateUtc)) {
       setEndDateUtc(value);
@@ -289,7 +295,13 @@ export default function AdvancedDateRangePicker({
 
   const handleEndDateChange = (value: string) => {
     setEndDateUtc(value);
-    setActiveDateField(value ? "start" : "end");
+    if (value) {
+      if (!startDateUtc) {
+        setActiveDateField("start");
+      }
+    } else {
+      setActiveDateField("end");
+    }
     // If new end is before start, adjust start (only if both dates are valid)
     if (value && startDateUtc && parseUtc(value) < parseUtc(startDateUtc)) {
       setStartDateUtc(value);
