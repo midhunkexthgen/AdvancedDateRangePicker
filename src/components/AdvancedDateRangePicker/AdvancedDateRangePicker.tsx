@@ -1963,6 +1963,8 @@ export default function AdvancedDateRangePicker({
               <MonthPicker
                 selectedRange={monthQuarterRange}
                 onSelect={handleCalendarSelect}
+                activeDateField={activeDateField}
+                onActiveFieldChange={setActiveDateField}
               />
             )}
             {unit === "quarter" && (

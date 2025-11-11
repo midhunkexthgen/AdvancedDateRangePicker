@@ -14,6 +14,8 @@ import { ALLOW_FUTURE_DATES } from "../../config/dateConfig";
 interface MonthPickerProps {
   selectedRange: { from?: Date; to?: Date };
   onSelect: (range: { from?: Date; to?: Date } | undefined) => void;
+  activeDateField?: "start" | "end";
+  onActiveFieldChange?: (field: "start" | "end") => void;
 }
 
 type MonthRange = { from?: Date; to?: Date };
@@ -51,6 +53,8 @@ const MONTHS = [
 export default function MonthPicker({
   selectedRange,
   onSelect,
+  activeDateField = "start",
+  onActiveFieldChange,
 }: MonthPickerProps) {
   const today = parseUtc(getTodayUtc());
   const initialRange = normalizeRange(selectedRange);
@@ -61,7 +65,6 @@ export default function MonthPicker({
   const [monthRange, setMonthRange] = useState<MonthRange>(initialRange);
   // Get the starting year from selected range or current year
   const [displayYear, setDisplayYear] = useState(initialYear);
-  const [isSelectingEnd, setIsSelectingEnd] = useState(false);
 
   useEffect(() => {
     const normalized = normalizeRange(selectedRange);
@@ -78,8 +81,6 @@ export default function MonthPicker({
       if (sameFrom && sameTo) {
         return current;
       }
-
-      setIsSelectingEnd(false);
 
       if (normalized.from) {
         const normalizedYear = getYear(normalized.from);
@@ -103,35 +104,40 @@ export default function MonthPicker({
     const monthStart = startOfMonth(clickedDate);
     const monthEnd = endOfMonth(clickedDate);
 
-    // If no selection exists, start a new range
-    if (!monthRange.from || !monthRange.to || !isSelectingEnd) {
-      const nextRange: MonthRange = { from: monthStart, to: monthEnd };
-      setMonthRange(nextRange);
-      setIsSelectingEnd(true);
-      onSelect(nextRange);
-      return;
-    }
+    const nextStartField = () => onActiveFieldChange?.("start");
+    const nextEndField = () => onActiveFieldChange?.("end");
 
-    // If we have a from but no to (or from === to), set the to
-    if (isSelectingEnd) {
-      let nextRange: MonthRange;
-
-      if (monthStart.getTime() < monthRange.from.getTime()) {
-        nextRange = { from: monthStart, to: monthRange.to };
-      } else {
-        nextRange = { from: monthRange.from, to: monthEnd };
+    if (activeDateField === "end") {
+      if (!monthRange.from) {
+        const nextRange: MonthRange = { from: monthStart, to: monthEnd };
+        setMonthRange(nextRange);
+        onSelect({ from: monthStart });
+        nextEndField();
+        return;
       }
+
+      const currentFrom = monthRange.from;
+      const currentTo = monthRange.to ?? endOfMonth(currentFrom);
+      let nextFrom = currentFrom;
+      let nextTo = monthEnd;
+
+      if (monthStart.getTime() < currentFrom.getTime()) {
+        nextFrom = monthStart;
+        nextTo = currentTo;
+      }
+
+      const nextRange: MonthRange = { from: nextFrom, to: nextTo };
       setMonthRange(nextRange);
-      setIsSelectingEnd(false);
       onSelect(nextRange);
+      nextStartField();
       return;
     }
 
-    // If we already have a range, start a new selection
+    // Treat as selecting start
     const nextRange: MonthRange = { from: monthStart, to: monthEnd };
     setMonthRange(nextRange);
-    setIsSelectingEnd(true);
-    onSelect(nextRange);
+    onSelect({ from: monthStart });
+    nextEndField();
   };
 
   const isMonthInRange = (year: number, monthIndex: number): boolean => {
