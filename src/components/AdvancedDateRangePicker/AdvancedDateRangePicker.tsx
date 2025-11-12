@@ -2075,6 +2075,16 @@ export default function AdvancedDateRangePicker({
                 classNames={{
                   chevron: "fill-black",
                 }}
+                styles={{
+                  month_grid: {
+                    borderCollapse: "separate",
+                    borderSpacing: "0 0.40rem",
+                  },
+                  cell: {
+                    padding: "0.25rem 0",
+                    backgroundClip: "content-box",
+                  },
+                }}
               />
             )}
             {unit === "month" && (
