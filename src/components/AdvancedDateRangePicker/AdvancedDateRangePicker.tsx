@@ -565,14 +565,12 @@ export default function AdvancedDateRangePicker({
     dayPickerProps: Date
   ) => {
     if (!range) return;
-    debugger;
 
     if (range.from) {
       let weekStartFrom = startOfWeek(range.from, {
         weekStartsOn: WEEK_NUMBERING_MODE === "iso" ? 1 : WEEK_STARTS_ON,
       });
       let weekEndFrom = addDays(weekStartFrom, 6);
-      debugger;
 
       if (startDateUtc && endDateUtc) {
         if (activeDateField === "start") {
@@ -680,7 +678,6 @@ export default function AdvancedDateRangePicker({
           weekStartsOn: WEEK_NUMBERING_MODE === "iso" ? 1 : WEEK_STARTS_ON,
         });
         const weekEndTo = addDays(weekStartTo, 6);
-        debugger;
         handleCalendarSelect({ from: weekStartFrom, to: weekEndTo });
       }
       setActiveDateField(activeDateField === "start" ? "end" : "start");
@@ -1962,10 +1959,8 @@ export default function AdvancedDateRangePicker({
                   handleWeekCalendarSelect(range, dayPickerProps);
                 }}
                 onWeekNumberClick={(_weekNumber: number, dates: Date[]) => {
-                  debugger;
                   if (dates && dates.length > 0) {
                     handleWeekCalendarSelect(
-                      null,
                       {
                         from: dates[0],
                         to: dates[dates.length - 1],
