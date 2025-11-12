@@ -1862,12 +1862,22 @@ export default function AdvancedDateRangePicker({
                       numberOfMonths={2}
                       disabled={isDateDisabled}
                       modifiersClassNames={{
-                        selected: "rdp-day_selected bg-[#003DB8]",
+                        selected: "rdp-day_selected",
                         disabled:
                           "rdp-day_disabled opacity-30 bg-gray-100 text-black",
                       }}
                       classNames={{
                         chevron: "fill-black",
+                      }}
+                      styles={{
+                        month_grid: {
+                          borderCollapse: "separate",
+                          borderSpacing: "0 0.40rem",
+                        },
+                        cell: {
+                          padding: "0.25rem 0",
+                          backgroundClip: "content-box",
+                        },
                       }}
                     />
                   </div>
