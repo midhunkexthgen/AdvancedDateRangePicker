@@ -13,3 +13,21 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.rdp-day_selected {
+  background-color: #cedbf5;
+  color: #1f1f1f;
+}
+.rdp-range_middle {
+  background-color: #cedbf5;
+}
+.rdp-range_start .rdp-day_button {
+  background-color: #cedbf5;
+  color: #1f1f1f;
+  border-radius: 10px;
+}
+.rdp-range_end .rdp-day_button {
+  background-color: #cedbf5;
+  color: #1f1f1f;
+  border-radius: 10px;
+}
