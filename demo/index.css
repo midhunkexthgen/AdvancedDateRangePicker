@@ -105,3 +105,15 @@ body {
 .rdp-day_disabled:not(.rdp-day_selected) {
   opacity: 0.3 !important;
 }
+
+.excluded-enabled
+  .rdp-day_selected.rdp-range_middle.rdp-day_disabled.rdp-day_excluded-weekday,
+.excluded-enabled
+  .rdp-day_selected.rdp-range_start.rdp-day_disabled.rdp-day_excluded-weekday
+  .rdp-day_button,
+.excluded-enabled
+  .rdp-day_selected.rdp-range_end.rdp-day_disabled.rdp-day_excluded-weekday
+  .rdp-day_button {
+  background-color: #f3f3f3 !important;
+  color: #1f2937 !important;
+}

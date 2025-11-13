@@ -254,7 +254,6 @@ export default function AdvancedDateRangePicker({
       setDuration(1);
     }
   }, [startDateUtc, endDateUtc, unit, excludedWeekdays]);
-
   // Calculate unit position based on duration text width
   useEffect(() => {
     if (durationInputRef.current) {
@@ -864,6 +863,39 @@ export default function AdvancedDateRangePicker({
     from: startDateUtc ? parseUtc(startDateUtc) : undefined,
     to: endDateUtc ? parseUtc(endDateUtc) : undefined,
   };
+
+  const dayPickerModifiers = useMemo(() => {
+    if (excludedWeekdays.length === 0) {
+      return {};
+    }
+    return {
+      excludedWeekday: {
+        dayOfWeek: excludedWeekdays,
+      },
+    };
+  }, [excludedWeekdays]);
+
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+
+    const styleId = "adrp-excluded-weekday-style";
+    if (document.getElementById(styleId)) return;
+
+    const styleElement = document.createElement("style");
+    styleElement.id = styleId;
+    styleElement.textContent = `
+      .rdp-day_excluded-weekday:not(.rdp-day_disabled):not(.rdp-day_selected) {
+        background-color: #E6ECFB;
+        color: #1F2937;
+      }
+
+      .rdp-day_excluded-weekday:not(.rdp-day_disabled):not(.rdp-day_selected):hover {
+        background-color: #D8E0F6;
+        color: #1F2937;
+      }
+    `;
+    document.head.appendChild(styleElement);
+  }, []);
 
   // For MonthPicker and QuarterPicker, provide default dates if empty
   const monthQuarterRange = {
@@ -1690,6 +1722,7 @@ export default function AdvancedDateRangePicker({
                           navLayout="around"
                           selected={selectedRange}
                           onSelect={handleCalendarSelect}
+                          modifiers={dayPickerModifiers}
                           month={startOfMonth(addMonths(displayedMonth, 1))}
                           onMonthChange={(date) => {
                             const prevMonth = new Date(displayedMonth);
@@ -1708,6 +1741,7 @@ export default function AdvancedDateRangePicker({
                             selected: "rdp-day_selected bg-[#003DB8]",
                             disabled:
                               "rdp-day_disabled opacity-30 bg-gray-100 text-black",
+                            excludedWeekday: "rdp-day_excluded-weekday",
                           }}
                           classNames={{
                             chevron: "fill-black",
@@ -1724,6 +1758,7 @@ export default function AdvancedDateRangePicker({
                           navLayout="around"
                           selected={selectedRange}
                           onSelect={handleCalendarSelect}
+                          modifiers={dayPickerModifiers}
                           month={displayedMonth}
                           onMonthChange={setDisplayedMonth}
                           numberOfMonths={1}
@@ -1732,6 +1767,7 @@ export default function AdvancedDateRangePicker({
                             selected: "rdp-day_selected bg-[#003DB8]",
                             disabled:
                               "rdp-day_disabled opacity-30 bg-gray-100 text-black",
+                            excludedWeekday: "rdp-day_excluded-weekday",
                           }}
                           classNames={{
                             chevron: "fill-black",
@@ -1756,6 +1792,7 @@ export default function AdvancedDateRangePicker({
                       onSelect={(range, _dayPickerProps) => {
                         handleResetCalendarSelect(range, _dayPickerProps);
                       }}
+                      modifiers={dayPickerModifiers}
                       month={displayedMonth}
                       onMonthChange={setDisplayedMonth}
                       numberOfMonths={2}
@@ -1763,6 +1800,7 @@ export default function AdvancedDateRangePicker({
                       modifiersClassNames={{
                         selected: "rdp-day_selected",
                         disabled: "rdp-day_disabled text-black",
+                        excludedWeekday: "rdp-day_excluded-weekday",
                       }}
                       classNames={{
                         chevron: "fill-black",
@@ -1795,6 +1833,7 @@ export default function AdvancedDateRangePicker({
                         navLayout="around"
                         selected={selectedRange}
                         onSelect={handleCalendarSelect}
+                        modifiers={dayPickerModifiers}
                         month={startOfMonth(addMonths(displayedMonth, 1))}
                         onMonthChange={(date) => {
                           const prevMonth = new Date(displayedMonth);
@@ -1813,6 +1852,7 @@ export default function AdvancedDateRangePicker({
                           selected: "rdp-day_selected bg-[#003DB8]",
                           disabled:
                             "rdp-day_disabled opacity-30 bg-gray-100 text-black",
+                          excludedWeekday: "rdp-day_excluded-weekday",
                         }}
                         classNames={{
                           chevron: "fill-black",
@@ -1830,6 +1870,7 @@ export default function AdvancedDateRangePicker({
                         navLayout="around"
                         selected={selectedRange}
                         onSelect={handleCalendarSelect}
+                        modifiers={dayPickerModifiers}
                         month={displayedMonth}
                         onMonthChange={setDisplayedMonth}
                         numberOfMonths={1}
@@ -1838,6 +1879,7 @@ export default function AdvancedDateRangePicker({
                           selected: "rdp-day_selected bg-[#003DB8]",
                           disabled:
                             "rdp-day_disabled opacity-30 bg-gray-100 text-black",
+                          excludedWeekday: "rdp-day_excluded-weekday",
                         }}
                         classNames={{
                           chevron: "fill-black",
@@ -1868,6 +1910,7 @@ export default function AdvancedDateRangePicker({
                 onSelect={(range, dayPickerProps) => {
                   handleWeekCalendarSelect(range, dayPickerProps);
                 }}
+                modifiers={dayPickerModifiers}
                 onWeekNumberClick={(_weekNumber: number, dates: Date[]) => {
                   if (dates && dates.length > 0) {
                     handleWeekCalendarSelect(
@@ -1956,6 +1999,7 @@ export default function AdvancedDateRangePicker({
                   selected: "rdp-day_selected bg-[#003DB8]",
                   disabled:
                     "rdp-day_disabled opacity-30 bg-gray-100 text-black",
+                  excludedWeekday: "rdp-day_excluded-weekday",
                 }}
                 classNames={{
                   chevron: "fill-black",
