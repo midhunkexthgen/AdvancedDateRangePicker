@@ -21,6 +21,7 @@ import {
   CalendarDays,
   Bookmark,
   AlertTriangle,
+  Search,
 } from "lucide-react";
 import type {
   DateRangeSelection,
@@ -178,6 +179,7 @@ export default function AdvancedDateRangePicker({
   const [excludedSavedDates, setExcludedSavedDates] = useState<string[]>(
     initialSelection?.excludedSavedDates || []
   );
+  const [savedDatesSearchTerm, setSavedDatesSearchTerm] = useState("");
   const [excludedDateRanges, setExcludedDateRanges] = useState<
     Array<{ id: string; start: string; end: string }>
   >(initialSelection?.excludedDateRanges || []);
@@ -906,6 +908,39 @@ export default function AdvancedDateRangePicker({
   const dayPickerDisabledMatcher = (date: Date): boolean =>
     excludeEnabled ? true : isDateDisabled(date);
 
+  const filteredSavedDates = useMemo(() => {
+    const term = savedDatesSearchTerm.trim().toLowerCase();
+    if (!term) return savedDatesForFilter;
+
+    return savedDatesForFilter.filter((saved) => {
+      const start = new Date(saved.selection.startDateUtc + "T00:00:00")
+        .toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        })
+        .toLowerCase();
+      const end = new Date(saved.selection.endDateUtc + "T00:00:00")
+        .toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        })
+        .toLowerCase();
+
+      return (
+        saved.label.toLowerCase().includes(term) ||
+        `${start} - ${end}`.includes(term)
+      );
+    });
+  }, [savedDatesForFilter, savedDatesSearchTerm]);
+
+  useEffect(() => {
+    if (activeFilterView !== "saved-dates") {
+      setSavedDatesSearchTerm("");
+    }
+  }, [activeFilterView]);
+
   // Helper function for disabled date logic (used by all DayPicker instances)
   const isDateDisabled = (date: Date): boolean => {
     // Check if future dates are not allowed
@@ -1538,21 +1573,150 @@ export default function AdvancedDateRangePicker({
                         )}
                     </div>
 
-                    <button
-                      type="button"
-                      onClick={() =>
-                        handleExcludeFilterButtonClick("saved-dates")
-                      }
-                      className={`flex items-center gap-2 px-3 py-2 rounded-md border text-sm font-medium transition-colors ${
-                        activeFilterView === "saved-dates"
-                          ? "border-blue-500 bg-[#F7F8FA] text-gray-700"
-                          : "border-gray-200 bg-gray-50 text-gray-600 hover:bg-gray-100"
-                      }`}
-                    >
-                      <span>Saved Dates</span>
+                    <div className="relative">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          handleExcludeFilterButtonClick("saved-dates")
+                        }
+                        className={`flex items-center gap-2 px-3 py-2 rounded-md border text-sm font-medium transition-colors ${
+                          activeFilterView === "saved-dates"
+                            ? "border-blue-500 bg-[#F7F8FA] text-gray-700"
+                            : "border-gray-200 bg-gray-50 text-gray-600 hover:bg-gray-100"
+                        }`}
+                      >
+                        <span>Saved Dates</span>
 
-                      <ChevronDown className="w-4 h-4 text-gray-400" />
-                    </button>
+                        <ChevronDown className="w-4 h-4 text-gray-400" />
+                      </button>
+
+                      {excludeEnabled &&
+                        activeFilterView === "saved-dates" &&
+                        excludeFilterTypes.includes("saved-dates") && (
+                          <div className="absolute right-0 mt-2 z-20 w-80">
+                            <div className="flex flex-col gap-3 px-3 py-3 bg-white border border-gray-200 rounded-xl shadow-xl">
+                              <div className="relative">
+                                <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                                <input
+                                  type="text"
+                                  value={savedDatesSearchTerm}
+                                  onChange={(event) =>
+                                    setSavedDatesSearchTerm(event.target.value)
+                                  }
+                                  placeholder="Search saved dates"
+                                  className="w-full pl-9 pr-3 py-2 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                />
+                              </div>
+
+                              {filteredSavedDates.length === 0 ? (
+                                <p className="text-sm text-gray-500 text-center py-6">
+                                  No saved dates found
+                                </p>
+                              ) : (
+                                <div className="max-h-64 overflow-y-auto space-y-2 pr-1">
+                                  {filteredSavedDates.map((saved) => {
+                                    const isExcluded =
+                                      excludedSavedDates.includes(saved.id);
+
+                                    const startDate = new Date(
+                                      saved.selection.startDateUtc + "T00:00:00"
+                                    ).toLocaleDateString("en-US", {
+                                      month: "short",
+                                      day: "numeric",
+                                      year: "numeric",
+                                    });
+
+                                    const endDate = new Date(
+                                      saved.selection.endDateUtc + "T00:00:00"
+                                    ).toLocaleDateString("en-US", {
+                                      month: "short",
+                                      day: "numeric",
+                                      year: "numeric",
+                                    });
+
+                                    return (
+                                      <button
+                                        key={saved.id}
+                                        type="button"
+                                        onClick={() => {
+                                          setExcludedSavedDates((current) => {
+                                            if (current.includes(saved.id)) {
+                                              const next = current.filter(
+                                                (id) => id !== saved.id
+                                              );
+
+                                              if (next.length === 0) {
+                                                setExcludeFilterTypes((types) =>
+                                                  types.filter(
+                                                    (t) => t !== "saved-dates"
+                                                  )
+                                                );
+                                              }
+
+                                              return next;
+                                            }
+
+                                            setExcludeFilterTypes((types) => {
+                                              if (
+                                                types.includes("saved-dates")
+                                              ) {
+                                                return types;
+                                              }
+                                              return [...types, "saved-dates"];
+                                            });
+
+                                            return [...current, saved.id];
+                                          });
+                                        }}
+                                        className={`w-full flex items-center justify-between px-3 py-2 rounded-md border text-left transition-colors ${
+                                          isExcluded
+                                            ? "bg-blue-50 border-blue-300"
+                                            : "bg-white border-gray-200 hover:bg-gray-50"
+                                        }`}
+                                      >
+                                        <div className="flex flex-col">
+                                          <span className="text-sm font-medium text-gray-900">
+                                            {saved.label}
+                                          </span>
+                                          <span className="text-xs text-gray-600">
+                                            {startDate} - {endDate}
+                                          </span>
+                                        </div>
+                                        <div className="ml-2 flex items-center">
+                                          <input
+                                            type="checkbox"
+                                            checked={isExcluded}
+                                            onChange={() => {}}
+                                            className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 pointer-events-none"
+                                          />
+                                        </div>
+                                      </button>
+                                    );
+                                  })}
+                                </div>
+                              )}
+
+                              <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-2 text-xs text-gray-500">
+                                  <Bookmark className="w-4 h-4 text-gray-400" />
+                                  <span>
+                                    {excludedSavedDates.length} selected
+                                  </span>
+                                </div>
+                                <button
+                                  type="button"
+                                  onClick={() =>
+                                    handleExcludeRemoveType("saved-dates")
+                                  }
+                                  className="text-xs font-medium text-blue-600 hover:text-blue-700"
+                                >
+                                  Clear
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                    </div>
                   </div>
 
                   <div className="flex items-center gap-2 ml-auto">
@@ -1595,104 +1759,6 @@ export default function AdvancedDateRangePicker({
 
             {/* Specific Date filter UI temporarily disabled for redesign */}
             {/* Saved Dates Filter Content - Shown when icon clicked */}
-            {excludeEnabled &&
-              activeFilterView === "saved-dates" &&
-              excludeFilterTypes.includes("saved-dates") && (
-                <div className="mt-3 flex flex-col gap-3">
-                  <div className="flex items-center justify-between">
-                    <h4 className="text-sm font-medium text-gray-700">
-                      Saved Dates
-                    </h4>
-                    <button
-                      type="button"
-                      onClick={() => handleExcludeRemoveType("saved-dates")}
-                      className="text-xs font-medium text-blue-600 hover:text-blue-700"
-                    >
-                      Clear
-                    </button>
-                  </div>
-
-                  {savedDatesForFilter.length === 0 ? (
-                    <p className="text-sm text-gray-500 text-center py-4">
-                      No saved dates available
-                    </p>
-                  ) : (
-                    <div className="space-y-2 max-h-64 overflow-y-auto border border-gray-200 rounded-md p-2">
-                      {savedDatesForFilter.map((saved) => {
-                        const isExcluded = excludedSavedDates.includes(
-                          saved.id
-                        );
-                        return (
-                          <div
-                            key={saved.id}
-                            className={`flex items-center justify-between px-3 py-2 rounded-md cursor-pointer transition-colors ${
-                              isExcluded
-                                ? "bg-blue-50 border border-blue-300"
-                                : "bg-white hover:bg-gray-50 border border-gray-200"
-                            }`}
-                            onClick={() => {
-                              setExcludedSavedDates((current) => {
-                                if (current.includes(saved.id)) {
-                                  const next = current.filter(
-                                    (id) => id !== saved.id
-                                  );
-
-                                  if (next.length === 0) {
-                                    setExcludeFilterTypes((types) =>
-                                      types.filter((t) => t !== "saved-dates")
-                                    );
-                                  }
-
-                                  return next;
-                                }
-
-                                setExcludeFilterTypes((types) => {
-                                  if (types.includes("saved-dates")) {
-                                    return types;
-                                  }
-                                  return [...types, "saved-dates"];
-                                });
-
-                                return [...current, saved.id];
-                              });
-                            }}
-                          >
-                            <div className="flex-1">
-                              <div className="text-sm font-medium text-gray-900">
-                                {saved.label}
-                              </div>
-                              <div className="text-xs text-gray-600">
-                                {new Date(
-                                  saved.selection.startDateUtc + "T00:00:00"
-                                ).toLocaleDateString("en-US", {
-                                  month: "short",
-                                  day: "numeric",
-                                  year: "numeric",
-                                })}{" "}
-                                -{" "}
-                                {new Date(
-                                  saved.selection.endDateUtc + "T00:00:00"
-                                ).toLocaleDateString("en-US", {
-                                  month: "short",
-                                  day: "numeric",
-                                  year: "numeric",
-                                })}
-                              </div>
-                            </div>
-                            <input
-                              type="checkbox"
-                              checked={isExcluded}
-                              onChange={() => {}}
-                              className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                            />
-                          </div>
-                        );
-                      })}
-                    </div>
-                  )}
-                </div>
-              )}
-
             {/* Date Range filter UI temporarily disabled for redesign */}
           </div>
 
