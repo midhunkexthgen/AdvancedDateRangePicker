@@ -66,6 +66,7 @@ export default function AdvancedDateRangePicker({
     selectedRange,
     todayDateObj,
     monthQuarterRange,
+    savedDatesForFilter,
     filteredSavedDates,
     dayPickerDisabledMatcher,
     getFutureDateWarning,
@@ -97,7 +98,6 @@ export default function AdvancedDateRangePicker({
     setExcludedSavedDates,
     setExcludeFilterTypes,
     setActiveFilterView,
-    excludeSavedStateRef,
     handleMonthSelect,
     handleYearSelect,
   } = useAdvancedDateRangeState({
@@ -127,11 +127,6 @@ export default function AdvancedDateRangePicker({
     excludedSavedDates,
     excludedDateRanges
   );
-
-  const excludeSummary = {
-    weekdaysCount: excludeSavedStateRef.current.excludedWeekdays.length,
-    savedDatesCount: excludeSavedStateRef.current.excludedSavedDates.length,
-  };
 
   const futureWarning = getFutureDateWarning();
 
@@ -178,13 +173,13 @@ export default function AdvancedDateRangePicker({
 
           <ExcludeFilters
             excludeEnabled={excludeEnabled}
-            excludeApplied={excludeApplied}
             excludeFilterTypes={excludeFilterTypes}
             activeFilterView={activeFilterView}
             excludedWeekdays={excludedWeekdays}
             excludedSavedDates={excludedSavedDates}
             savedDatesSearchTerm={savedDatesSearchTerm}
             filteredSavedDates={filteredSavedDates}
+            savedDatesForFilter={savedDatesForFilter}
             onExcludeToggle={handleExcludeToggle}
             onFilterButtonClick={handleExcludeFilterButtonClick}
             onRemoveFilterType={handleExcludeRemoveType}
@@ -195,7 +190,6 @@ export default function AdvancedDateRangePicker({
             setExcludedSavedDates={setExcludedSavedDates}
             setExcludeFilterTypes={setExcludeFilterTypes}
             setActiveFilterView={setActiveFilterView}
-            summary={excludeSummary}
           />
           <CalendarSection
             unit={unit}

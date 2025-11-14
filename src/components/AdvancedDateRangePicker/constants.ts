@@ -10,6 +10,16 @@ export const WEEKDAY_LABELS = [
   { value: 6, label: "Sa" },
 ];
 
+export const WEEKDAY_FULL_NAMES = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+] as const;
+
 export const MONTHS = [
   "Jan",
   "Feb",
@@ -30,4 +40,3 @@ export const DEFAULT_PICKER_HEIGHT =
 
 export const DEFAULT_PICKER_WIDTH =
   "var(--adrp-container-width, min(1200px, 98vw))";
-

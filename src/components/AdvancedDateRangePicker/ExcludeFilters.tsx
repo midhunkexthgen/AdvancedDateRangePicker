@@ -1,22 +1,22 @@
 import type { Dispatch, SetStateAction } from "react";
-import { ChevronDown, Bookmark, Search } from "lucide-react";
+import { useMemo } from "react";
+import { ChevronDown, Bookmark, Search, X } from "lucide-react";
 import type { SavedDateRange } from "../../types/dateRange";
-import { WEEKDAY_LABELS, SupportedExcludeFilterType } from "./constants";
-
-interface AppliedExcludeSummary {
-  weekdaysCount: number;
-  savedDatesCount: number;
-}
+import {
+  WEEKDAY_LABELS,
+  WEEKDAY_FULL_NAMES,
+  SupportedExcludeFilterType,
+} from "./constants";
 
 interface ExcludeFiltersProps {
   excludeEnabled: boolean;
-  excludeApplied: boolean;
   excludeFilterTypes: SupportedExcludeFilterType[];
   activeFilterView: SupportedExcludeFilterType | null;
   excludedWeekdays: number[];
   excludedSavedDates: string[];
   savedDatesSearchTerm: string;
   filteredSavedDates: SavedDateRange[];
+  savedDatesForFilter: SavedDateRange[];
   onExcludeToggle: (checked: boolean) => void;
   onFilterButtonClick: (type: SupportedExcludeFilterType) => void;
   onRemoveFilterType: (type: SupportedExcludeFilterType) => void;
@@ -29,12 +29,10 @@ interface ExcludeFiltersProps {
   setActiveFilterView: Dispatch<
     SetStateAction<SupportedExcludeFilterType | null>
   >;
-  summary: AppliedExcludeSummary;
 }
 
 export default function ExcludeFilters({
   excludeEnabled,
-  excludeApplied,
   excludeFilterTypes,
   activeFilterView,
   excludedWeekdays,
@@ -51,8 +49,64 @@ export default function ExcludeFilters({
   setExcludedSavedDates,
   setExcludeFilterTypes,
   setActiveFilterView,
-  summary,
+  savedDatesForFilter,
 }: ExcludeFiltersProps) {
+  const savedDatesById = useMemo(() => {
+    const map = new Map<string, SavedDateRange>();
+    for (const saved of savedDatesForFilter) {
+      map.set(saved.id, saved);
+    }
+    return map;
+  }, [savedDatesForFilter]);
+
+  const selectedWeekdays = WEEKDAY_LABELS.filter((day) =>
+    excludedWeekdays.includes(day.value)
+  );
+
+  const selectedSavedDates = excludedSavedDates
+    .map((id) => savedDatesById.get(id))
+    .filter((value): value is SavedDateRange => Boolean(value));
+
+  const formatSavedDateRange = (saved: SavedDateRange) => {
+    const start = new Date(saved.selection.startDateUtc + "T00:00:00");
+    const end = new Date(saved.selection.endDateUtc + "T00:00:00");
+    const formatOptions: Intl.DateTimeFormatOptions = {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    };
+    const startLabel = start.toLocaleDateString("en-US", formatOptions);
+    const endLabel = end.toLocaleDateString("en-US", formatOptions);
+    return startLabel === endLabel ? startLabel : `${startLabel} - ${endLabel}`;
+  };
+
+  const getSavedDateChipLabel = (saved: SavedDateRange) => {
+    const rangeLabel = formatSavedDateRange(saved);
+    const trimmedLabel = saved.label?.trim();
+    if (
+      trimmedLabel &&
+      trimmedLabel.toLowerCase() !== rangeLabel.toLowerCase()
+    ) {
+      return trimmedLabel;
+    }
+    return rangeLabel;
+  };
+
+  const handleRemoveSavedDate = (savedId: string) => {
+    setExcludedSavedDates((current) => {
+      if (!current.includes(savedId)) {
+        return current;
+      }
+      const next = current.filter((id) => id !== savedId);
+      if (next.length === 0) {
+        setExcludeFilterTypes((types) =>
+          types.filter((t) => t !== "saved-dates")
+        );
+      }
+      return next;
+    });
+  };
+
   return (
     <div className="mb-4">
       <div className="flex flex-wrap items-center gap-3 mb-3">
@@ -272,7 +326,7 @@ export default function ExcludeFilters({
                   onSave();
                   setActiveFilterView(null);
                 }}
-                className="px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-md shadow-sm hover:bg-blue-700 transition-colors"
+                className="px-4 py-2 bg-[#003DB8] text-white text-sm font-semibold rounded-md shadow-sm hover:bg-blue-700 transition-colors"
               >
                 Save
               </button>
@@ -280,14 +334,56 @@ export default function ExcludeFilters({
           </>
         )}
 
-        {!excludeEnabled && excludeApplied && (
-          <div className="flex items-center gap-2 text-xs text-gray-600">
-            {summary.weekdaysCount > 0 && (
-              <span>Week Days ({summary.weekdaysCount})</span>
-            )}
-            {summary.savedDatesCount > 0 && (
-              <span>Saved Dates ({summary.savedDatesCount})</span>
-            )}
+        {(selectedWeekdays.length > 0 || selectedSavedDates.length > 0) && (
+          <div className="w-full border-t border-gray-200 pt-3">
+            <div className="flex flex-wrap gap-2">
+              {selectedWeekdays.map((day) => {
+                const fullLabel = WEEKDAY_FULL_NAMES[day.value] ?? day.label;
+                return (
+                  <span
+                    key={day.value}
+                    className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-1.5 text-sm text-gray-700"
+                    title={fullLabel}
+                  >
+                    {fullLabel}
+                    {excludeEnabled && (
+                      <button
+                        type="button"
+                        onClick={() => onToggleWeekday(day.value)}
+                        className="text-gray-400 hover:text-gray-600 transition-colors"
+                        aria-label={`Remove ${fullLabel}`}
+                      >
+                        <X className="h-4 w-4" />
+                      </button>
+                    )}
+                  </span>
+                );
+              })}
+
+              {selectedSavedDates.map((saved) => {
+                const chipLabel = getSavedDateChipLabel(saved);
+                const rangeLabel = formatSavedDateRange(saved);
+                return (
+                  <span
+                    key={saved.id}
+                    className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-1.5 text-sm text-gray-700"
+                    title={rangeLabel}
+                  >
+                    {chipLabel}
+                    {excludeEnabled && (
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveSavedDate(saved.id)}
+                        className="text-gray-400 hover:text-gray-600 transition-colors"
+                        aria-label={`Remove ${chipLabel}`}
+                      >
+                        <X className="h-4 w-4" />
+                      </button>
+                    )}
+                  </span>
+                );
+              })}
+            </div>
           </div>
         )}
       </div>
