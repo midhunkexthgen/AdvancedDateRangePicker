@@ -19,7 +19,8 @@ interface PresetSidebarProps {
         warning: string;
         success: string;
     };
+    disabled?: boolean;
 }
-export default function PresetSidebar({ onPresetSelect, onSavedDateSelect, currentSelection, themeColors, }: PresetSidebarProps): import("react/jsx-runtime").JSX.Element;
+export default function PresetSidebar({ onPresetSelect, onSavedDateSelect, currentSelection, themeColors, disabled, }: PresetSidebarProps): import("react/jsx-runtime").JSX.Element;
 export {};
 //# sourceMappingURL=PresetSidebar.d.ts.map
