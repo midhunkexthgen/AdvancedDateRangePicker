@@ -3,6 +3,8 @@ import type { DateRange, Matcher } from "react-day-picker";
 import {
   startOfMonth,
   endOfMonth,
+  startOfQuarter,
+  endOfQuarter,
   startOfWeek,
   addDays,
   getYear,
@@ -633,6 +635,28 @@ export function useAdvancedDateRangeState({
           setStartDateUtc(formatUtc(startDateMonthStart));
           setEndDateUtc(formatUtc(endDateMonthEnd));
           updateDisplayedMonth(formatUtc(startDateMonthStart));
+        }
+      }
+
+      // Auto-expand date range when switching from "month" to "quarter" or "week" to "quarter"
+      // Expands to span all quarters from start date's quarter to end date's quarter
+      if (
+        (unit === "month" && newUnit === "quarter") ||
+        (unit === "week" && newUnit === "quarter")
+      ) {
+        if (startDateUtc && endDateUtc) {
+          const startDate = parseUtc(startDateUtc);
+          const endDate = parseUtc(endDateUtc);
+
+          // Calculate quarter start of the start date
+          const startDateQuarterStart = startOfQuarter(startDate);
+
+          // Calculate quarter end of the end date
+          const endDateQuarterEnd = endOfQuarter(endDate);
+
+          setStartDateUtc(formatUtc(startDateQuarterStart));
+          setEndDateUtc(formatUtc(endDateQuarterEnd));
+          updateDisplayedMonth(formatUtc(startDateQuarterStart));
         }
       }
 

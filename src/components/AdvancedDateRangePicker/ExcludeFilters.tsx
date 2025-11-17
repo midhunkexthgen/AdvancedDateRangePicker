@@ -109,7 +109,7 @@ export default function ExcludeFilters({
 
   return (
     <div className="mb-4">
-      <div className="flex flex-wrap items-center gap-3 mb-3">
+      <div className="flex flex-wrap items-center gap-3 mb-3 px-4">
         <div className="flex items-center gap-2">
           <input
             type="checkbox"
@@ -118,7 +118,10 @@ export default function ExcludeFilters({
             onChange={(e) => onExcludeToggle(e.target.checked)}
             className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
           />
-          <label htmlFor="exclude-checkbox" className="text-sm text-gray-700">
+          <label
+            htmlFor="exclude-checkbox"
+            className="text-xs font-medium text-[#1F1F1F]"
+          >
             {!excludeEnabled ? "exclude dates from selection" : "exclude"}
           </label>
         </div>

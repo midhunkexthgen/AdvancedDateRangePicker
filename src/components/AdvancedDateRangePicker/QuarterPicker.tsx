@@ -86,8 +86,8 @@ export default function QuarterPicker({
 
     // Check if clicked quarter is before the start
     if (
-      year < currentFromYear ||
-      (year === currentFromYear && clickedQuarter < currentFromQuarter)
+      !selectedRange.to ||
+      selectedRange.from.getTime() === selectedRange.to.getTime()
     ) {
       onSelect({ from: quarterStart, to: normalizedToEnd });
       return;

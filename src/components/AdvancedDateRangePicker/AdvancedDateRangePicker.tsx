@@ -132,7 +132,7 @@ export default function AdvancedDateRangePicker({
 
   return (
     <div
-      className="flex gap-4 bg-white rounded-lg shadow-xl border border-gray-200"
+      className="flex bg-white rounded-xl shadow-xl border border-gray-200"
       style={containerStyle}
     >
       <PresetSidebar
@@ -144,7 +144,7 @@ export default function AdvancedDateRangePicker({
       />
 
       <div className="flex-1 flex flex-col min-h-0">
-        <div className="px-6 pt-6 overflow-y-auto flex-1">
+        <div className=" pt-4 overflow-y-auto flex-1">
           <UnitTabs
             unit={unit}
             excludeEnabled={excludeEnabled}

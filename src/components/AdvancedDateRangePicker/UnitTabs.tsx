@@ -14,13 +14,13 @@ export default function UnitTabs({
   onUnitChange,
 }: UnitTabsProps) {
   return (
-    <div className="flex gap-2 mb-4">
+    <div className="flex gap-2 mb-2 justify-end border-b border-gray-200 pb-2 pr-4">
       {UNITS.map((u) => (
         <button
           key={u}
           onClick={() => onUnitChange(u)}
           disabled={excludeEnabled}
-          className={`px-4 py-2 rounded-lg text-sm font-light transition-colors ${
+          className={`px-4 py-2 w-20 rounded-lg text-xs font-medium transition-colors ${
             excludeEnabled
               ? unit === u
                 ? "bg-[#EBF0F9] text-[#003DB8] border border-[#003DB8] opacity-60 cursor-not-allowed"
@@ -36,4 +36,3 @@ export default function UnitTabs({
     </div>
   );
 }
-

@@ -163,11 +163,11 @@ export default function DateInputsRow({
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <div className="grid grid-cols-3 gap-4 mb-4">
+      <div className="flex gap-3 mb-4 px-4">
         <div>
           <label
             className={`block text-xs font-medium mb-1 ${
-              excludeEnabled ? "text-gray-400" : "text-gray-600"
+              excludeEnabled ? "text-gray-400" : "text-[#61708F]"
             }`}
           >
             Start Date
@@ -186,11 +186,24 @@ export default function DateInputsRow({
                 fullWidth: true,
                 variant: "outlined",
                 error: startFieldError,
+                // To ensure the height is reflected, use InputProps with sx for the input element
+                InputProps: {
+                  sx: {
+                    minHeight: "28px",
+                    height: "28px",
+                    maxHeight: "28px",
+                    boxSizing: "border-box",
+                    fontSize: "12px",
+                  },
+                },
                 sx: {
                   ...getDateFieldStyles(
                     activeDateField === "start",
                     startFieldError
                   ),
+                  width: "172px",
+                  // Do NOT specify height here, but ensure InputProps.sx sets the height
+                  // Optionally, you can add padding to control inner height if needed
                 },
                 disabled: excludeEnabled,
               },
@@ -200,7 +213,7 @@ export default function DateInputsRow({
         <div>
           <label
             className={`block text-xs font-medium mb-1 ${
-              excludeEnabled ? "text-gray-400" : "text-gray-600"
+              excludeEnabled ? "text-gray-400" : "text-[#61708F]"
             }`}
           >
             End Date
@@ -219,11 +232,24 @@ export default function DateInputsRow({
                 fullWidth: true,
                 variant: "outlined",
                 error: endFieldError,
+                // To ensure the height is reflected, use InputProps with sx for the input element
+                InputProps: {
+                  sx: {
+                    minHeight: "28px",
+                    height: "28px",
+                    maxHeight: "28px",
+                    boxSizing: "border-box",
+                    fontSize: "12px",
+                  },
+                },
                 sx: {
                   ...getDateFieldStyles(
                     activeDateField === "end",
                     endFieldError
                   ),
+                  width: "172px",
+                  // Do NOT specify height here, but ensure InputProps.sx sets the height
+                  // Optionally, you can add padding to control inner height if needed
                 },
                 disabled: excludeEnabled,
               },
@@ -231,7 +257,11 @@ export default function DateInputsRow({
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-gray-600 mb-1">
+          <label
+            className={`block text-xs font-medium ${
+              excludeEnabled ? "text-gray-400" : "text-[#61708F]"
+            } mb-1`}
+          >
             Duration
           </label>
           <div className="relative">
@@ -242,10 +272,10 @@ export default function DateInputsRow({
               value={duration}
               onChange={(e) => onDurationChange(Number(e.target.value))}
               disabled={excludeEnabled}
-              className="w-full pl-3 pr-10 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:text-gray-400 disabled:border-gray-200 disabled:cursor-not-allowed disabled:focus:ring-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [-moz-appearance:textfield]"
+              className="w-[120px] h-[28px] pl-3 pr-10 py-2 text-gray-500 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:text-gray-400 disabled:border-gray-200 disabled:cursor-not-allowed disabled:focus:ring-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [-moz-appearance:textfield]"
             />
             <span
-              className={`absolute top-1/2 -translate-y-1/2 text-sm pointer-events-none ${
+              className={`absolute top-1/2 -translate-y-1/2 text-[12px] pointer-events-none ${
                 excludeEnabled ? "text-gray-300" : "text-gray-500"
               }`}
               style={{ left: `${unitPosition}px` }}
