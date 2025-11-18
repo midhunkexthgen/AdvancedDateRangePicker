@@ -593,85 +593,9 @@ export function useAdvancedDateRangeState({
   const handleUnitChange = useCallback(
     (newUnit: DateRangeUnit) => {
       if (excludeEnabled) return;
-
-      // Auto-expand date range when switching from "day" to "week"
-      // Expands to span all weeks from start date's week to end date's week
-      if (unit === "day" && newUnit === "week" && startDateUtc && endDateUtc) {
-        const startDate = parseUtc(startDateUtc);
-        const endDate = parseUtc(endDateUtc);
-
-        // Calculate week start of the start date
-        const startDateWeekStart = startOfWeek(startDate, {
-          weekStartsOn: WEEK_NUMBERING_MODE === "iso" ? 1 : WEEK_STARTS_ON,
-        });
-
-        // Calculate week start of the end date, then add 6 days to get week end
-        const endDateWeekStart = startOfWeek(endDate, {
-          weekStartsOn: WEEK_NUMBERING_MODE === "iso" ? 1 : WEEK_STARTS_ON,
-        });
-        const endDateWeekEnd = addDays(endDateWeekStart, 6);
-
-        setStartDateUtc(formatUtc(startDateWeekStart));
-        setEndDateUtc(formatUtc(endDateWeekEnd));
-        updateDisplayedMonth(formatUtc(startDateWeekStart));
-      }
-
-      // Auto-expand date range when switching from "day" to "month" or "week" to "month"
-      // Expands to span all months from start date's month to end date's month
-      if (
-        (unit === "day" && newUnit === "month") ||
-        (unit === "week" && newUnit === "month")
-      ) {
-        if (startDateUtc && endDateUtc) {
-          const startDate = parseUtc(startDateUtc);
-          const endDate = parseUtc(endDateUtc);
-
-          // Calculate month start of the start date
-          const startDateMonthStart = startOfMonth(startDate);
-
-          // Calculate month end of the end date
-          const endDateMonthEnd = endOfMonth(endDate);
-
-          setStartDateUtc(formatUtc(startDateMonthStart));
-          setEndDateUtc(formatUtc(endDateMonthEnd));
-          updateDisplayedMonth(formatUtc(startDateMonthStart));
-        }
-      }
-
-      // Auto-expand date range when switching from "month" to "quarter" or "week" to "quarter"
-      // Expands to span all quarters from start date's quarter to end date's quarter
-      if (
-        (unit === "month" && newUnit === "quarter") ||
-        (unit === "week" && newUnit === "quarter")
-      ) {
-        if (startDateUtc && endDateUtc) {
-          const startDate = parseUtc(startDateUtc);
-          const endDate = parseUtc(endDateUtc);
-
-          // Calculate quarter start of the start date
-          const startDateQuarterStart = startOfQuarter(startDate);
-
-          // Calculate quarter end of the end date
-          const endDateQuarterEnd = endOfQuarter(endDate);
-
-          setStartDateUtc(formatUtc(startDateQuarterStart));
-          setEndDateUtc(formatUtc(endDateQuarterEnd));
-          updateDisplayedMonth(formatUtc(startDateQuarterStart));
-        }
-      }
-
-      // Clear excluded weekdays when switching from "day" to "week" or from "month" to "day"
-      // Excluded weekdays are only relevant for day unit
-      if (
-        (unit === "day" && newUnit === "week") ||
-        (unit === "month" && newUnit === "day")
-      ) {
-        setExcludedWeekdays([]);
-      }
-
       setUnit(newUnit);
     },
-    [excludeEnabled, unit, startDateUtc, endDateUtc, updateDisplayedMonth]
+    [excludeEnabled]
   );
 
   const handlePresetSelect = useCallback(
