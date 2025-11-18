@@ -144,7 +144,7 @@ export default function AdvancedDateRangePicker({
       />
 
       <div className="flex-1 flex flex-col min-h-0">
-        <div className=" pt-4 overflow-y-auto flex-1">
+        <div className="pt-4 overflow-y-auto overflow-x-hidden flex-1">
           <UnitTabs
             unit={unit}
             excludeEnabled={excludeEnabled}

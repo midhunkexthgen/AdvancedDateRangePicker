@@ -473,7 +473,7 @@ export default function CalendarSection({
 
   return (
     <div
-      className={`flex gap-4 justify-center mb-4 ${
+      className={`flex gap-4 justify-center mb-4 h-[264px] ${
         excludeEnabled ? "excluded-enabled" : "excluded-disabled"
       }`}
     >
@@ -588,9 +588,11 @@ export default function CalendarSection({
                     width: "100%",
                   },
                   month: {
-                    width: "calc((100% - 24px) / 2)",
+                    width: "224px",
+                    // width: "calc((100% - 24px) / 2)",
                     minWidth: "224px",
                     maxWidth: "260px",
+                    height: "256px",
                   },
                   caption: {
                     ...BASE_DAY_PICKER_STYLES.caption,
@@ -598,7 +600,7 @@ export default function CalendarSection({
                   },
                   month_grid: {
                     borderCollapse: "separate",
-                    borderSpacing: "0 0.10rem",
+                    borderSpacing: "0 0.25rem",
                     width: "100%",
                   },
                   table: {
@@ -726,7 +728,7 @@ export default function CalendarSection({
             ...BASE_DAY_PICKER_STYLES,
             month_grid: {
               borderCollapse: "separate",
-              borderSpacing: "0 0.10rem",
+              borderSpacing: "0 0.25rem",
             },
             cell: {
               padding: "0.25rem 0",
