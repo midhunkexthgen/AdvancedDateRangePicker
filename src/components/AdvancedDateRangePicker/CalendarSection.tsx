@@ -118,6 +118,8 @@ export default function CalendarSection({
           yearSpan.textContent = year;
           yearSpan.setAttribute("data-year-name", "true");
           yearSpan.style.cursor = "pointer";
+          yearSpan.style.fontSize = "14px";
+          yearSpan.style.fontWeight = "600";
 
           yearSpan.onclick = (e) => {
             e.stopPropagation();
@@ -202,6 +204,8 @@ export default function CalendarSection({
             monthSpan.textContent = monthName;
             monthSpan.setAttribute("data-month-name", "true");
             monthSpan.style.cursor = "pointer";
+            monthSpan.style.fontSize = "14px";
+            monthSpan.style.fontWeight = "600";
 
             monthSpan.onclick = (e) => {
               e.stopPropagation();
@@ -218,6 +222,8 @@ export default function CalendarSection({
             yearSpan.textContent = year;
             yearSpan.setAttribute("data-year-name", "true");
             yearSpan.style.cursor = "pointer";
+            yearSpan.style.fontSize = "14px";
+            yearSpan.style.fontWeight = "600";
 
             yearSpan.onclick = (e) => {
               e.stopPropagation();
@@ -397,7 +403,7 @@ export default function CalendarSection({
     </div>
   );
 
-  const BASE_DAY_CELL_STYLES = {
+  const BASE_DAY_PICKER_STYLES = {
     day: {
       width: "32px",
       height: "28px",
@@ -411,7 +417,54 @@ export default function CalendarSection({
       alignItems: "center",
       justifyContent: "center",
     },
+    weekdays: {
+      borderBottom: "1px solid #D5E0F6",
+      paddingBottom: "0.35rem",
+      marginBottom: "0.35rem",
+    },
+    head: {
+      borderBottom: "1px solid #D5E0F6",
+      marginBottom: "0.35rem",
+    },
+    head_row: {
+      borderBottom: "1px solid #D5E0F6",
+    },
+    head_cell: {
+      paddingBottom: "0.35rem",
+    },
+    caption: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      height: "32px",
+    },
+    caption_label: {
+      fontSize: "14px",
+      fontWeight: "600",
+      lineHeight: "1",
+    },
+    nav_button: {
+      width: "32px",
+      height: "32px",
+      borderRadius: "8px",
+      border: "1px solid #D3DBF0",
+      backgroundColor: "#fff",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      flexShrink: 0,
+    },
+    nav_button_previous: {
+      marginRight: "6px",
+    },
+    nav_button_next: {
+      marginLeft: "6px",
+    },
   } as const;
+
+  const dayPickerClassNames = {
+    chevron: "fill-[#1F1F1F] w-4 h-4",
+  };
 
   return (
     <div
@@ -455,10 +508,8 @@ export default function CalendarSection({
                       excludedWeekday: "rdp-day_excluded-weekday",
                       "excluded-saved-date": "rdp-day_excluded-saved-date",
                     }}
-                    classNames={{
-                      chevron: "fill-black",
-                    }}
-                    styles={BASE_DAY_CELL_STYLES}
+                    classNames={dayPickerClassNames}
+                    styles={BASE_DAY_PICKER_STYLES}
                   />
                 </div>
               </>
@@ -483,10 +534,8 @@ export default function CalendarSection({
 
                       "excluded-saved-date": "rdp-day_excluded-saved-date",
                     }}
-                    classNames={{
-                      chevron: "fill-black",
-                    }}
-                    styles={BASE_DAY_CELL_STYLES}
+                    classNames={dayPickerClassNames}
+                    styles={BASE_DAY_PICKER_STYLES}
                   />
                 </div>
                 <div
@@ -522,11 +571,9 @@ export default function CalendarSection({
                   excludedWeekday: "rdp-day_excluded-weekday",
                   "excluded-saved-date": "rdp-day_excluded-saved-date",
                 }}
-                classNames={{
-                  chevron: "fill-black",
-                }}
+                classNames={dayPickerClassNames}
                 styles={{
-                  ...BASE_DAY_CELL_STYLES,
+                  ...BASE_DAY_PICKER_STYLES,
                   months: {
                     display: "flex",
                     flexDirection: "row",
@@ -536,11 +583,12 @@ export default function CalendarSection({
                     width: "100%",
                   },
                   month: {
-                    width: "calc((100% - 32px) / 2)",
+                    width: "calc((100% - 24px) / 2)",
                     minWidth: "224px",
                     maxWidth: "260px",
                   },
                   caption: {
+                    ...BASE_DAY_PICKER_STYLES.caption,
                     paddingBottom: "8px",
                   },
                   month_grid: {
@@ -591,10 +639,8 @@ export default function CalendarSection({
                     excludedWeekday: "rdp-day_excluded-weekday",
                     "excluded-saved-date": "rdp-day_excluded-saved-date",
                   }}
-                  classNames={{
-                    chevron: "fill-black",
-                  }}
-                  styles={BASE_DAY_CELL_STYLES}
+                  classNames={dayPickerClassNames}
+                  styles={BASE_DAY_PICKER_STYLES}
                 />
               </div>
             </>
@@ -621,7 +667,7 @@ export default function CalendarSection({
                   classNames={{
                     chevron: "fill-black",
                   }}
-                  styles={BASE_DAY_CELL_STYLES}
+                  styles={BASE_DAY_PICKER_STYLES}
                 />
               </div>
               <div
@@ -670,11 +716,9 @@ export default function CalendarSection({
             excludedWeekday: "rdp-day_excluded-weekday",
             "excluded-saved-date": "rdp-day_excluded-saved-date",
           }}
-          classNames={{
-            chevron: "fill-black",
-          }}
+          classNames={dayPickerClassNames}
           styles={{
-            ...BASE_DAY_CELL_STYLES,
+            ...BASE_DAY_PICKER_STYLES,
             month_grid: {
               borderCollapse: "separate",
               borderSpacing: "0 0.40rem",

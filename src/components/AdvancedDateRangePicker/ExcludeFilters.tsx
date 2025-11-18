@@ -108,8 +108,8 @@ export default function ExcludeFilters({
   };
 
   return (
-    <div className="mb-4">
-      <div className="flex flex-wrap items-center gap-3 mb-3 px-4">
+    <div className="py-2 border-b border-gray-200">
+      <div className="flex flex-wrap items-center gap-3 px-4">
         <div className="flex items-center gap-2">
           <input
             type="checkbox"

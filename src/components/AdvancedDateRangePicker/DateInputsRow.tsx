@@ -163,7 +163,7 @@ export default function DateInputsRow({
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <div className="flex gap-3 mb-4 px-4">
+      <div className="flex gap-3 pb-2 px-4 border-b border-gray-200">
         <div>
           <label
             className={`block text-xs font-medium mb-1 ${
