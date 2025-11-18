@@ -124,7 +124,7 @@ export default function PresetSidebar({
 
   return (
     <div
-      className={`w-44 bg-white border-r border-gray-200 flex flex-col overflow-hidden ${
+      className={`w-44 flex-shrink-0 bg-white border-r border-gray-200 flex flex-col overflow-hidden ${
         disabled ? "opacity-60" : ""
       }`}
       style={{ ...themeColors }}

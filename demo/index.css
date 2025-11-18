@@ -161,26 +161,30 @@ body {
   font-size: 10px !important;
 }
 .week-picker-calender .rdp-caption_label {
-  cursor: pointer; font-size: 14px !important; font-weight: 600;
+  cursor: pointer;
+  font-size: 14px !important;
+  font-weight: 600;
 }
 .week-picker-calender .rdp-button_previous {
   margin-left: 27px;
 }
 .week-picker-calender .rdp-button_previous + .rdp-month_caption {
-  margin-left: 55px !important;
+  margin-left: 66px !important;
 }
 .week-picker-calender .rdp-month:has(.rdp-button_next) .rdp-month_caption {
-   margin-left: 22px !important;
+  margin-left: 10px !important;
 }
 .week-picker-calender .rdp-button_next {
-  margin-right: 25px !important;
+  margin-right: 28px !important;
 }
 .rdp-caption_label {
-  gap: 3px !important
+  gap: 3px !important;
 }
 
 .day-picker-calender .rdp-caption_label {
-  cursor: pointer; font-size: 14px !important; font-weight: 600;
+  cursor: pointer;
+  font-size: 14px !important;
+  font-weight: 600;
 }
 /* .week-picker-calender .rdp-button_previous {
   margin-left: 27px;

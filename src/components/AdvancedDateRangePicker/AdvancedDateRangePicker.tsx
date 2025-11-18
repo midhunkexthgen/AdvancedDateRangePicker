@@ -142,8 +142,11 @@ export default function AdvancedDateRangePicker({
         disabled={excludeEnabled}
       />
 
-      <div className="flex-1 flex flex-col min-h-0">
-        <div className="pt-4 flex-1">
+      <div
+        className="flex-1 flex flex-col min-h-0 min-w-0 overflow-hidden"
+        style={{ minWidth: "520px" }}
+      >
+        <div className="pt-4 flex-1 min-w-0 overflow-x-hidden">
           <UnitTabs
             unit={unit}
             excludeEnabled={excludeEnabled}
