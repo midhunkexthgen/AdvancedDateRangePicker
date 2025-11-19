@@ -108,9 +108,9 @@ export default function ExcludeFilters({
   };
 
   return (
-    <div className="py-2 border-b border-gray-200">
+    <div className=" border-b border-gray-200">
       {/* Controls Row */}
-      <div className="flex items-center gap-3 px-4">
+      <div className="py-2 flex items-center gap-3 px-4">
         <div className="flex items-center gap-2">
           <input
             type="checkbox"
@@ -146,8 +146,8 @@ export default function ExcludeFilters({
 
               {activeFilterView === "days" &&
                 excludeFilterTypes.includes("days") && (
-                  <div className="absolute top-full left-0 mt-2 z-20">
-                    <div className="flex flex-col gap-3 px-2 py-2 bg-white border border-gray-200 rounded-xl shadow-xl">
+                  <div className="absolute w-12 h-[264px] top-full left-7 mt-1 z-20">
+                    <div className="flex flex-col gap-3 px-2 py-2 bg-white border border-[0.5px]  border-gray-200 rounded-lg">
                       <div className="flex justify-center">
                         <div className="inline-flex flex-col items-center gap-2 ">
                           {WEEKDAY_LABELS.map((day) => {
@@ -158,7 +158,7 @@ export default function ExcludeFilters({
                               <button
                                 key={day.value}
                                 onClick={() => onToggleWeekday(day.value)}
-                                className={`w-9 h-9 flex items-center justify-center rounded-md text-sm font-semibold transition-colors ${
+                                className={`w-8 h-8 flex items-center justify-center rounded-md text-xs font-semibold transition-colors ${
                                   isSelected
                                     ? "bg-[#CEDBF5] shadow-inner"
                                     : "text-gray-800 hover:bg-gray-100"
@@ -191,9 +191,9 @@ export default function ExcludeFilters({
               {excludeEnabled &&
                 activeFilterView === "saved-dates" &&
                 excludeFilterTypes.includes("saved-dates") && (
-                  <div className="absolute top-full left-0 mt-2 z-20 w-80">
-                    <div className="flex flex-col gap-3 px-3 py-3 bg-white border border-gray-200 rounded-xl shadow-xl">
-                      <div className="relative">
+                  <div className="absolute top-full left-0 mt-2 z-20 w-80 max-h-64">
+                    <div className="flex flex-col gap-3 px-4 py-4 bg-white rounded-xl shadow-xl">
+                      <div className="relative h-7 w-72 flex items-center">
                         <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                         <input
                           type="text"
@@ -202,7 +202,7 @@ export default function ExcludeFilters({
                             setSavedDatesSearchTerm(event.target.value)
                           }
                           placeholder="Search saved dates"
-                          className="w-full pl-9 pr-3 py-2 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full pl-9 pr-3 py-2 border border-gray-200 rounded-md text-xs focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                       </div>
 
@@ -211,7 +211,7 @@ export default function ExcludeFilters({
                           No saved dates found
                         </p>
                       ) : (
-                        <div className="max-h-64 overflow-y-auto space-y-2 pr-1">
+                        <div className="max-h-64 overflow-y-auto space-y-2">
                           {filteredSavedDates.map((saved) => {
                             const isExcluded = excludedSavedDates.includes(
                               saved.id
@@ -265,53 +265,31 @@ export default function ExcludeFilters({
                                     return [...current, saved.id];
                                   });
                                 }}
-                                className={`w-full flex items-center justify-between px-3 py-2 rounded-md border text-left transition-colors ${
+                                className={`w-full flex items-center justify-between px-3 py-2 rounded-md text-left transition-colors ${
                                   isExcluded
-                                    ? "bg-blue-50 border-blue-300"
-                                    : "bg-white border-gray-200 hover:bg-gray-50"
+                                    ? "bg-[#CEDBF5] "
+                                    : "bg-white  hover:bg-gray-50"
                                 }`}
                               >
                                 <div className="flex flex-col">
-                                  <span className="text-sm font-medium text-gray-900">
+                                  <span className="text-xs font-semibold text-gray-900">
                                     {saved.label}
                                   </span>
-                                  <span className="text-xs text-gray-600">
+                                  <span className="text-[10px] font-medium text-gray-600">
                                     {startDate} - {endDate}
                                   </span>
-                                </div>
-                                <div className="ml-2 flex items-center">
-                                  <input
-                                    type="checkbox"
-                                    checked={isExcluded}
-                                    onChange={() => {}}
-                                    className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 pointer-events-none"
-                                  />
                                 </div>
                               </button>
                             );
                           })}
                         </div>
                       )}
-
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2 text-xs text-gray-500">
-                          <Bookmark className="w-4 h-4 text-gray-400" />
-                          <span>{excludedSavedDates.length} selected</span>
-                        </div>
-                        <button
-                          type="button"
-                          onClick={() => onRemoveFilterType("saved-dates")}
-                          className="text-xs font-medium text-blue-600 hover:text-blue-700"
-                        >
-                          Clear
-                        </button>
-                      </div>
                     </div>
                   </div>
                 )}
             </div>
 
-            <div className="flex items-center gap-2 ml-auto">
+            <div className="flex items-center gap-2 ml-auto h-7">
               <button
                 type="button"
                 onClick={() => {
@@ -328,7 +306,7 @@ export default function ExcludeFilters({
                   onSave();
                   setActiveFilterView(null);
                 }}
-                className="px-4 py-2 bg-[#003DB8] text-white text-xs font-semibold rounded-md shadow-sm hover:bg-blue-700 transition-colors"
+                className="px-4 h-7 flex items-center py-2 bg-[#003DB8] text-white text-xs font-semibold rounded-md shadow-sm hover:bg-blue-700 transition-colors"
               >
                 Save Exclusion
               </button>
@@ -339,14 +317,14 @@ export default function ExcludeFilters({
 
       {/* Excluded Items Row */}
       {(selectedWeekdays.length > 0 || selectedSavedDates.length > 0) && (
-        <div className="w-full border-t border-gray-200 pt-3 px-4">
+        <div className="w-full border-t border-gray-200 py-3 px-4">
           <div className="flex flex-wrap gap-2">
             {selectedWeekdays.map((day) => {
               const fullLabel = WEEKDAY_FULL_NAMES[day.value] ?? day.label;
               return (
                 <span
                   key={day.value}
-                  className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-1.5 text-sm text-gray-700"
+                  className="inline-flex items-center h-7 gap-2 rounded-full border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium text-gray-700"
                   title={fullLabel}
                 >
                   {fullLabel}
@@ -357,7 +335,7 @@ export default function ExcludeFilters({
                       className="text-gray-400 hover:text-gray-600 transition-colors"
                       aria-label={`Remove ${fullLabel}`}
                     >
-                      <X className="h-4 w-4" />
+                      <X className="h-2.5 w-2.5" />
                     </button>
                   )}
                 </span>
@@ -370,7 +348,7 @@ export default function ExcludeFilters({
               return (
                 <span
                   key={saved.id}
-                  className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-1.5 text-sm text-gray-700"
+                  className="inline-flex h-7 items-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium text-gray-700"
                   title={rangeLabel}
                 >
                   {chipLabel}
@@ -381,7 +359,7 @@ export default function ExcludeFilters({
                       className="text-gray-400 hover:text-gray-600 transition-colors"
                       aria-label={`Remove ${chipLabel}`}
                     >
-                      <X className="h-4 w-4" />
+                      <X className="h-2.5 w-2.5" />
                     </button>
                   )}
                 </span>

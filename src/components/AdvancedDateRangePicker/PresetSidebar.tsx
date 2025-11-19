@@ -172,7 +172,7 @@ export default function PresetSidebar({
 
       {/* Saved Dates Section */}
       <div className="flex justify-between flex-col flex-1 min-h-0 border-t border-gray-200 px-3 h-full">
-        <div>
+        <div className="overflow-y-auto">
           <div className="flex items-center justify-between mb-3 flex-shrink-0 mt-3">
             <div className="flex items-center gap-1">
               <h3 className="text-xs font-semibold text-[#757575]">
