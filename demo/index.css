@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* Import the package CSS */
-@import "advanced-date-range-picker/dist/advanced-date-range-picker.css";
+/* @import "advanced-date-range-picker/dist/advanced-date-range-picker.css"; */
 
 body {
   margin: 0;
@@ -86,3 +86,109 @@ body {
   width: 100%;
   height: 100%;
 }
+
+.excluded-enabled .rdp-day_selected.rdp-range_middle.rdp-day_disabled,
+.excluded-enabled .rdp-day_selected.rdp-range_start.rdp-day_disabled,
+.excluded-enabled .rdp-day_selected.rdp-range_end.rdp-day_disabled {
+  background-color: #003db8 !important;
+  color: white !important;
+}
+.excluded-enabled
+  .rdp-day_selected.rdp-range_start.rdp-day_disabled
+  .rdp-day_button,
+.excluded-enabled
+  .rdp-day_selected.rdp-range_end.rdp-day_disabled
+  .rdp-day_button {
+  background-color: #003db8 !important;
+  color: white !important;
+}
+.rdp-day_disabled:not(.rdp-day_selected) {
+  opacity: 0.3 !important;
+}
+
+.excluded-enabled
+  .rdp-day_selected.rdp-range_middle.rdp-day_disabled.rdp-day_excluded-weekday,
+.excluded-enabled
+  .rdp-day_selected.rdp-range_start.rdp-day_disabled.rdp-day_excluded-weekday
+  .rdp-day_button,
+.excluded-enabled
+  .rdp-day_selected.rdp-range_end.rdp-day_disabled.rdp-day_excluded-weekday
+  .rdp-day_button {
+  background-color: #f3f3f3 !important;
+  color: #1f2937 !important;
+}
+
+.excluded-enabled
+  .rdp-day_selected.rdp-range_middle.rdp-day_disabled.rdp-day_excluded-saved-date,
+.excluded-enabled
+  .rdp-day_selected.rdp-range_start.rdp-day_disabled.rdp-day_excluded-saved-date,
+.excluded-enabled
+  .rdp-day_selected.rdp-range_end.rdp-day_disabled.rdp-day_excluded-saved-date {
+  background-color: #f3f3f3 !important;
+  color: #1f2937 !important;
+}
+
+.excluded-disabled .rdp-day_selected.rdp-range_middle.rdp-day_excluded-weekday,
+.excluded-disabled
+  .rdp-day_selected.rdp-range_start.rdp-day_excluded-weekday
+  .rdp-day_button,
+.excluded-disabled
+  .rdp-day_selected.rdp-range_end.rdp-day_excluded-weekday
+  .rdp-day_button {
+  background-color: #f3f3f3 !important;
+  color: #1f2937 !important;
+}
+
+.excluded-disabled
+  .rdp-day_selected.rdp-range_middle.rdp-day_excluded-saved-date,
+.excluded-disabled
+  .rdp-day_selected.rdp-range_start.rdp-day_excluded-saved-date,
+.excluded-disabled .rdp-day_selected.rdp-range_end.rdp-day_excluded-saved-date {
+  background-color: #f3f3f3 !important;
+  color: #1f2937 !important;
+}
+
+.rdp-button_previous {
+  height: 32px !important;
+}
+
+.rdp-button_next {
+  height: 32px !important;
+}
+
+.rdp-week_number {
+  height: 28px !important;
+  font-size: 10px !important;
+}
+.week-picker-calender .rdp-caption_label {
+  cursor: pointer;
+  font-size: 14px !important;
+  font-weight: 600;
+}
+.week-picker-calender .rdp-button_previous {
+  margin-left: 27px;
+}
+.week-picker-calender .rdp-button_previous + .rdp-month_caption {
+  margin-left: 66px !important;
+}
+.week-picker-calender .rdp-month:has(.rdp-button_next) .rdp-month_caption {
+  margin-left: 10px !important;
+}
+.week-picker-calender .rdp-button_next {
+  margin-right: 28px !important;
+}
+.rdp-caption_label {
+  gap: 3px !important;
+}
+
+.day-picker-calender .rdp-caption_label {
+  cursor: pointer;
+  font-size: 14px !important;
+  font-weight: 600;
+}
+/* .week-picker-calender .rdp-button_previous {
+  margin-left: 27px;
+} */
+/* .week-picker-calender .rdp-caption_label {
+    margin-left: 27px;
+} */

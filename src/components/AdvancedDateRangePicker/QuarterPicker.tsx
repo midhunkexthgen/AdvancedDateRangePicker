@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import {
   getQuarter,
@@ -6,6 +6,7 @@ import {
   setQuarter,
   setYear,
   startOfQuarter,
+  endOfQuarter,
 } from "date-fns";
 import { parseUtc, getTodayUtc } from "../../utils/dateRange";
 import { ALLOW_FUTURE_DATES } from "../../config/dateConfig";
@@ -28,38 +29,88 @@ export default function QuarterPicker({
   const [displayYear, setDisplayYear] = useState(selectedStartYear);
   const today = parseUtc(getTodayUtc());
 
+  // Check if the range represents "today" (default when dates are cleared)
+  // When dates are cleared, monthQuarterRange defaults to todayDateObj for both from and to
+  // We detect this by checking if it's a single point that exactly matches today
+  const isDefaultTodayRange = (): boolean => {
+    // If from and to are the exact same date and that date is today, it's likely the cleared state
+    // (as opposed to a full quarter range which would span from startOfQuarter to endOfQuarter)
+    const isSinglePoint =
+      selectedRange.from.getTime() === selectedRange.to.getTime();
+    const isToday =
+      selectedRange.from.getTime() === today.getTime() &&
+      selectedRange.to.getTime() === today.getTime();
+
+    return isSinglePoint && isToday;
+  };
+
   const handleQuarterClick = (year: number, quarterIndex: number) => {
     // quarterIndex is 0-3, but date-fns expects 1-4
     if (disabled) return;
-    const clickedDate = startOfQuarter(
-      setQuarter(setYear(new Date(), year), quarterIndex + 1)
-    );
+    const quarterDate = setQuarter(setYear(new Date(), year), quarterIndex + 1);
+    const quarterStart = startOfQuarter(quarterDate);
+    const quarterEnd = endOfQuarter(quarterDate);
 
-    // If no selection exists, start a new range
-    if (!selectedRange.from) {
-      onSelect({ from: clickedDate, to: clickedDate });
+    // If dates are cleared (default today range), just select the clicked quarter
+    if (isDefaultTodayRange()) {
+      onSelect({ from: quarterStart, to: quarterEnd });
       return;
     }
 
-    // If we have a from but no to (or from === to), set the to
+    // Normalize the current range to quarter boundaries for comparison
+    const currentFromQuarter = getQuarter(selectedRange.from);
+    const currentFromYear = getYear(selectedRange.from);
+    const normalizedFromStart = startOfQuarter(
+      setQuarter(setYear(new Date(), currentFromYear), currentFromQuarter)
+    );
+
+    const currentToQuarter = getQuarter(selectedRange.to);
+    const currentToYear = getYear(selectedRange.to);
+    const normalizedToEnd = endOfQuarter(
+      setQuarter(setYear(new Date(), currentToYear), currentToQuarter)
+    );
+
+    // Check if we have a meaningful selection (not just defaulted to today)
+    // If from === to (same quarter), treat it as a single point selection (starting fresh)
+    const isSinglePoint =
+      normalizedFromStart.getTime() === normalizedToEnd.getTime();
+
+    // If it's a single point selection, start a new range with the clicked quarter
+    if (isSinglePoint) {
+      onSelect({ from: quarterStart, to: quarterEnd });
+      return;
+    }
+
+    // If we have an existing range, check if we should extend it or start new
+    const clickedQuarter = quarterIndex + 1; // Convert to 1-4
+
+    // Check if clicked quarter is before the start
     if (
       !selectedRange.to ||
       selectedRange.from.getTime() === selectedRange.to.getTime()
     ) {
-      if (clickedDate < selectedRange.from) {
-        onSelect({ from: clickedDate, to: selectedRange.from });
-      } else {
-        onSelect({ from: selectedRange.from, to: clickedDate });
-      }
+      onSelect({ from: quarterStart, to: normalizedToEnd });
       return;
     }
 
-    // If we already have a range, start a new selection
-    onSelect({ from: clickedDate, to: clickedDate });
+    // Check if clicked quarter is after the end
+    if (
+      year > currentToYear ||
+      (year === currentToYear && clickedQuarter > currentToQuarter)
+    ) {
+      onSelect({ from: normalizedFromStart, to: quarterEnd });
+      return;
+    }
+
+    // If clicked within the range, start a new selection with the clicked quarter
+    onSelect({ from: quarterStart, to: quarterEnd });
   };
 
   const isQuarterInRange = (year: number, quarterIndex: number): boolean => {
     if (!selectedRange.from || !selectedRange.to) return false;
+
+    // If it's the default today range, don't show any quarters as in range
+    if (isDefaultTodayRange()) return false;
 
     const fromQuarter = getQuarter(selectedRange.from) - 1; // Convert to 0-3
     const fromYear = getYear(selectedRange.from);
@@ -78,6 +129,10 @@ export default function QuarterPicker({
 
   const isQuarterStart = (year: number, quarterIndex: number): boolean => {
     if (!selectedRange.from) return false;
+
+    // If it's the default today range, don't show any quarters as selected
+    if (isDefaultTodayRange()) return false;
+
     const fromQuarter = getQuarter(selectedRange.from) - 1;
     const fromYear = getYear(selectedRange.from);
     return year === fromYear && quarterIndex === fromQuarter;
@@ -85,6 +140,10 @@ export default function QuarterPicker({
 
   const isQuarterEnd = (year: number, quarterIndex: number): boolean => {
     if (!selectedRange.to) return false;
+
+    // If it's the default today range, don't show any quarters as selected
+    if (isDefaultTodayRange()) return false;
+
     const toQuarter = getQuarter(selectedRange.to) - 1;
     const toYear = getYear(selectedRange.to);
     return year === toYear && quarterIndex === toQuarter;
@@ -98,10 +157,44 @@ export default function QuarterPicker({
     return quarterDate > today;
   };
 
-  const renderYear = (year: number) => {
+  const renderYear = (
+    year: number,
+    showLeftChevron: boolean,
+    showRightChevron: boolean,
+    style?: React.CSSProperties
+  ) => {
     return (
-      <div key={year} className="flex-1">
-        <div className="text-center font-semibold text-lg mb-4">{year}</div>
+      <div key={year} style={{ width: "224px", height: "256px" }}>
+        <div
+          className="flex items-center justify-center gap-2 mb-4"
+          style={{ ...style }}
+        >
+          {showLeftChevron && (
+            <button
+              onClick={() => !disabled && setDisplayYear(displayYear - 1)}
+              disabled={disabled}
+              className={`p-1 rounded-md transition-colors ${
+                disabled ? "cursor-not-allowed opacity-40" : "hover:bg-gray-100"
+              }`}
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+          )}
+          <div className="text-center font-semibold text-sm px-3 py-1 rounded-md">
+            {year}
+          </div>
+          {showRightChevron && (
+            <button
+              onClick={() => !disabled && setDisplayYear(displayYear + 1)}
+              disabled={disabled}
+              className={`p-1 rounded-md transition-colors ${
+                disabled ? "cursor-not-allowed opacity-40" : "hover:bg-gray-100"
+              }`}
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          )}
+        </div>
         <div className="grid grid-cols-2 gap-3">
           {QUARTERS.map((quarter, index) => {
             const inRange = isQuarterInRange(year, index);
@@ -124,9 +217,9 @@ export default function QuarterPicker({
                     futureQuarter || disabled
                       ? "opacity-30 bg-gray-100 text-gray-400 cursor-not-allowed"
                       : isSelected
-                      ? "bg-blue-600 text-white"
+                      ? "bg-[#003DB8] text-white"
                       : inRange
-                      ? "bg-blue-100 text-blue-900"
+                      ? "bg-[#CEDBF5] text-[#1F1F1F]"
                       : "bg-gray-50 text-gray-700 hover:bg-gray-100"
                   }
                 `}
@@ -142,37 +235,17 @@ export default function QuarterPicker({
 
   return (
     <div className="w-full">
-      {/* Navigation */}
-      <div className="flex items-center justify-between mb-4">
-        <button
-          onClick={() => !disabled && setDisplayYear(displayYear - 1)}
-          disabled={disabled}
-          className={`p-2 rounded-md transition-colors ${
-            disabled ? "cursor-not-allowed opacity-40" : "hover:bg-gray-100"
-          }`}
-        >
-          <ChevronLeft className="w-5 h-5" />
-        </button>
-        <div className="text-lg font-semibold">
-          {displayYear} - {displayYear + 1}
-        </div>
-        <button
-          onClick={() => !disabled && setDisplayYear(displayYear + 1)}
-          disabled={disabled}
-          className={`p-2 rounded-md transition-colors ${
-            disabled ? "cursor-not-allowed opacity-40" : "hover:bg-gray-100"
-          }`}
-        >
-          <ChevronRight className="w-5 h-5" />
-        </button>
-      </div>
-
-      {/* Two Year Grids */}
-      <div className="flex gap-8">
-        {renderYear(displayYear)}
-        {renderYear(displayYear + 1)}
+      {/* Two Year Grids with Navigation */}
+      <div className="flex gap-8 justify-between px-6">
+        {renderYear(displayYear, true, false, {
+          justifyContent: "start",
+          gap: "3rem",
+        })}
+        {renderYear(displayYear + 1, false, true, {
+          justifyContent: "end",
+          gap: "3rem",
+        })}
       </div>
     </div>
   );
 }
-

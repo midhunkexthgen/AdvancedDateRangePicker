@@ -21,7 +21,20 @@ export default defineConfig({
     },
     cssCodeSplit: false,
     rollupOptions: {
-      external: ["react", "react-dom", "react/jsx-runtime"],
+      external: [
+        "react",
+        "react-dom",
+        "react/jsx-runtime",
+        "react/jsx-dev-runtime",
+        "@mui/material",
+        "@mui/material/styles",
+        "@mui/x-date-pickers",
+        "@mui/x-date-pickers/AdapterDayjs",
+        "@mui/x-date-pickers/LocalizationProvider",
+        "@mui/x-date-pickers/DateField",
+        "@emotion/react",
+        "@emotion/styled",
+      ],
       output: {
         globals: {
           react: "React",

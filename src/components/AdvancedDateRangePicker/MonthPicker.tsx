@@ -68,6 +68,24 @@ export default function MonthPicker({
   // Get the starting year from selected range or current year
   const [displayYear, setDisplayYear] = useState(initialYear);
 
+  // Check if the range represents "today" (default when dates are cleared)
+  // When dates are cleared, monthQuarterRange defaults to todayDateObj for both from and to
+  // We detect this by checking the original selectedRange before normalization
+  // (normalizeRange converts today to startOfMonth/endOfMonth, so we can't use monthRange)
+  const isDefaultTodayRange = (): boolean => {
+    // If from and to are the exact same date and that date is today, it's likely the cleared state
+    // (as opposed to a full month range which would span from startOfMonth to endOfMonth)
+    if (!selectedRange.from || !selectedRange.to) return false;
+
+    const isSinglePoint =
+      selectedRange.from.getTime() === selectedRange.to.getTime();
+    const isToday =
+      selectedRange.from.getTime() === today.getTime() &&
+      selectedRange.to.getTime() === today.getTime();
+
+    return isSinglePoint && isToday;
+  };
+
   useEffect(() => {
     const normalized = normalizeRange(selectedRange);
 
@@ -110,6 +128,15 @@ export default function MonthPicker({
     const nextStartField = () => onActiveFieldChange?.("start");
     const nextEndField = () => onActiveFieldChange?.("end");
 
+    // If dates are cleared (default today range), just select the clicked month
+    if (isDefaultTodayRange()) {
+      const nextRange: MonthRange = { from: monthStart, to: monthEnd };
+      setMonthRange(nextRange);
+      onSelect({ from: monthStart });
+      nextEndField();
+      return;
+    }
+
     if (activeDateField === "end") {
       if (!monthRange.from) {
         const nextRange: MonthRange = { from: monthStart, to: monthEnd };
@@ -146,6 +173,9 @@ export default function MonthPicker({
   const isMonthInRange = (year: number, monthIndex: number): boolean => {
     if (!monthRange.from || !monthRange.to) return false;
 
+    // If it's the default today range, don't show any months as in range
+    if (isDefaultTodayRange()) return false;
+
     const fromMonth = getMonth(monthRange.from);
     const fromYear = getYear(monthRange.from);
     const toMonth = getMonth(monthRange.to);
@@ -160,6 +190,10 @@ export default function MonthPicker({
 
   const isMonthStart = (year: number, monthIndex: number): boolean => {
     if (!monthRange.from) return false;
+
+    // If it's the default today range, don't show any months as selected
+    if (isDefaultTodayRange()) return false;
+
     const fromMonth = getMonth(monthRange.from);
     const fromYear = getYear(monthRange.from);
     return year === fromYear && monthIndex === fromMonth;
@@ -167,6 +201,10 @@ export default function MonthPicker({
 
   const isMonthEnd = (year: number, monthIndex: number): boolean => {
     if (!monthRange.to) return false;
+
+    // If it's the default today range, don't show any months as selected
+    if (isDefaultTodayRange()) return false;
+
     const toMonth = getMonth(monthRange.to);
     const toYear = getYear(monthRange.to);
     return year === toYear && monthIndex === toMonth;
@@ -180,11 +218,42 @@ export default function MonthPicker({
     return monthDate > today;
   };
 
-  const renderYear = (year: number) => {
+  const renderYear = (
+    year: number,
+    showLeftChevron: boolean,
+    showRightChevron: boolean,
+    style?: React.CSSProperties
+  ) => {
     return (
-      <div key={year} className="flex-1">
-        <div className="text-center font-semibold text-lg mb-4">{year}</div>
-        <div className="grid grid-cols-4 gap-2">
+      <div key={year} style={{ width: "224px", height: "256px" }}>
+        <div className="flex items-center mb-4" style={{ ...style }}>
+          {showLeftChevron && (
+            <button
+              onClick={() => !disabled && setDisplayYear(displayYear - 1)}
+              disabled={disabled}
+              className={`p-1 rounded-md transition-colors ${
+                disabled ? "cursor-not-allowed opacity-40" : "hover:bg-gray-100"
+              }`}
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+          )}
+          <div className="text-center font-semibold text-sm px-3 py-1 rounded-md ">
+            {year}
+          </div>
+          {showRightChevron && (
+            <button
+              onClick={() => !disabled && setDisplayYear(displayYear + 1)}
+              disabled={disabled}
+              className={`p-1 rounded-md transition-colors ${
+                disabled ? "cursor-not-allowed opacity-40" : "hover:bg-gray-100"
+              }`}
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          )}
+        </div>
+        <div className="grid grid-cols-3 gap-2">
           {MONTHS.map((month, index) => {
             const inRange = isMonthInRange(year, index);
             const isStart = isMonthStart(year, index);
@@ -201,7 +270,7 @@ export default function MonthPicker({
                 }
                 disabled={futureMonth || disabled}
                 className={`
-                  px-3 py-2 text-sm font-medium rounded-md transition-colors
+                  px-3 py-2 text-xs font-medium rounded-md transition-colors
                   ${
                     futureMonth || disabled
                       ? "opacity-30 bg-gray-100 text-gray-400 cursor-not-allowed"
@@ -224,35 +293,16 @@ export default function MonthPicker({
 
   return (
     <div className="w-full">
-      {/* Navigation */}
-      <div className="flex items-center justify-between mb-4">
-        <button
-          onClick={() => !disabled && setDisplayYear(displayYear - 1)}
-          disabled={disabled}
-          className={`p-2 rounded-md transition-colors ${
-            disabled ? "cursor-not-allowed opacity-40" : "hover:bg-gray-100"
-          }`}
-        >
-          <ChevronLeft className="w-5 h-5" />
-        </button>
-        <div className="text-lg font-semibold">
-          {displayYear} - {displayYear + 1}
-        </div>
-        <button
-          onClick={() => !disabled && setDisplayYear(displayYear + 1)}
-          disabled={disabled}
-          className={`p-2 rounded-md transition-colors ${
-            disabled ? "cursor-not-allowed opacity-40" : "hover:bg-gray-100"
-          }`}
-        >
-          <ChevronRight className="w-5 h-5" />
-        </button>
-      </div>
-
-      {/* Two Year Grids */}
-      <div className="flex gap-8">
-        {renderYear(displayYear)}
-        {renderYear(displayYear + 1)}
+      {/* Two Year Grids with Navigation */}
+      <div className="flex gap-8 justify-between px-6">
+        {renderYear(displayYear, true, false, {
+          justifyContent: "start",
+          gap: "3rem",
+        })}
+        {renderYear(displayYear + 1, false, true, {
+          justifyContent: "end",
+          gap: "3rem",
+        })}
       </div>
     </div>
   );
