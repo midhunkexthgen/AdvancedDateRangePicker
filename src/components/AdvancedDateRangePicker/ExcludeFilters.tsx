@@ -7,6 +7,7 @@ import {
   WEEKDAY_FULL_NAMES,
   SupportedExcludeFilterType,
 } from "./constants";
+import { formatDateRangeLabel } from "../../utils/dateRange";
 
 interface ExcludeFiltersProps {
   excludeEnabled: boolean;
@@ -175,8 +176,8 @@ export default function ExcludeFilters({
     })),
     ...excludedDateRanges.map((range) => ({
       id: `range-${range.id}`,
-      label: `${range.start} - ${range.end}`,
-      title: `${range.start} - ${range.end}`,
+      label: formatDateRangeLabel(range.start, range.end),
+      title: formatDateRangeLabel(range.start, range.end),
       onRemove: () => handleRemoveDateRange(range.id),
     })),
     ...excludedSpecificDates.map((dateStr) => ({
