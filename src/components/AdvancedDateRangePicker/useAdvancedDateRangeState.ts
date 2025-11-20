@@ -85,6 +85,10 @@ export function useAdvancedDateRangeState({
     }
   );
   const [duration, setDuration] = useState(initialSelection?.duration || 1);
+  const [excludeSelectionStart, setExcludeSelectionStart] = useState<
+    string | null
+  >(null);
+
   const [excludedWeekdays, setExcludedWeekdays] = useState<number[]>(
     initialSelection?.excludedWeekdays || []
   );
@@ -286,12 +290,28 @@ export function useAdvancedDateRangeState({
         excludedSpecificDates.includes(formatUtc(date));
     }
 
+    if (excludedDateRanges.length > 0) {
+      modifiers["excluded-range"] = (date) => {
+        const d = formatUtc(date);
+        return excludedDateRanges.some(
+          (range) => d >= range.start && d <= range.end
+        );
+      };
+    }
+
+    if (excludeSelectionStart) {
+      modifiers["exclude-range-start"] = (date) =>
+        formatUtc(date) === excludeSelectionStart;
+    }
+
     return modifiers;
   }, [
     excludedSavedDates,
     excludedWeekdays,
     isDateExcludedBySavedDates,
     excludedSpecificDates,
+    excludedDateRanges,
+    excludeSelectionStart,
   ]);
 
   const selectedRange: DateRange = useMemo(
@@ -404,6 +424,7 @@ export function useAdvancedDateRangeState({
         );
         setExcludeEnabled(false);
         setActiveFilterView(null);
+        setExcludeSelectionStart(null);
       }
     },
     [sanitizeExcludeFilterTypes]
@@ -468,6 +489,7 @@ export function useAdvancedDateRangeState({
     );
     setExcludeEnabled(false);
     setActiveFilterView(null);
+    setExcludeSelectionStart(null);
   }, [sanitizeExcludeFilterTypes]);
 
   const handleExcludeSave = useCallback(() => {
@@ -517,6 +539,7 @@ export function useAdvancedDateRangeState({
     setExcludeApplied(nextTypes.length > 0);
     setExcludeEnabled(false);
     setActiveFilterView(null);
+    setExcludeSelectionStart(null);
   }, [
     excludedDateRanges,
     excludedSavedDates,
@@ -1058,14 +1081,33 @@ export function useAdvancedDateRangeState({
         if (dateStr < startDateUtc || dateStr > endDateUtc) return;
       }
 
-      setExcludedSpecificDates((current) => {
-        if (current.includes(dateStr)) {
-          return current.filter((d) => d !== dateStr);
-        }
-        return [...current, dateStr];
-      });
+      if (excludeSelectionStart) {
+        // Second click: complete the range
+        const start =
+          dateStr < excludeSelectionStart ? dateStr : excludeSelectionStart;
+        const end =
+          dateStr < excludeSelectionStart ? excludeSelectionStart : dateStr;
+
+        const newRange = {
+          id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+          start,
+          end,
+        };
+
+        setExcludedDateRanges((current) => [...current, newRange]);
+        setExcludeSelectionStart(null);
+
+        // Also ensure 'date-range' filter type is active
+        setExcludeFilterTypes((current) => {
+          if (current.includes("date-range")) return current;
+          return [...current, "date-range"];
+        });
+      } else {
+        // First click: start selection
+        setExcludeSelectionStart(dateStr);
+      }
     },
-    [excludeEnabled, startDateUtc, endDateUtc]
+    [excludeEnabled, startDateUtc, endDateUtc, excludeSelectionStart]
   );
 
   return {
@@ -1134,5 +1176,6 @@ export function useAdvancedDateRangeState({
     handleMonthSelect,
     handleYearSelect,
     handleDayClick,
+    excludeSelectionStart,
   };
 }

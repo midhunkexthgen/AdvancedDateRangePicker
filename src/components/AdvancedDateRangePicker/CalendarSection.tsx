@@ -517,14 +517,19 @@ export default function CalendarSection({
                       "excluded-saved-date": "rdp-day_excluded-saved-date",
                       "excluded-specific-date":
                         "rdp-day_excluded-specific-date",
+                      "excluded-range": "rdp-day_excluded-range",
+                      "exclude-range-start": "rdp-day_exclude-range-start",
                     }}
-                    // modifiersStyles={{
-                    //   "excluded-specific-date": {
-                    //     textDecoration: "line-through",
-                    //     color: "#ef4444",
-                    //     fontWeight: "bold",
-                    //   },
-                    // }}
+                    modifiersStyles={{
+                      "excluded-range": {
+                        backgroundColor: "#f3f3f3",
+                        color: "#1f2937",
+                      },
+                      "exclude-range-start": {
+                        backgroundColor: "#f3f3f3",
+                        color: "#1f2937",
+                      },
+                    }}
                     classNames={dayPickerClassNames}
                     styles={BASE_DAY_PICKER_STYLES}
                   />
@@ -551,6 +556,18 @@ export default function CalendarSection({
                       "excluded-saved-date": "rdp-day_excluded-saved-date",
                       "excluded-specific-date":
                         "rdp-day_excluded-specific-date",
+                      "excluded-range": "rdp-day_excluded-range",
+                      "exclude-range-start": "rdp-day_exclude-range-start",
+                    }}
+                    modifiersStyles={{
+                      "excluded-range": {
+                        backgroundColor: "#f3f3f3",
+                        color: "#1f2937",
+                      },
+                      "exclude-range-start": {
+                        backgroundColor: "#f3f3f3",
+                        color: "#1f2937",
+                      },
                     }}
                     classNames={dayPickerClassNames}
                     styles={BASE_DAY_PICKER_STYLES}
@@ -590,14 +607,19 @@ export default function CalendarSection({
                   excludedWeekday: "rdp-day_excluded-weekday",
                   "excluded-saved-date": "rdp-day_excluded-saved-date",
                   "excluded-specific-date": "rdp-day_excluded-specific-date",
+                  "excluded-range": "rdp-day_excluded-range",
+                  "exclude-range-start": "rdp-day_exclude-range-start",
                 }}
-                // modifiersStyles={{
-                //   "excluded-specific-date": {
-                //     textDecoration: "line-through",
-                //     color: "#ef4444",
-                //     fontWeight: "bold",
-                //   },
-                // }}
+                modifiersStyles={{
+                  "excluded-range": {
+                    backgroundColor: "#f3f3f3",
+                    color: "#1f2937",
+                  },
+                  "exclude-range-start": {
+                    backgroundColor: "#f3f3f3",
+                    color: "#1f2937",
+                  },
+                }}
                 classNames={dayPickerClassNames}
                 styles={{
                   ...BASE_DAY_PICKER_STYLES,
@@ -748,12 +770,21 @@ export default function CalendarSection({
             excludedWeekday: "rdp-day_excluded-weekday",
             "excluded-saved-date": "rdp-day_excluded-saved-date",
             "excluded-specific-date": "rdp-day_excluded-specific-date",
+            "excluded-range": "rdp-day_excluded-range",
+            "exclude-range-start": "rdp-day_exclude-range-start",
           }}
           modifiersStyles={{
             "excluded-specific-date": {
-              textDecoration: "line-through",
-              color: "#ef4444",
-              fontWeight: "bold",
+              backgroundColor: "#f3f3f3",
+              color: "#1f2937",
+            },
+            "excluded-range": {
+              backgroundColor: "#f3f3f3",
+              color: "#1f2937",
+            },
+            "exclude-range-start": {
+              backgroundColor: "#f3f3f3",
+              color: "#1f2937",
             },
           }}
           className="text-xs"

@@ -140,6 +140,24 @@ body {
   color: #1f2937 !important;
 }
 
+.excluded-enabled
+  td[data-selected="true"].rdp-day_selected.rdp-range_middle.rdp-day_exclude-range-start,
+.excluded-enabled
+  td[data-selected="true"].rdp-day_selected.rdp-range_start.rdp-day_exclude-range-start,
+.excluded-enabled
+  td[data-selected="true"].rdp-day_selected.rdp-range_end.rdp-day_exclude-range-start,
+.excluded-enabled
+  td[data-selected="true"].rdp-day_selected.rdp-range_middle.rdp-day_excluded-range,
+.excluded-enabled
+  td[data-selected="true"].rdp-day_selected.rdp-range_start.rdp-day_excluded-range
+  .rdp-day_button,
+.excluded-enabled
+  td[data-selected="true"].rdp-day_selected.rdp-range_end.rdp-day_excluded-range
+  .rdp-day_button {
+  background-color: #f3f3f3 !important;
+  color: #1f2937 !important;
+}
+
 .excluded-disabled .rdp-day_selected.rdp-range_middle.rdp-day_excluded-weekday,
 .excluded-disabled
   .rdp-day_selected.rdp-range_start.rdp-day_excluded-weekday
