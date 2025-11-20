@@ -2305,7 +2305,7 @@ function hs({
   onPresetSelect: e,
   onSavedDateSelect: t,
   currentSelection: n,
-  themeColors: r,
+  themeColors: r = {},
   disabled: o = !1
 }) {
   const [a, s] = X([]), [i, c] = X(!1), [l, g] = X(""), [d, N] = X(!1);
@@ -6274,7 +6274,7 @@ function vc({
             onPresetSelect: re,
             onSavedDateSelect: oe,
             currentSelection: xt,
-            themeColors: r,
+            themeColors: r || {},
             disabled: d
           }
         ),
