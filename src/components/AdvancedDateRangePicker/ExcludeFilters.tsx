@@ -215,9 +215,9 @@ export default function ExcludeFilters({
   }, [excludeEnabled, isExpanded, allExcludedItems.length]);
 
   return (
-    <div className=" border-b border-gray-200">
+    <div className=" border-b border-gray-200 ">
       {/* Controls Row */}
-      <div className="py-2 flex items-center gap-3 px-4">
+      <div className="py-2 flex items-center gap-3 px-4 h-[45px]">
         <div className="flex items-center gap-2">
           <input
             type="checkbox"
@@ -427,7 +427,7 @@ export default function ExcludeFilters({
                   onSave();
                   setActiveFilterView(null);
                 }}
-                className="px-4 h-7 flex items-center py-2 bg-[#003DB8] text-white text-xs font-semibold rounded-md shadow-sm hover:bg-blue-700 transition-colors"
+                className="px-4 h-7 flex items-center py-2 bg-[#003DB8] text-white text-xs font-semibold rounded-[4px] shadow-sm hover:bg-blue-700 transition-colors"
               >
                 Save Exclusion
               </button>

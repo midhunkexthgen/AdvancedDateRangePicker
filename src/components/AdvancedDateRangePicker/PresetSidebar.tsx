@@ -139,6 +139,9 @@ export default function PresetSidebar({
         <div className="flex flex-col">
           {Object.values(presets).map((preset) => {
             const { startDateUtc, endDateUtc } = preset.getValue();
+            const isSelected =
+              currentSelection.startDateUtc === startDateUtc &&
+              currentSelection.endDateUtc === endDateUtc;
             return (
               <button
                 key={preset.label}
@@ -146,21 +149,25 @@ export default function PresetSidebar({
                 disabled={disabled}
                 aria-disabled={disabled}
                 className={`w-full text-left px-1 rounded-md transition-all mb-3 ${
-                  disabled
-                    ? "cursor-not-allowed bg-gray-100 text-gray-400"
-                    : "hover:bg-white hover:shadow-sm"
+                  disabled ? "cursor-not-allowed text-gray-400" : ""
                 }`}
               >
                 <div
                   className={`text-xs font-semibold ${
-                    disabled ? "text-gray-400" : "text-[#1F1F1F]"
+                    disabled
+                      ? "text-gray-400"
+                      : isSelected
+                      ? "text-blue-600"
+                      : "text-[#1F1F1F]"
                   }`}
                 >
                   {preset.label}
                 </div>
                 <div
                   className={`text-[10px] leading-relaxed font-medium
- mt-0.5 ${disabled ? "text-gray-400" : "text-[#61708F]"}`}
+ mt-0.5 ${
+   disabled ? "text-gray-400" : isSelected ? "text-[#cedbf5]" : "text-[#61708F]"
+ }`}
                 >
                   {formatDateRange(startDateUtc, endDateUtc)}
                 </div>
