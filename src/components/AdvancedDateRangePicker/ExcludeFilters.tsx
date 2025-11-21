@@ -222,9 +222,27 @@ export default function ExcludeFilters({
           <input
             type="checkbox"
             id="exclude-checkbox"
-            checked={excludeEnabled}
-            onChange={(e) => onExcludeToggle(e.target.checked)}
-            className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+            checked={excludeEnabled || allExcludedItems.length > 0}
+            onChange={(e) => {
+              const isChecked = e.target.checked;
+              onExcludeToggle(isChecked);
+              if (
+                !isChecked &&
+                !excludeEnabled &&
+                allExcludedItems.length > 0
+              ) {
+                setExcludedSavedDates([]);
+                setExcludedSpecificDates([]);
+                setExcludedDateRanges([]);
+                setExcludeFilterTypes([]);
+                excludedWeekdays.forEach((day) => onToggleWeekday(day));
+              }
+            }}
+            className={`w-4 h-4 border-gray-300 rounded focus:ring-blue-500 ${
+              !excludeEnabled && allExcludedItems.length > 0
+                ? "accent-[#61708F]"
+                : "text-blue-600"
+            }`}
           />
           <label
             htmlFor="exclude-checkbox"
