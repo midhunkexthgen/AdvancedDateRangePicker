@@ -122,6 +122,52 @@ export default function PresetSidebar({
     return `${formatDate(start)} - ${formatDate(end)}`;
   };
 
+  const isSavedSelected = (savedSelection: DateRangeSelection) => {
+    if (
+      currentSelection.startDateUtc !== savedSelection.startDateUtc ||
+      currentSelection.endDateUtc !== savedSelection.endDateUtc
+    ) {
+      return false;
+    }
+
+    const arraysEqual = (a: any[] = [], b: any[] = []) => {
+      if (a.length !== b.length) return false;
+      const setA = new Set(a);
+      return b.every((item) => setA.has(item));
+    };
+
+    if (
+      !arraysEqual(
+        currentSelection.excludedWeekdays,
+        savedSelection.excludedWeekdays
+      )
+    )
+      return false;
+    if (
+      !arraysEqual(
+        currentSelection.excludedSpecificDates,
+        savedSelection.excludedSpecificDates
+      )
+    )
+      return false;
+    if (
+      !arraysEqual(
+        currentSelection.excludedSavedDates,
+        savedSelection.excludedSavedDates
+      )
+    )
+      return false;
+
+    const rangesA = currentSelection.excludedDateRanges || [];
+    const rangesB = savedSelection.excludedDateRanges || [];
+    if (rangesA.length !== rangesB.length) return false;
+
+    const rangeSig = (r: { start: string; end: string }) =>
+      `${r.start}|${r.end}`;
+    const setRanges = new Set(rangesA.map(rangeSig));
+    return rangesB.every((r) => setRanges.has(rangeSig(r)));
+  };
+
   return (
     <div
       className={`w-44 flex-shrink-0 border-r border-gray-200 flex flex-col overflow-hidden ${
@@ -214,29 +260,35 @@ export default function PresetSidebar({
             </p>
           ) : (
             <div className="space-y-3 mb-3 overflow-y-auto flex-1 min-h-0">
-              {savedDates.map((saved) => (
-                <div
-                  key={saved.id}
-                  className="group bg-white rounded-md hover:shadow-sm transition-all"
-                >
-                  <div className="flex items-start justify-between px-1">
-                    <button
-                      onClick={() => handleLoadSavedDate(saved)}
-                      disabled={disabled}
-                      className={`flex-1 text-left ${
-                        disabled ? "cursor-not-allowed opacity-60" : ""
-                      }`}
-                    >
-                      <div
-                        className={`text-xs font-semibold mb-1 ${
-                          disabled ? "text-gray-400" : "text-gray-900"
+              {savedDates.map((saved) => {
+                const isSelected = isSavedSelected(saved.selection);
+                return (
+                  <div
+                    key={saved.id}
+                    className="group bg-white rounded-md hover:shadow-sm transition-all"
+                  >
+                    <div className="flex items-start justify-between px-1">
+                      <button
+                        onClick={() => handleLoadSavedDate(saved)}
+                        disabled={disabled}
+                        className={`flex-1 text-left ${
+                          disabled ? "cursor-not-allowed opacity-60" : ""
                         }`}
                       >
-                        {saved.label}
-                      </div>
+                        <div
+                          className={`text-xs font-semibold mb-1 ${
+                            disabled
+                              ? "text-gray-400"
+                              : isSelected
+                              ? "text-[#0955ed]"
+                              : "text-gray-900"
+                          }`}
+                        >
+                          {saved.label}
+                        </div>
 
-                      {/* TODO: Add back in when we have a way to display the excluded dates */}
-                      {/* {(saved.selection.excludedWeekdays?.length > 0 ||
+                        {/* TODO: Add back in when we have a way to display the excluded dates */}
+                        {/* {(saved.selection.excludedWeekdays?.length > 0 ||
                       (saved.selection.excludedSpecificDates &&
                         saved.selection.excludedSpecificDates.length > 0) ||
                       (saved.selection.excludedSavedDates &&
@@ -285,31 +337,36 @@ export default function PresetSidebar({
                           )}
                       </div>
                     )} */}
-                    </button>
-                    <button
-                      onClick={() => handleDeleteSavedDate(saved.id)}
-                      disabled={disabled}
-                      className={`${
+                      </button>
+                      <button
+                        onClick={() => handleDeleteSavedDate(saved.id)}
+                        disabled={disabled}
+                        className={`${
+                          disabled
+                            ? "opacity-40 cursor-not-allowed"
+                            : "opacity-0 group-hover:opacity-100"
+                        } text-red-500 hover:text-red-700 transition-opacity ml-2`}
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                    <div
+                      className={`text-[10px] leading-relaxed font-medium px-1 ${
                         disabled
-                          ? "opacity-40 cursor-not-allowed"
-                          : "opacity-0 group-hover:opacity-100"
-                      } text-red-500 hover:text-red-700 transition-opacity ml-2`}
+                          ? "text-gray-400"
+                          : isSelected
+                          ? "text-[#0955ed]"
+                          : "text-[#61708F]"
+                      }`}
                     >
-                      <Trash2 className="w-3.5 h-3.5" />
-                    </button>
+                      {formatDateRange(
+                        saved.selection.startDateUtc,
+                        saved.selection.endDateUtc
+                      )}
+                    </div>
                   </div>
-                  <div
-                    className={`text-[10px] leading-relaxed font-medium px-1 ${
-                      disabled ? "text-gray-400" : "text-[#61708F]"
-                    }`}
-                  >
-                    {formatDateRange(
-                      saved.selection.startDateUtc,
-                      saved.selection.endDateUtc
-                    )}
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>
