@@ -1,8 +1,9 @@
 import { DateRangeSelection } from '../../types/dateRange';
 interface AdvancedDateRangePickerProps {
     initialSelection?: Partial<DateRangeSelection>;
-    onApply: (selection: DateRangeSelection) => void;
+    onApply: (selection: DateRangeSelection | null) => void;
     onCancel: () => void;
+    allowClear?: boolean;
     themeColors?: {
         background?: string;
         surface?: string;
@@ -20,6 +21,6 @@ interface AdvancedDateRangePickerProps {
         success?: string;
     };
 }
-export default function AdvancedDateRangePicker({ initialSelection, onApply, onCancel, themeColors, }: AdvancedDateRangePickerProps): import("react/jsx-runtime").JSX.Element;
+export default function AdvancedDateRangePicker({ initialSelection, onApply, onCancel, allowClear, themeColors, }: AdvancedDateRangePickerProps): import("react/jsx-runtime").JSX.Element;
 export {};
 //# sourceMappingURL=AdvancedDateRangePicker.d.ts.map

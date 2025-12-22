@@ -16,9 +16,10 @@ interface ExcludeSavedState {
 }
 interface UseAdvancedDateRangeStateParams {
     initialSelection?: Partial<DateRangeSelection>;
-    onApply: (selection: DateRangeSelection) => void;
+    onApply: (selection: DateRangeSelection | null) => void;
+    allowClear?: boolean;
 }
-export declare function useAdvancedDateRangeState({ initialSelection, onApply, }: UseAdvancedDateRangeStateParams): {
+export declare function useAdvancedDateRangeState({ initialSelection, onApply, allowClear, }: UseAdvancedDateRangeStateParams): {
     today: string;
     unit: DateRangeUnit;
     displayUnit: DateRangeUnit;

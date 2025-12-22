@@ -14,8 +14,9 @@ import { DEFAULT_PICKER_HEIGHT, DEFAULT_PICKER_WIDTH } from "./constants";
 
 interface AdvancedDateRangePickerProps {
   initialSelection?: Partial<DateRangeSelection>;
-  onApply: (selection: DateRangeSelection) => void;
+  onApply: (selection: DateRangeSelection | null) => void;
   onCancel: () => void;
+  allowClear?: boolean;
   themeColors?: {
     background?: string;
     surface?: string;
@@ -38,6 +39,7 @@ export default function AdvancedDateRangePicker({
   initialSelection,
   onApply,
   onCancel,
+  allowClear = false,
   themeColors,
 }: AdvancedDateRangePickerProps) {
   const {
@@ -111,6 +113,7 @@ export default function AdvancedDateRangePicker({
   } = useAdvancedDateRangeState({
     initialSelection,
     onApply,
+    allowClear,
   });
 
   const containerStyle: CSSProperties = {
@@ -245,6 +248,7 @@ export default function AdvancedDateRangePicker({
           excludeEnabled={excludeEnabled}
           hasEmptyDates={hasEmptyDates}
           hasFutureDates={hasFutureDates}
+          allowClear={allowClear}
           onToday={handleToday}
           onClear={handleClear}
           onCancel={onCancel}
