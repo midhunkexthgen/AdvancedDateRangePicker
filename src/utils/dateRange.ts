@@ -119,7 +119,15 @@ export function calcEndFromDuration(
 
     return formatUtc(currentDate);
   } else {
-    // For other units or no exclusions, simple addition
+    // For other units or no exclusions, calculate end date based on unit span
+    // If unit is week/month/quarter, duration 1 means "1 full week/month/quarter"
+    // So we add the unit amount, then subtract 1 day to get the inclusive end date
+    if (unit === "week" || unit === "month" || unit === "quarter") {
+      const nextDate = addUnitUtc(startDateUtc, unit, duration);
+      return formatUtc(addDays(parseUtc(nextDate), -1));
+    }
+    
+    // Fallback for other cases (though primarily handled above)
     return addUnitUtc(startDateUtc, unit, duration - 1);
   }
 }
@@ -156,7 +164,15 @@ export function calcStartFromDuration(
 
     return formatUtc(currentDate);
   } else {
-    // For other units or no exclusions, subtract duration - 1
+    // For other units or no exclusions, subtract duration
+    // Similar to calcEndFromDuration, we calculate start date based on unit span
+    if (unit === "week" || unit === "month" || unit === "quarter") {
+      // Get the date 'duration' units ago
+      const prevDate = addUnitUtc(endDateUtc, unit, -duration);
+      // Add 1 day to get the inclusive start date
+      return formatUtc(addDays(parseUtc(prevDate), 1));
+    }
+
     const date = parseUtc(endDateUtc);
     let result: Date;
 
@@ -164,17 +180,10 @@ export function calcStartFromDuration(
       case "day":
         result = addDays(date, -(duration - 1));
         break;
-      case "week":
-        result = addWeeks(date, -(duration - 1));
-        break;
-      case "month":
-        result = addMonths(date, -(duration - 1));
-        break;
-      case "quarter":
-        result = addQuarters(date, -(duration - 1));
-        break;
       default:
-        result = date;
+        // This default block shouldn't be reached for week/month/quarter due to if check above
+        // But keeping safe fallback for day
+        result = addDays(date, -(duration - 1));
     }
 
     return formatUtc(result);
@@ -360,6 +369,62 @@ export function getUnitAbbreviation(unit: DateRangeUnit): string {
 }
 
 /**
+ * Format a date range label intelligently based on the start and end dates
+ * - Single date: "Feb 22, 2025"
+ * - Same month range: "Feb 12-14, 2025"
+ * - Different months, same year: "Feb 20 - Nov 18, 2025"
+ * - Different years: "Mar 6, 2024 - May 19, 2025"
+ */
+export function formatDateRangeLabel(startStr: string, endStr: string): string {
+  const start = new Date(startStr + "T00:00:00");
+  const end = new Date(endStr + "T00:00:00");
+
+  const startMonth = start.getMonth();
+  const endMonth = end.getMonth();
+  const startYear = start.getFullYear();
+  const endYear = end.getFullYear();
+  const startDay = start.getDate();
+  const endDay = end.getDate();
+
+  // Case 1: Single date (start === end)
+  if (startStr === endStr) {
+    return start.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+  }
+
+  // Case 2: Same month and year (e.g., "Feb 12-14, 2025")
+  if (startMonth === endMonth && startYear === endYear) {
+    const monthName = start.toLocaleDateString("en-US", { month: "short" });
+    return `${monthName} ${startDay}-${endDay}, ${startYear}`;
+  }
+
+  // Case 3: Different months, same year (e.g., "Feb 20 - Nov 18, 2025")
+  if (startYear === endYear) {
+    const startMonthName = start.toLocaleDateString("en-US", {
+      month: "short",
+    });
+    const endMonthName = end.toLocaleDateString("en-US", { month: "short" });
+    return `${startMonthName} ${startDay} - ${endMonthName} ${endDay}, ${startYear}`;
+  }
+
+  // Case 4: Different years (e.g., "Mar 6, 2024 - May 19, 2025")
+  const startFormatted = start.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+  const endFormatted = end.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+  return `${startFormatted} - ${endFormatted}`;
+}
+
+/**
  * Get preset date ranges
  */
 export function getPresets() {
@@ -462,4 +527,3 @@ export function getPresets() {
     },
   };
 }
-

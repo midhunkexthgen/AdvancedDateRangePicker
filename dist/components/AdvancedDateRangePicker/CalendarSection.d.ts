@@ -37,7 +37,10 @@ interface CalendarSectionProps {
     onMonthSelect: (year: number, monthIndex: number) => void;
     onYearSelect: (year: number) => void;
     todayDateObj: Date;
+    onDayClick: (date: Date) => void;
+    endFieldError: boolean;
+    startFieldError: boolean;
 }
-export default function CalendarSection({ unit, excludeEnabled, selectedRange, displayedMonth, setDisplayedMonth, dayPickerModifiers, dayPickerDisabledMatcher, monthsViewIndex, setMonthsViewIndex, monthsViewYear, setMonthsViewYear, yearsViewIndex, setYearsViewIndex, yearsViewDecade, setYearsViewDecade, handleCalendarSelect, handleResetCalendarSelect, handleWeekCalendarSelect, monthQuarterRange, activeDateField, setActiveDateField, onMonthSelect, onYearSelect, todayDateObj, }: CalendarSectionProps): import("react/jsx-runtime").JSX.Element;
+export default function CalendarSection({ unit, excludeEnabled, selectedRange, displayedMonth, setDisplayedMonth, dayPickerModifiers, dayPickerDisabledMatcher, monthsViewIndex, setMonthsViewIndex, monthsViewYear, setMonthsViewYear, yearsViewIndex, setYearsViewIndex, yearsViewDecade, setYearsViewDecade, handleCalendarSelect, handleResetCalendarSelect, handleWeekCalendarSelect, monthQuarterRange, activeDateField, setActiveDateField, onMonthSelect, onYearSelect, todayDateObj, onDayClick, endFieldError, startFieldError, }: CalendarSectionProps): import("react/jsx-runtime").JSX.Element;
 export {};
 //# sourceMappingURL=CalendarSection.d.ts.map

@@ -14,6 +14,8 @@ import { ALLOW_FUTURE_DATES } from "../../config/dateConfig";
 interface QuarterPickerProps {
   selectedRange: { from: Date; to: Date };
   onSelect: (range: { from?: Date; to?: Date } | undefined) => void;
+  activeDateField?: "start" | "end";
+  onActiveFieldChange?: (field: "start" | "end") => void;
   disabled?: boolean;
 }
 
@@ -22,6 +24,8 @@ const QUARTERS = ["Q1", "Q2", "Q3", "Q4"];
 export default function QuarterPicker({
   selectedRange,
   onSelect,
+  activeDateField = "start",
+  onActiveFieldChange,
   disabled = false,
 }: QuarterPickerProps) {
   // Get the starting year from selected range or current year
@@ -51,9 +55,13 @@ export default function QuarterPicker({
     const quarterStart = startOfQuarter(quarterDate);
     const quarterEnd = endOfQuarter(quarterDate);
 
+    const nextStartField = () => onActiveFieldChange?.("start");
+    const nextEndField = () => onActiveFieldChange?.("end");
+
     // If dates are cleared (default today range), just select the clicked quarter
     if (isDefaultTodayRange()) {
       onSelect({ from: quarterStart, to: quarterEnd });
+      nextEndField();
       return;
     }
 
@@ -75,35 +83,23 @@ export default function QuarterPicker({
     const isSinglePoint =
       normalizedFromStart.getTime() === normalizedToEnd.getTime();
 
-    // If it's a single point selection, start a new range with the clicked quarter
-    if (isSinglePoint) {
-      onSelect({ from: quarterStart, to: quarterEnd });
-      return;
-    }
+    if (activeDateField === "end") {
+      // If clicked quarter is before the start, treat it as new start
+      if (quarterStart.getTime() < normalizedFromStart.getTime()) {
+        onSelect({ from: quarterStart, to: normalizedToEnd });
+        nextStartField();
+        return;
+      }
 
-    // If we have an existing range, check if we should extend it or start new
-    const clickedQuarter = quarterIndex + 1; // Convert to 1-4
-
-    // Check if clicked quarter is before the start
-    if (
-      !selectedRange.to ||
-      selectedRange.from.getTime() === selectedRange.to.getTime()
-    ) {
-      onSelect({ from: quarterStart, to: normalizedToEnd });
-      return;
-    }
-
-    // Check if clicked quarter is after the end
-    if (
-      year > currentToYear ||
-      (year === currentToYear && clickedQuarter > currentToQuarter)
-    ) {
+      // Extend to the clicked quarter
       onSelect({ from: normalizedFromStart, to: quarterEnd });
+      nextStartField();
       return;
     }
 
-    // If clicked within the range, start a new selection with the clicked quarter
+    // If it's a start selection (or default fallback), select just this quarter
     onSelect({ from: quarterStart, to: quarterEnd });
+    nextEndField();
   };
 
   const isQuarterInRange = (year: number, quarterIndex: number): boolean => {
@@ -236,7 +232,7 @@ export default function QuarterPicker({
   return (
     <div className="w-full">
       {/* Two Year Grids with Navigation */}
-      <div className="flex gap-8 justify-between px-6">
+      <div className="flex gap-4 justify-center">
         {renderYear(displayYear, true, false, {
           justifyContent: "start",
           gap: "3rem",

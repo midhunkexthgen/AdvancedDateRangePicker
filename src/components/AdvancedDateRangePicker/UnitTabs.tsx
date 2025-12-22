@@ -20,7 +20,7 @@ export default function UnitTabs({
           key={u}
           onClick={() => onUnitChange(u)}
           disabled={excludeEnabled}
-          className={`px-4 py-2 w-20 rounded-lg text-xs font-medium transition-colors ${
+          className={`px-4 py-2 w-20 rounded-[4px] text-xs font-medium transition-colors ${
             excludeEnabled
               ? unit === u
                 ? "bg-[#EBF0F9] text-[#003DB8] border border-[#003DB8] opacity-60 cursor-not-allowed"

@@ -70,6 +70,9 @@ function App() {
                 initialSelection={dateRange || undefined}
                 onApply={handleApply}
                 onCancel={handleCancel}
+                // themeColors={{
+                //   background: "#eff6ff",
+                // }}
               />
             </div>
           )}

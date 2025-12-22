@@ -7,8 +7,10 @@ interface QuarterPickerProps {
         from?: Date;
         to?: Date;
     } | undefined) => void;
+    activeDateField?: "start" | "end";
+    onActiveFieldChange?: (field: "start" | "end") => void;
     disabled?: boolean;
 }
-export default function QuarterPicker({ selectedRange, onSelect, disabled, }: QuarterPickerProps): import("react/jsx-runtime").JSX.Element;
+export default function QuarterPicker({ selectedRange, onSelect, activeDateField, onActiveFieldChange, disabled, }: QuarterPickerProps): import("react/jsx-runtime").JSX.Element;
 export {};
 //# sourceMappingURL=QuarterPicker.d.ts.map

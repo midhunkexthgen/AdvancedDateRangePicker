@@ -21,6 +21,7 @@ interface UseAdvancedDateRangeStateParams {
 export declare function useAdvancedDateRangeState({ initialSelection, onApply, }: UseAdvancedDateRangeStateParams): {
     today: string;
     unit: DateRangeUnit;
+    displayUnit: DateRangeUnit;
     startDateUtc: string;
     endDateUtc: string;
     activeDateField: "start" | "end";
@@ -91,12 +92,24 @@ export declare function useAdvancedDateRangeState({ initialSelection, onApply, }
     handleExcludeSave: () => void;
     toggleWeekday: (day: number) => void;
     setExcludedSavedDates: import('react').Dispatch<import('react').SetStateAction<string[]>>;
+    setExcludedSpecificDates: import('react').Dispatch<import('react').SetStateAction<string[]>>;
+    setExcludedDateRanges: import('react').Dispatch<import('react').SetStateAction<{
+        id: string;
+        start: string;
+        end: string;
+    }[]>>;
     setExcludeFilterTypes: import('react').Dispatch<import('react').SetStateAction<SupportedExcludeFilterType[]>>;
     setActiveFilterView: import('react').Dispatch<import('react').SetStateAction<SupportedExcludeFilterType | null>>;
     excludeSavedStateRef: import('react').RefObject<ExcludeSavedState>;
     sanitizeExcludeFilterTypes: (types: AnyExcludeFilterType[]) => SupportedExcludeFilterType[];
     handleMonthSelect: (year: number, monthIndex: number) => void;
     handleYearSelect: (year: number) => void;
+    handleDayClick: (date: Date) => void;
+    excludeSelectionStart: string | null;
+    endFieldError: boolean;
+    setEndFieldError: import('react').Dispatch<import('react').SetStateAction<boolean>>;
+    startFieldError: boolean;
+    setStartFieldError: import('react').Dispatch<import('react').SetStateAction<boolean>>;
 };
 export {};
 //# sourceMappingURL=useAdvancedDateRangeState.d.ts.map

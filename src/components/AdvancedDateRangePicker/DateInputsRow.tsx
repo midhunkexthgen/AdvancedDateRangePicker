@@ -20,12 +20,17 @@ interface DateInputsRowProps {
   endDateUtc: string;
   duration: number;
   unit: DateRangeUnit;
+  selectedUnit?: DateRangeUnit;
   excludeEnabled: boolean;
   activeDateField: "start" | "end";
   onStartDateChange: (value: string) => void;
   onEndDateChange: (value: string) => void;
   onDurationChange: (value: number) => void;
   onActiveFieldChange: (field: "start" | "end") => void;
+  endFieldError: boolean;
+  setEndFieldError: (hasError: boolean) => void;
+  startFieldError: boolean;
+  setStartFieldError: (hasError: boolean) => void;
 }
 
 export default function DateInputsRow({
@@ -33,12 +38,17 @@ export default function DateInputsRow({
   endDateUtc,
   duration,
   unit,
+  selectedUnit,
   excludeEnabled,
   activeDateField,
   onStartDateChange,
   onEndDateChange,
   onDurationChange,
   onActiveFieldChange,
+  endFieldError,
+  setEndFieldError,
+  startFieldError,
+  setStartFieldError,
 }: DateInputsRowProps) {
   const durationInputRef = useRef<HTMLInputElement>(null);
   const [unitPosition, setUnitPosition] = useState(0);
@@ -48,8 +58,13 @@ export default function DateInputsRow({
   const [endFieldValue, setEndFieldValue] = useState<Dayjs | null>(() =>
     parseDateValue(endDateUtc)
   );
-  const [startFieldError, setStartFieldError] = useState<boolean>(false);
-  const [endFieldError, setEndFieldError] = useState<boolean>(false);
+
+  const currentUnit = selectedUnit || unit;
+  const isMismatch =
+    (currentUnit === "week" && unit !== "week") ||
+    (currentUnit === "month" && unit !== "month") ||
+    (currentUnit === "quarter" && unit !== "quarter");
+  const inputValue = isMismatch ? "" : duration;
 
   useEffect(() => {
     if (durationInputRef.current) {
@@ -57,11 +72,12 @@ export default function DateInputsRow({
       const context = canvas.getContext("2d");
       if (context) {
         context.font = "14px system-ui, -apple-system, sans-serif";
-        const textWidth = context.measureText(duration.toString()).width;
+        const text = inputValue.toString();
+        const textWidth = context.measureText(text).width;
         setUnitPosition(12 + textWidth + 4);
       }
     }
-  }, [duration]);
+  }, [inputValue]);
 
   const getDateFieldStyles = (isActive: boolean, hasError: boolean) => ({
     "& .MuiOutlinedInput-root": {
@@ -280,7 +296,7 @@ export default function DateInputsRow({
               ref={durationInputRef}
               type="number"
               min="1"
-              value={duration}
+              value={inputValue}
               onChange={(e) => onDurationChange(Number(e.target.value))}
               disabled={excludeEnabled}
               className={`w-[120px] h-[28px] pl-3 pr-10 py-2 text-gray-500 border border-gray-300 rounded-md text-[12px] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white disabled:bg-gray-100 disabled:text-gray-400 disabled:border-gray-200 disabled:cursor-not-allowed disabled:focus:ring-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [-moz-appearance:textfield] ${
@@ -293,7 +309,7 @@ export default function DateInputsRow({
               }`}
               style={{ left: `${unitPosition}px` }}
             >
-              {getUnitAbbreviation(unit)}
+              {getUnitAbbreviation(currentUnit)}
             </span>
           </div>
         </div>

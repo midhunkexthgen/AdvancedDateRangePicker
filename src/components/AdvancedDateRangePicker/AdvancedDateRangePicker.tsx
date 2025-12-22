@@ -17,20 +17,20 @@ interface AdvancedDateRangePickerProps {
   onApply: (selection: DateRangeSelection) => void;
   onCancel: () => void;
   themeColors?: {
-    background: string;
-    surface: string;
-    surfaceSecondary: string;
-    text: string;
-    textSecondary: string;
-    textMuted: string;
-    border: string;
-    primary: string;
-    primaryHover: string;
-    secondary: string;
-    accent: string;
-    error: string;
-    warning: string;
-    success: string;
+    background?: string;
+    surface?: string;
+    surfaceSecondary?: string;
+    text?: string;
+    textSecondary?: string;
+    textMuted?: string;
+    border?: string;
+    primary?: string;
+    primaryHover?: string;
+    secondary?: string;
+    accent?: string;
+    error?: string;
+    warning?: string;
+    success?: string;
   };
 }
 
@@ -42,6 +42,7 @@ export default function AdvancedDateRangePicker({
 }: AdvancedDateRangePickerProps) {
   const {
     unit,
+    displayUnit,
     startDateUtc,
     endDateUtc,
     activeDateField,
@@ -96,10 +97,17 @@ export default function AdvancedDateRangePicker({
     handleExcludeSave,
     toggleWeekday,
     setExcludedSavedDates,
+    setExcludedSpecificDates,
+    setExcludedDateRanges,
     setExcludeFilterTypes,
     setActiveFilterView,
     handleMonthSelect,
     handleYearSelect,
+    handleDayClick,
+    endFieldError,
+    setEndFieldError,
+    startFieldError,
+    setStartFieldError,
   } = useAdvancedDateRangeState({
     initialSelection,
     onApply,
@@ -138,7 +146,7 @@ export default function AdvancedDateRangePicker({
         onPresetSelect={handlePresetSelect}
         onSavedDateSelect={handleSavedDateSelect}
         currentSelection={currentSelection}
-        themeColors={themeColors}
+        themeColors={themeColors || {}}
         disabled={excludeEnabled}
       />
 
@@ -157,13 +165,18 @@ export default function AdvancedDateRangePicker({
             startDateUtc={startDateUtc}
             endDateUtc={endDateUtc}
             duration={duration}
-            unit={unit}
+            unit={displayUnit}
+            selectedUnit={unit}
             excludeEnabled={excludeEnabled}
             activeDateField={activeDateField}
             onStartDateChange={handleStartDateChange}
             onEndDateChange={handleEndDateChange}
             onDurationChange={handleDurationChange}
             onActiveFieldChange={setActiveDateField}
+            endFieldError={endFieldError}
+            setEndFieldError={setEndFieldError}
+            startFieldError={startFieldError}
+            setStartFieldError={setStartFieldError}
           />
 
           {hasFutureDates && futureWarning && (
@@ -179,6 +192,8 @@ export default function AdvancedDateRangePicker({
             activeFilterView={activeFilterView}
             excludedWeekdays={excludedWeekdays}
             excludedSavedDates={excludedSavedDates}
+            excludedSpecificDates={excludedSpecificDates}
+            excludedDateRanges={excludedDateRanges}
             savedDatesSearchTerm={savedDatesSearchTerm}
             filteredSavedDates={filteredSavedDates}
             savedDatesForFilter={savedDatesForFilter}
@@ -190,6 +205,8 @@ export default function AdvancedDateRangePicker({
             onToggleWeekday={toggleWeekday}
             setSavedDatesSearchTerm={setSavedDatesSearchTerm}
             setExcludedSavedDates={setExcludedSavedDates}
+            setExcludedSpecificDates={setExcludedSpecificDates}
+            setExcludedDateRanges={setExcludedDateRanges}
             setExcludeFilterTypes={setExcludeFilterTypes}
             setActiveFilterView={setActiveFilterView}
           />
@@ -218,6 +235,9 @@ export default function AdvancedDateRangePicker({
             onMonthSelect={handleMonthSelect}
             onYearSelect={handleYearSelect}
             todayDateObj={todayDateObj}
+            onDayClick={handleDayClick}
+            endFieldError={endFieldError}
+            startFieldError={startFieldError}
           />
         </div>
 

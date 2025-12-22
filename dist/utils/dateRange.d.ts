@@ -54,6 +54,14 @@ export declare function parseDisplayDate(displayStr: string): string | null;
  */
 export declare function getUnitAbbreviation(unit: DateRangeUnit): string;
 /**
+ * Format a date range label intelligently based on the start and end dates
+ * - Single date: "Feb 22, 2025"
+ * - Same month range: "Feb 12-14, 2025"
+ * - Different months, same year: "Feb 20 - Nov 18, 2025"
+ * - Different years: "Mar 6, 2024 - May 19, 2025"
+ */
+export declare function formatDateRangeLabel(startStr: string, endStr: string): string;
+/**
  * Get preset date ranges
  */
 export declare function getPresets(): {

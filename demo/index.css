@@ -50,6 +50,19 @@ body {
   background: #dbeafe;
 }
 
+.excluded-disabled
+  .rdp-day_selected.rdp-range_end.rdp-range_start
+  .rdp-day_button {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px 8px 8px 8px;
+  border-right: 4px solid #1e40af;
+  border-left: 4px solid #1e40af;
+}
+.excluded-disabled .rdp-day_selected.rdp-range_end.rdp-range_start {
+  border-radius: 15px 15px 15px 15px;
+}
+
 .rdp-day_selected.rdp-range_start:not(.rdp-range_end) .rdp-day_button {
   background: #2563eb;
   color: white;
@@ -86,18 +99,41 @@ body {
   width: 100%;
   height: 100%;
 }
+.excluded-enabled
+  .rdp-day_selected.rdp-range_middle:not(.rdp-day_excluded-range):not(
+    .rdp-day_excluded-weekday
+  ):not(.rdp-day_excluded-saved-date):not(.rdp-day_exclude-range-start)
+  .rdp-day_button,
+.excluded-enabled
+  .rdp-day_selected.rdp-range_start:not(.rdp-day_excluded-range):not(
+    .rdp-day_excluded-weekday
+  ):not(.rdp-day_excluded-saved-date):not(.rdp-day_exclude-range-start)
+  .rdp-day_button,
+.excluded-enabled
+  .rdp-day_selected.rdp-range_end:not(.rdp-day_excluded-range):not(
+    .rdp-day_excluded-weekday
+  ):not(.rdp-day_excluded-saved-date):not(.rdp-day_exclude-range-start)
+  .rdp-day_button {
+  color: white !important;
+}
 
-.excluded-enabled .rdp-day_selected.rdp-range_middle.rdp-day_disabled,
-.excluded-enabled .rdp-day_selected.rdp-range_start.rdp-day_disabled,
-.excluded-enabled .rdp-day_selected.rdp-range_end.rdp-day_disabled {
+.excluded-enabled td[data-selected="true"].rdp-day_selected.rdp-range_middle,
+.excluded-enabled
+  td[data-selected="true"].rdp-day_selected.rdp-range_start:not(
+    .rdp-day_exclude-range-start
+  ):not(.rdp-day_excluded-range),
+.excluded-enabled
+  td[data-selected="true"].rdp-day_selected.rdp-range_end:not(
+    .rdp-day_exclude-range-start
+  ):not(.rdp-day_excluded-range) {
   background-color: #003db8 !important;
   color: white !important;
 }
 .excluded-enabled
-  .rdp-day_selected.rdp-range_start.rdp-day_disabled
+  td[data-selected="true"].rdp-day_selected.rdp-range_start
   .rdp-day_button,
 .excluded-enabled
-  .rdp-day_selected.rdp-range_end.rdp-day_disabled
+  td[data-selected="true"].rdp-day_selected.rdp-range_end
   .rdp-day_button {
   background-color: #003db8 !important;
   color: white !important;
@@ -107,27 +143,67 @@ body {
 }
 
 .excluded-enabled
-  .rdp-day_selected.rdp-range_middle.rdp-day_disabled.rdp-day_excluded-weekday,
+  td[data-selected="true"].rdp-day_selected.rdp-range_middle.rdp-day_excluded-weekday,
 .excluded-enabled
-  .rdp-day_selected.rdp-range_start.rdp-day_disabled.rdp-day_excluded-weekday
+  td[data-selected="true"].rdp-day_selected.rdp-range_start.rdp-day_excluded-weekday
   .rdp-day_button,
 .excluded-enabled
-  .rdp-day_selected.rdp-range_end.rdp-day_disabled.rdp-day_excluded-weekday
+  td[data-selected="true"].rdp-day_selected.rdp-range_end.rdp-day_excluded-weekday
   .rdp-day_button {
   background-color: #f3f3f3 !important;
   color: #1f2937 !important;
 }
 
 .excluded-enabled
-  .rdp-day_selected.rdp-range_middle.rdp-day_disabled.rdp-day_excluded-saved-date,
+  td[data-selected="true"].rdp-day_selected.rdp-range_middle.rdp-day_excluded-saved-date,
 .excluded-enabled
-  .rdp-day_selected.rdp-range_start.rdp-day_disabled.rdp-day_excluded-saved-date,
+  td[data-selected="true"].rdp-day_selected.rdp-range_start.rdp-day_excluded-saved-date,
 .excluded-enabled
-  .rdp-day_selected.rdp-range_end.rdp-day_disabled.rdp-day_excluded-saved-date {
+  td[data-selected="true"].rdp-day_selected.rdp-range_end.rdp-day_excluded-saved-date {
   background-color: #f3f3f3 !important;
   color: #1f2937 !important;
 }
 
+.excluded-enabled
+  td[data-selected="true"].rdp-day_selected.rdp-range_middle.rdp-day_excluded-specific-date,
+.excluded-enabled
+  td[data-selected="true"].rdp-day_selected.rdp-range_start.rdp-day_excluded-specific-date
+  .rdp-day_button,
+.excluded-enabled
+  td[data-selected="true"].rdp-day_selected.rdp-range_end.rdp-day_excluded-specific-date
+  .rdp-day_button {
+  background-color: #f3f3f3 !important;
+  color: #1f2937 !important;
+}
+
+.excluded-enabled
+  td[data-selected="true"].rdp-day_selected.rdp-range_middle.rdp-day_exclude-range-start,
+.excluded-enabled
+  td[data-selected="true"].rdp-day_selected.rdp-range_start.rdp-day_exclude-range-start,
+.excluded-enabled
+  td[data-selected="true"].rdp-day_selected.rdp-range_start.rdp-day_exclude-range-start
+  .rdp-day_button,
+.excluded-enabled
+  td[data-selected="true"].rdp-day_selected.rdp-range_end.rdp-day_exclude-range-start
+  .rdp-day_button,
+.excluded-enabled
+  td[data-selected="true"].rdp-day_selected.rdp-range_end.rdp-day_exclude-range-start,
+.excluded-enabled
+  td[data-selected="true"].rdp-day_selected.rdp-range_middle.rdp-day_excluded-range,
+.excluded-enabled
+  td[data-selected="true"].rdp-day_selected.rdp-range_start.rdp-day_excluded-range
+  .rdp-day_button,
+.excluded-enabled
+  td[data-selected="true"].rdp-day_selected.rdp-range_end.rdp-day_excluded-range
+  .rdp-day_button {
+  background-color: #f3f3f3 !important;
+  color: #1f2937 !important;
+}
+
+.excluded-disabled .rdp-day_selected.rdp-day_excluded-range .rdp-day_button,
+.excluded-disabled .rdp-day_selected.rdp-range_middle.rdp-day_excluded-range,
+.excluded-disabled .rdp-day_selected.rdp-range_start.rdp-day_excluded-range,
+.excluded-disabled .rdp-day_selected.rdp-range_end.rdp-day_excluded-range,
 .excluded-disabled .rdp-day_selected.rdp-range_middle.rdp-day_excluded-weekday,
 .excluded-disabled
   .rdp-day_selected.rdp-range_start.rdp-day_excluded-weekday
@@ -186,9 +262,29 @@ body {
   font-size: 14px !important;
   font-weight: 600;
 }
+
+.day-picker-calender .rdp-months .rdp-month:nth-of-type(2) {
+  left: 28px;
+}
 /* .week-picker-calender .rdp-button_previous {
   margin-left: 27px;
 } */
 /* .week-picker-calender .rdp-caption_label {
     margin-left: 27px;
 } */
+
+/* .week-picker-calender .rdp-month:has(.rdp-button_next) .rdp-month_caption */
+
+.day-picker-calender:not(:has(.day_picker_left_container)):not(
+    :has(.day_with_years_picker_left_container)
+  )
+  .rdp-button_next {
+  margin-right: 28px !important;
+}
+.day-picker-calender:not(:has(.day_picker_left_container)):not(
+    :has(.day_with_years_picker_left_container)
+  )
+  .rdp-month:has(.rdp-button_next)
+  .rdp-month_caption {
+  margin-right: 90px !important;
+}

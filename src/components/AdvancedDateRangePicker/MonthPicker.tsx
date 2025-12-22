@@ -132,7 +132,7 @@ export default function MonthPicker({
     if (isDefaultTodayRange()) {
       const nextRange: MonthRange = { from: monthStart, to: monthEnd };
       setMonthRange(nextRange);
-      onSelect({ from: monthStart });
+      onSelect(nextRange);
       nextEndField();
       return;
     }
@@ -141,7 +141,7 @@ export default function MonthPicker({
       if (!monthRange.from) {
         const nextRange: MonthRange = { from: monthStart, to: monthEnd };
         setMonthRange(nextRange);
-        onSelect({ from: monthStart });
+        onSelect(nextRange);
         nextEndField();
         return;
       }
@@ -166,7 +166,7 @@ export default function MonthPicker({
     // Treat as selecting start
     const nextRange: MonthRange = { from: monthStart, to: monthEnd };
     setMonthRange(nextRange);
-    onSelect({ from: monthStart });
+    onSelect(nextRange);
     nextEndField();
   };
 
@@ -294,7 +294,7 @@ export default function MonthPicker({
   return (
     <div className="w-full">
       {/* Two Year Grids with Navigation */}
-      <div className="flex gap-8 justify-between px-6">
+      <div className="flex gap-4 justify-center">
         {renderYear(displayYear, true, false, {
           justifyContent: "start",
           gap: "3rem",
